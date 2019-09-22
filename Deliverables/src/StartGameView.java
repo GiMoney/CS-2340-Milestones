@@ -10,7 +10,7 @@ public class StartGameView extends ViewController {
 		System.out.println("Start game");
 		JButton b = new JButton("Start Game!");
 		b.setBounds(130, 100, 100, 40);
-		b.addActionListener(new StartGameView.SegueListener());
+		b.addActionListener(new SegueListener());
 
 		view.add(b);
 

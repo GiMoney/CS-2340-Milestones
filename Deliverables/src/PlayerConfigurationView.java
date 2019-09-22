@@ -10,7 +10,7 @@ public class PlayerConfigurationView extends ViewController {
 		System.out.println("Player configuration");
 		JButton b = new JButton("Player configuration");
 		b.setBounds(130, 100, 100, 40);
-		b.addActionListener(new PlayerConfigurationView.SegueListener());
+		b.addActionListener(new SegueListener());
 
 		view.add(b);
 

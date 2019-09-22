@@ -9,7 +9,7 @@ public class PlayerInfoView extends ViewController {
 		System.out.println("Player view");
 		JButton b = new JButton("Player view");
 		b.setBounds(130,100,100, 40);
-		b.addActionListener(new PlayerInfoView.SegueListener());
+		b.addActionListener(new SegueListener());
 
 		view.add(b);
 

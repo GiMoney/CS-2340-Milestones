@@ -1,30 +1,40 @@
 import javax.swing.*;
+import java.awt.FlowLayout;
 import java.awt.event.*;
 
 public class StartGameView extends ViewController {
-	public static JFrame view = new JFrame();
-	static StartGameView current;
-	static PlayerConfigurationView next;
+    public static JFrame view = new JFrame();
+    static StartGameView current;
+    static PlayerConfigurationView next;
 
-	public static void main(String[] args) {
-		System.out.println("Start game");
-		JButton b = new JButton("Start Game!");
-		b.setBounds(130, 100, 100, 40);
-		b.addActionListener(new SegueListener());
+    public static void main(String[] args) {
+        view.setSize(500,600);
 
-		view.add(b);
+        JButton b = new JButton("Start Game!");
+        int bLocX = view.getWidth() / 2 - 50;
+        int bLocY = view.getHeight() / 2 - 40;
 
-		view.setSize(400,500);
-		view.setLayout(null);
-		view.setVisible(true);
-	}
+        JLabel welcome = new JLabel("Welcome to Space Trader!");
 
-	public static class SegueListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			current.view.setVisible(false);
-			current.view.dispose();
-			next = new PlayerConfigurationView();
-			next.main(null);
-		}
-	}
+        b.setBounds(bLocX, bLocY, 100, 40);
+        welcome.setBounds(bLocX - 25, bLocY - 100, 200, 40);
+
+        b.addActionListener(new SegueListener());
+
+        view.add(welcome);
+        view.add(b);
+
+        view.setLocationRelativeTo(null);
+        view.setLayout(new FlowLayout());
+        view.setVisible(true);
+    }
+
+    public static class SegueListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            current.view.setVisible(false);
+            current.view.dispose();
+            next = new PlayerConfigurationView();
+            next.main(null);
+        }
+    }
 }

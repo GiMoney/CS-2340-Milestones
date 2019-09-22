@@ -1,27 +1,34 @@
 import javax.swing.*;
+import java.awt.FlowLayout;
 import java.awt.event.*;
 
 public class PlayerInfoView extends ViewController {
-	public static JFrame view = new JFrame();
-	static PlayerInfoView current;
+    public static JFrame view = new JFrame();
+    static PlayerInfoView current;
 
-	public static void main(String[] args) {
-		System.out.println("Player view");
-		JButton b = new JButton("Player view");
-		b.setBounds(130,100,100, 40);
-		b.addActionListener(new SegueListener());
+    public static void main(String[] args) {
+        view.setSize(500,600);
 
-		view.add(b);
 
-		view.setSize(400,500);
-		view.setLayout(null);
-		view.setVisible(true);
-	}
 
-	public static class SegueListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			current.view.setVisible(false);
-			current.view.dispose();
-		}
-	}
+        JButton b = new JButton("Player view");
+        int bLocX = view.getWidth() / 2 - 50;
+        int bLocY = view.getHeight() / 2 - 40;
+
+        b.setBounds(bLocX,bLocY,100, 40);
+        b.addActionListener(new SegueListener());
+
+        view.add(b);
+
+        view.setLocationRelativeTo(null);
+        view.setLayout(new FlowLayout());
+        view.setVisible(true);
+    }
+
+    public static class SegueListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            current.view.setVisible(false);
+            current.view.dispose();
+        }
+    }
 }

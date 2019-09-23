@@ -1,5 +1,6 @@
 import javax.swing.*;
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.event.*;
 
 public class PlayerInfoView extends ViewController {
@@ -8,20 +9,31 @@ public class PlayerInfoView extends ViewController {
 
     public static void main(String[] args) {
         view.setSize(500,600);
+        Container cp = view.getContentPane();
+        cp.setLayout(new BorderLayout());
 
 
-
-        JButton b = new JButton("Player view");
+        JLabel b = new JLabel("Player view");
         int bLocX = view.getWidth() / 2 - 50;
         int bLocY = view.getHeight() / 2 - 40;
 
-        b.setBounds(bLocX,bLocY,100, 40);
-        b.addActionListener(new SegueListener());
+        b.setBounds(0, 0, 10, 20);
+        cp.add(b, BorderLayout.NORTH);
+        //b.addActionListener(new SegueListener());
 
-        view.add(b);
+        JLabel name = new JLabel("Character name: args0x");
+        name.setBounds(0, 50, 120, 100);
+        cp.add(name, BorderLayout.CENTER);
+
+        JLabel diff = new JLabel("Difficulty: args1");
+        diff.setBounds(0, 75, 120, 100);
+        cp.add(diff, BorderLayout.CENTER);
+
+        JLabel fighter = new JLabel("Fighter: args2");
+        fighter.setBounds(0, 100, 120, 100);
+        cp.add(fighter, BorderLayout.CENTER);
 
         view.setLocationRelativeTo(null);
-        view.setLayout(new FlowLayout());
         view.setVisible(true);
     }
 

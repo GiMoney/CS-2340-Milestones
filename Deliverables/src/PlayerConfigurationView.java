@@ -67,8 +67,7 @@ public class PlayerConfigurationView extends ViewController {
         JLabel pilotpoints =  new JLabel(pilotpointscounter + "");
         addpilot.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                pilotpointscounter += 1;
-                pilotpoints.setText(pilotpointscounter + "");
+                pilotpoints.setText(pilotpointscounter + 1 + "");
             }
         });
         addpilot.setBounds(150, 150, 200, 40);

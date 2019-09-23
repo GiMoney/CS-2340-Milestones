@@ -20,40 +20,40 @@ public class PlayerInfoView extends ViewController {
         b.setBounds(0, 0, 10, 20);
         cp.add(b, BorderLayout.NORTH);
 
-        JLabel name = new JLabel("Character name: args0x");
+        JLabel name = new JLabel("Character name: " + args[0]);
         name.setBounds(0, 50, 150, 150);
         cp.add(name, BorderLayout.CENTER);
 
-        JLabel diff = new JLabel("Difficulty: args1");
+        JLabel diff = new JLabel("Difficulty: " + args[1]);
         diff.setBounds(0, 100, 120, 100);
         cp.add(diff, BorderLayout.CENTER);
 
-        JLabel pilot = new JLabel("Pilot: args2");
+        JLabel pilot = new JLabel("Pilot: " + args[2]);
         pilot.setBounds(0, 150, 200, 40);
         cp.add(pilot, BorderLayout.CENTER);
 
-        JLabel fighter = new JLabel("Fighter: args3");
+        JLabel fighter = new JLabel("Fighter: " + args[3]);
         fighter.setBounds(0, 170, 200, 40);
         cp.add(fighter, BorderLayout.CENTER);
 
-        JLabel merchant = new JLabel("Merchant: args4");
+        JLabel merchant = new JLabel("Merchant: " + args[4]);
         merchant.setBounds(0, 190, 200, 40);
         cp.add(merchant, BorderLayout.CENTER);
 
-        JLabel engineer = new JLabel("Engineer: args5");
+        JLabel engineer = new JLabel("Engineer: " + args[5]);
         engineer.setBounds(0, 210, 200, 40);
         cp.add(engineer, BorderLayout.CENTER);
 
 
-        JLabel credits = new JLabel("Starting Credits: args6");
-        /*if (args[6].equals("Easy")) {
+        JLabel credits = new JLabel("Starting Credits: args1");
+        if (args[1].equals("Easy")) {
             credits.setText("Starting Credits: 1000");
-        } else if (args[6].equals("Medium")) {
+        } else if (args[1].equals("Medium")) {
             credits.setText("Starting Credits: 500");
         } else {
             credits.setText("Starting Credits: 100");
         }
-        */
+
         credits.setBounds(0, 250, 200, 40);
         cp.add(credits, BorderLayout.CENTER);
 

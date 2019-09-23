@@ -20,8 +20,6 @@ public class PlayerInfoView extends ViewController {
         b.setBounds(0, 0, 10, 20);
         cp.add(b, BorderLayout.NORTH);
 
-        //b.addActionListener(new SegueListener());
-
         JLabel name = new JLabel("Character name: args0x");
         name.setBounds(0, 50, 150, 150);
         cp.add(name, BorderLayout.CENTER);
@@ -62,6 +60,7 @@ public class PlayerInfoView extends ViewController {
 
         view.setLocationRelativeTo(null);
         view.setVisible(true);
+
     }
 
     public static class SegueListener implements ActionListener {

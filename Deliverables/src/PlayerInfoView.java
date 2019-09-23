@@ -45,8 +45,10 @@ public class PlayerInfoView extends ViewController {
         cp.add(engineer, BorderLayout.CENTER);
 
 
-        JLabel credits = new JLabel("Starting Credits: args1");
-        if (args[1].equals("Easy")) {
+        JLabel credits = new JLabel("Starting Credits: ");
+        if (args[1] == null) {
+            credits.setText("Starting Credits: 1000");
+        } else if (args[1].equals("Easy")) {
             credits.setText("Starting Credits: 1000");
         } else if (args[1].equals("Medium")) {
             credits.setText("Starting Credits: 500");

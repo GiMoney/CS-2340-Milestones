@@ -10,19 +10,19 @@ public class StartGameView extends ViewController {
     public static void main(String[] args) {
         view.setSize(500,600);
 
-        JButton b = new JButton("Start Game!");
-        int bLocX = view.getWidth() / 2 - 50;
-        int bLocY = view.getHeight() / 2 - 40;
+        JButton startGameButton = new JButton("Start Game!");
+        int sgb_x = view.getWidth() / 2 - 50;
+        int sgb_y = view.getHeight() / 2 - 40;
 
         JLabel welcome = new JLabel("Welcome to Space Trader!");
 
-        b.setBounds(bLocX, bLocY, 100, 40);
-        welcome.setBounds(bLocX - 25, bLocY - 100, 200, 40);
+        startGameButton.setBounds(sgb_x, sgb_y, 100, 40);
+        welcome.setBounds(sgb_x - 25, sgb_y - 100, 200, 40);
 
-        b.addActionListener(new SegueListener());
+        startGameButton.addActionListener(new SegueListener());
 
         view.add(welcome);
-        view.add(b);
+        view.add(startGameButton);
 
         view.setLocationRelativeTo(null);
         view.setLayout(new FlowLayout());

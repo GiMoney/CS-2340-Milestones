@@ -1,13 +1,18 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerConfigurationView extends ViewController {
     public static JFrame view = new JFrame();
     static PlayerConfigurationView current;
     static PlayerInfoView next;
     static String[] inputData = new String[6];
+    static int maxPoints = 0;
 
     public static void main(String[] args) {
         view.setSize(500,600);
@@ -30,34 +35,28 @@ public class PlayerConfigurationView extends ViewController {
         difficulty.setBounds(20, 90, 200, 40);
         cp.add(difficulty, BorderLayout.CENTER);
 
-        String[] diffs = {"Easy", "Medium", "Hard"};
+        HashMap<String, String> diffsToPoints = new HashMap<>();
+        diffsToPoints.put("Easy", "16");
+        diffsToPoints.put("Medium", "12");
+        diffsToPoints.put("Hard", "8");
+
+        Object[] diffs = diffsToPoints.keySet().toArray();
         JComboBox diffList = new JComboBox(diffs);
         diffList.setBounds(180, 90, 200, 40);
         cp.add(diffList, BorderLayout.CENTER);
 
-        JLabel skillsnum = new JLabel("16");
-        JButton select = new JButton("Select");
+        JLabel skillsnum = new JLabel();
+        skillsnum.setBounds(230, 130, 200, 40);
+        String currentSelection = (String) diffList.getSelectedItem();
 
-        select.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String diff = (String) diffList.getSelectedItem();
-                if (diff.equals("Easy")) {
-                    skillsnum.setText("16");
-                } else if (diff.equals("Medium")) {
-                    skillsnum.setText("12");
-                } else {
-                    skillsnum.setText("8");
-                }
-            }
-        });
+        JButton select = new JButton("Select");
         select.setBounds(390, 90, 100, 40);
+        cp.add(skillsnum, BorderLayout.CENTER);
         cp.add(select, BorderLayout.CENTER);
 
         JLabel skills = new JLabel("Total Skill Points for that class:");
         skills.setBounds(20, 130, 200, 40);
         cp.add(skills, BorderLayout.CENTER);
-        skillsnum.setBounds(230, 130, 200, 40);
-        cp.add(skillsnum, BorderLayout.CENTER);
 
         JLabel pilot = new JLabel("Pilot");
         pilot.setBounds(50, 150, 200, 40);
@@ -99,6 +98,31 @@ public class PlayerConfigurationView extends ViewController {
         JButton b = new JButton("Configure Player");
 
         b.setSize(200, 40);
+
+        select.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String selection = (String) diffList.getSelectedItem();
+                String points = diffsToPoints.get(selection);
+                maxPoints = Integer.parseInt(points);
+                skillsnum.setText(points);
+                skillsnum.updateUI();
+
+                // Set max value allowed on all spinners
+                SpinnerNumberModel curModel = new SpinnerNumberModel(0, 0,
+                        maxPoints, 1);
+
+                pSkill.setModel(curModel);
+                fSkill.setModel(curModel);
+                mSkill.setModel(curModel);
+                eSkill.setModel(curModel);
+
+                pSkill.updateUI();
+                fSkill.updateUI();
+                mSkill.updateUI();
+                eSkill.updateUI();
+            }
+        });
+
         b.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 inputData[0] = nameField.getText();
@@ -111,7 +135,6 @@ public class PlayerConfigurationView extends ViewController {
         });
         b.addActionListener(new SegueListener());
         cp.add(b, BorderLayout.SOUTH);
-
 
         view.setLocationRelativeTo(null);
         view.setVisible(true);

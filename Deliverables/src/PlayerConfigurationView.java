@@ -1,18 +1,18 @@
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.BorderLayout;
-import java.awt.Container;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
-import java.util.Map;
 
 public class PlayerConfigurationView extends ViewController {
     public static JFrame view = new JFrame();
-    static PlayerConfigurationView current;
-    static PlayerInfoView next;
-    static String[] inputData = new String[6];
-    static int maxPoints = 0;
+    private static PlayerConfigurationView current;
+    private static PlayerInfoView next;
+    private static String[] inputData = new String[6];
+    private static int maxPoints = 0;
+    private static JFormattedTextField pSkill;
+    private static JFormattedTextField fSkill;
+    private static JFormattedTextField mSkill;
+    private static JFormattedTextField eSkill;
 
     public static void main(String[] args) {
         view.setSize(500,600);
@@ -62,8 +62,8 @@ public class PlayerConfigurationView extends ViewController {
         pilot.setBounds(50, 150, 200, 40);
         cp.add(pilot, BorderLayout.CENTER);
 
-        JSpinner pSkill = new JSpinner(
-                new SpinnerNumberModel(0, 0, 16, 1));
+        pSkill = new JFormattedTextField("%d*");
+        pSkill.setValue(0);
         pSkill.setBounds(200, 160, 40, 20);
         cp.add(pSkill, BorderLayout.CENTER);
 
@@ -71,7 +71,8 @@ public class PlayerConfigurationView extends ViewController {
         fighter.setBounds(50, 170, 200, 40);
         cp.add(fighter, BorderLayout.CENTER);
 
-        JSpinner fSkill = new JSpinner(new SpinnerNumberModel(0, 0, 16, 1));
+        fSkill = new JFormattedTextField("%d*");
+        fSkill.setValue(0);
         fSkill.setBounds(200, 180, 40, 20);
         cp.add(fSkill, BorderLayout.CENTER);
 
@@ -79,7 +80,8 @@ public class PlayerConfigurationView extends ViewController {
         merchant.setBounds(50, 190, 200, 40);
         cp.add(merchant, BorderLayout.CENTER);
 
-        JSpinner mSkill = new JSpinner(new SpinnerNumberModel(0, 0, 16, 1));
+        mSkill = new JFormattedTextField("%d*");
+        mSkill.setValue(0);
         mSkill.setBounds(200, 200, 40, 20);
         cp.add(mSkill, BorderLayout.CENTER);
 
@@ -87,7 +89,8 @@ public class PlayerConfigurationView extends ViewController {
         engineer.setBounds(50, 210, 200, 40);
         cp.add(engineer, BorderLayout.CENTER);
 
-        JSpinner eSkill = new JSpinner(new SpinnerNumberModel(0, 0, 16, 1));
+        eSkill = new JFormattedTextField("%d*");
+        eSkill.setValue(0);
         eSkill.setBounds(200, 220, 40, 20);
         cp.add(eSkill, BorderLayout.CENTER);
 
@@ -107,19 +110,11 @@ public class PlayerConfigurationView extends ViewController {
                 skillsnum.setText(points);
                 skillsnum.updateUI();
 
-                // Set max value allowed on all spinners
-                SpinnerNumberModel curModel = new SpinnerNumberModel(0, 0,
-                        maxPoints, 1);
-
-                pSkill.setModel(curModel);
-                fSkill.setModel(curModel);
-                mSkill.setModel(curModel);
-                eSkill.setModel(curModel);
-
-                pSkill.updateUI();
-                fSkill.updateUI();
-                mSkill.updateUI();
-                eSkill.updateUI();
+                // Flush all entered values
+                pSkill.setValue(0);
+                fSkill.setValue(0);
+                mSkill.setValue(0);
+                eSkill.setValue(0);
             }
         });
 
@@ -136,8 +131,46 @@ public class PlayerConfigurationView extends ViewController {
         b.addActionListener(new SegueListener());
         cp.add(b, BorderLayout.SOUTH);
 
+        pSkill.addActionListener(new SkillPointFieldUpdater());
+        fSkill.addActionListener(new SkillPointFieldUpdater());
+        mSkill.addActionListener(new SkillPointFieldUpdater());
+        eSkill.addActionListener(new SkillPointFieldUpdater());
+
         view.setLocationRelativeTo(null);
         view.setVisible(true);
+    }
+
+    private static class SkillPointFieldUpdater implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Updated field");
+            JFormattedTextField editedField =
+                    (JFormattedTextField) e.getSource();
+            int attemptedPoints = getTextValue(editedField);
+            editedField.setValue(0);
+            int distributedPoints = getAllocatedPoints();
+            int remainingPoints = maxPoints - distributedPoints;
+
+            System.out.printf("A: %d, D: %d, T: %d, R: %d%n", attemptedPoints,
+                    distributedPoints, maxPoints, remainingPoints);
+
+            if (attemptedPoints < remainingPoints) {
+                editedField.setValue(attemptedPoints);
+            } else {
+                editedField.setValue(remainingPoints);
+            }
+        }
+    }
+
+    private static int getAllocatedPoints() {
+        System.out.println("Got allocated points");
+        return Integer.parseInt(pSkill.getValue().toString()) +
+                Integer.parseInt(fSkill.getValue().toString()) +
+                Integer.parseInt(mSkill.getValue().toString()) +
+                Integer.parseInt(eSkill.getValue().toString());
+    }
+
+    private static int getTextValue(JFormattedTextField field) {
+        return Integer.parseInt(field.getValue().toString());
     }
 
     public static class SegueListener implements ActionListener {

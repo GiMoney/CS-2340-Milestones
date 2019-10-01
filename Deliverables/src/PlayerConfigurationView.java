@@ -9,6 +9,9 @@ public class PlayerConfigurationView extends ViewController {
     private static PlayerInfoView next;
     private static String[] inputData = new String[6];
     private static int maxPoints = 0;
+    private static JTextField nameField;
+    private static JComboBox diffList;
+    private static JButton b;
     private static JFormattedTextField pSkill;
     private static JFormattedTextField fSkill;
     private static JFormattedTextField mSkill;
@@ -27,7 +30,7 @@ public class PlayerConfigurationView extends ViewController {
         name.setBounds(20, 50, 200, 40);
         cp.add(name, BorderLayout.CENTER);
 
-        JTextField nameField = new JTextField();
+        nameField = new JTextField();
         nameField.setBounds(180, 60, 200, 20);
         cp.add(nameField, BorderLayout.CENTER);
 
@@ -41,13 +44,12 @@ public class PlayerConfigurationView extends ViewController {
         diffsToPoints.put("Hard", "8");
 
         Object[] diffs = diffsToPoints.keySet().toArray();
-        JComboBox diffList = new JComboBox(diffs);
+        diffList = new JComboBox(diffs);
         diffList.setBounds(180, 90, 200, 40);
         cp.add(diffList, BorderLayout.CENTER);
 
         JLabel skillsnum = new JLabel();
         skillsnum.setBounds(230, 130, 200, 40);
-        String currentSelection = (String) diffList.getSelectedItem();
 
         JButton select = new JButton("Select");
         select.setBounds(390, 90, 100, 40);
@@ -98,7 +100,7 @@ public class PlayerConfigurationView extends ViewController {
         space.setBounds(50, 210, 200, 40);
         cp.add(space, BorderLayout.CENTER);
 
-        JButton b = new JButton("Configure Player");
+        b = new JButton("Configure Player");
 
         b.setSize(200, 40);
 
@@ -115,20 +117,13 @@ public class PlayerConfigurationView extends ViewController {
                 fSkill.setValue(0);
                 mSkill.setValue(0);
                 eSkill.setValue(0);
+
+                b.setEnabled(canContinueConfiguation());
             }
         });
 
-        b.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                inputData[0] = nameField.getText();
-                inputData[1] = (String) diffList.getSelectedItem();
-                inputData[2] = ((Integer)pSkill.getValue()).toString();
-                inputData[3] = ((Integer)fSkill.getValue()).toString();
-                inputData[4] = ((Integer)mSkill.getValue()).toString();
-                inputData[5] = ((Integer)eSkill.getValue()).toString();
-            }
-        });
         b.addActionListener(new SegueListener());
+        b.setEnabled(canContinueConfiguation());
         cp.add(b, BorderLayout.SOUTH);
 
         pSkill.addActionListener(new SkillPointFieldUpdater());
@@ -140,9 +135,14 @@ public class PlayerConfigurationView extends ViewController {
         view.setVisible(true);
     }
 
+    private static boolean canContinueConfiguation() {
+        boolean didFillName = !nameField.getText().equals("");
+        boolean didAllocatedAllPoints = getAllocatedPoints() == maxPoints;
+        return didFillName && didAllocatedAllPoints;
+    }
+
     private static class SkillPointFieldUpdater implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Updated field");
             JFormattedTextField editedField =
                     (JFormattedTextField) e.getSource();
             int attemptedPoints = getTextValue(editedField);
@@ -150,19 +150,17 @@ public class PlayerConfigurationView extends ViewController {
             int distributedPoints = getAllocatedPoints();
             int remainingPoints = maxPoints - distributedPoints;
 
-            System.out.printf("A: %d, D: %d, T: %d, R: %d%n", attemptedPoints,
-                    distributedPoints, maxPoints, remainingPoints);
-
             if (attemptedPoints < remainingPoints) {
                 editedField.setValue(attemptedPoints);
             } else {
                 editedField.setValue(remainingPoints);
             }
+
+            b.setEnabled(canContinueConfiguation());
         }
     }
 
     private static int getAllocatedPoints() {
-        System.out.println("Got allocated points");
         return Integer.parseInt(pSkill.getValue().toString()) +
                 Integer.parseInt(fSkill.getValue().toString()) +
                 Integer.parseInt(mSkill.getValue().toString()) +
@@ -178,6 +176,13 @@ public class PlayerConfigurationView extends ViewController {
             current.view.setVisible(false);
             current.view.dispose();
             next = new PlayerInfoView();
+            inputData = new String[]{ nameField.getText(),
+                    diffList.getSelectedItem().toString(),
+                    pSkill.getValue().toString(),
+                    fSkill.getValue().toString(),
+                    mSkill.getValue().toString(),
+                    eSkill.getValue().toString()
+            };
             next.main(inputData);
         }
     }

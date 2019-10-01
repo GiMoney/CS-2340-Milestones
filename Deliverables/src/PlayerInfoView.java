@@ -8,10 +8,10 @@ public class PlayerInfoView extends ViewController {
     static PlayerInfoView current;
 
     public static void main(String[] args) {
+        System.out.println(args[0]);
         view.setSize(500,600);
         Container cp = view.getContentPane();
         cp.setLayout(new BorderLayout());
-
 
         JLabel b = new JLabel("Player view");
         int bLocX = view.getWidth() / 2 - 50;
@@ -46,9 +46,7 @@ public class PlayerInfoView extends ViewController {
 
 
         JLabel credits = new JLabel("Starting Credits: ");
-        if (args[1] == null) {
-            credits.setText("Starting Credits: 1000");
-        } else if (args[1].equals("Easy")) {
+        if (args[1].equals("Easy")) {
             credits.setText("Starting Credits: 1000");
         } else if (args[1].equals("Medium")) {
             credits.setText("Starting Credits: 500");

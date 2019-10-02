@@ -8,7 +8,6 @@ public class PlayerInfoView extends ViewController {
     static PlayerInfoView current;
 
     public static void main(String[] args) {
-        System.out.println(args[0]);
         view.setSize(500,600);
         Container cp = view.getContentPane();
         cp.setLayout(new BorderLayout());

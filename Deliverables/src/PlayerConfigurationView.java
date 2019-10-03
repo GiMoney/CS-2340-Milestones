@@ -38,6 +38,10 @@ public class PlayerConfigurationView extends ViewController {
         difficulty.setBounds(20, 90, 200, 40);
         cp.add(difficulty, BorderLayout.CENTER);
 
+        JLabel note = new JLabel("Must press enter when entering skill points");
+        note.setBounds(20, 300, 300, 100);
+        cp.add(note, BorderLayout.CENTER);
+
         HashMap<String, String> diffsToPoints = new HashMap<>();
         diffsToPoints.put("Easy", "16");
         diffsToPoints.put("Medium", "12");
@@ -101,7 +105,6 @@ public class PlayerConfigurationView extends ViewController {
         cp.add(space, BorderLayout.CENTER);
 
         b = new JButton("Configure Player");
-
         b.setSize(200, 40);
 
         select.addActionListener(new ActionListener() {
@@ -117,20 +120,20 @@ public class PlayerConfigurationView extends ViewController {
                 fSkill.setValue(0);
                 mSkill.setValue(0);
                 eSkill.setValue(0);
-
-                b.setEnabled(canContinueConfiguation());
+                b.setEnabled(true);
             }
         });
 
+
         b.addActionListener(new SegueListener());
-        b.setEnabled(canContinueConfiguation());
+        b.setEnabled(true);
         cp.add(b, BorderLayout.SOUTH);
 
         pSkill.addActionListener(new SkillPointFieldUpdater());
         fSkill.addActionListener(new SkillPointFieldUpdater());
         mSkill.addActionListener(new SkillPointFieldUpdater());
         eSkill.addActionListener(new SkillPointFieldUpdater());
-
+        b.setEnabled(true);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
     }
@@ -183,7 +186,15 @@ public class PlayerConfigurationView extends ViewController {
                     mSkill.getValue().toString(),
                     eSkill.getValue().toString()
             };
-            next.main(inputData);
+            if(getAllocatedPoints() == maxPoints && !nameField.getText().equals("") && maxPoints != 0){
+                next.main(inputData);
+            } else{
+                view.setVisible(true);
+                JOptionPane.showMessageDialog(view, "Double check if you configured properly" +
+                        " i.e included name, game mode, and correct skill points");
+                view.setVisible(true);
+            }
+
         }
     }
 }

@@ -23,13 +23,13 @@ public class Game extends ViewController{
     static Universe universe;
     public static Player player;
     public static String names[] = {"Alpha-20","Beta-43","Charlie-28", "Delta-8","EEEEE-E","Falcon-69","Gamma-Hamma","Helix-Felix","I-99","Ben-10"};
-    public void StartGame(String[] args) {
+    public static void startGame() {
         universe = new Universe(names);
     }
 
     public static void main(String[] args) {
         player = new Player(args);
-        universe = new Universe(names);
+        startGame();
         String difficulty = args[1];
         view.setSize(1000,600);
 
@@ -54,7 +54,7 @@ public class Game extends ViewController{
             }
         });
         System.out.println(player.getRegion());
-        RegionList.setBounds(180, 90, 200, 40);
+        RegionList.setBounds(1000, 1000, 1000, 1000);
         view.add(welcome);
         view.add(map);
         view.add(location);

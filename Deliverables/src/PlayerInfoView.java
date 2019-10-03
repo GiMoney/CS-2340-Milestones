@@ -67,8 +67,6 @@ public class PlayerInfoView extends ViewController {
             public void actionPerformed(ActionEvent e) {
                 next = new Game();
                 next.main(args);
-                next.StartGame(args);
-                System.out.println("IT DID IT");
             }
         });
 

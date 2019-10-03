@@ -7,7 +7,7 @@ public class PlayerConfigurationView extends ViewController {
     public static JFrame view = new JFrame();
     private static PlayerConfigurationView current;
     private static PlayerInfoView next;
-    private static String[] inputData = new String[6];
+    private static String[] inputData = new String[7];
     private static int maxPoints = 0;
     private static JTextField nameField;
     private static JComboBox diffList;
@@ -159,7 +159,7 @@ public class PlayerConfigurationView extends ViewController {
                 editedField.setValue(remainingPoints);
             }
 
-            b.setEnabled(canContinueConfiguation());
+            b.setEnabled(true);
         }
     }
 
@@ -184,8 +184,11 @@ public class PlayerConfigurationView extends ViewController {
                     pSkill.getValue().toString(),
                     fSkill.getValue().toString(),
                     mSkill.getValue().toString(),
-                    eSkill.getValue().toString()
+                    eSkill.getValue().toString(),
+                    null
+
             };
+
             if(getAllocatedPoints() == maxPoints && !nameField.getText().equals("") && maxPoints != 0){
                 next.main(inputData);
             } else{

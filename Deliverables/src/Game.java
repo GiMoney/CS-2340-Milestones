@@ -1,0 +1,81 @@
+import javax.swing.*;
+import java.awt.FlowLayout;
+import java.awt.event.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
+public class Game extends ViewController{
+
+    public static JFrame view = new JFrame();
+    static Game current;
+    public static JComboBox RegionList;
+    static Universe universe;
+    public static Player player;
+    public static String names[] = {"Alpha-20","Beta-43","Charlie-28", "Delta-8","EEEEE-E","Falcon-69","Gamma-Hamma","Helix-Felix","I-99","Ben-10"};
+    public void StartGame(String[] args) {
+        universe = new Universe(names);
+    }
+
+    public static void main(String[] args) {
+        player = new Player(args);
+        universe = new Universe(names);
+        String difficulty = args[1];
+        view.setSize(1000,600);
+
+        JButton map = new JButton("See Map");
+        int sgb_x = view.getWidth() / 2 - 50;
+        int sgb_y = view.getHeight() / 2 - 40;
+
+        JLabel welcome = new JLabel("Current Difficulty:" + difficulty);
+        welcome.setBounds(sgb_x - 25, sgb_y - 100, 200, 40);
+        JLabel location = new JLabel("Current Location:" + player.getRegion());
+        location.setBounds(sgb_x - 25, sgb_y - 300,200,40);
+        map.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    BufferedImage img = ImageIO.read(new File("http://oi65.tinypic.com/30uwp6b.jpg"));
+                    ImageIcon icon = new ImageIcon(img);
+                    JLabel label = new JLabel(icon);
+                    JOptionPane.showMessageDialog(null, label);
+                } catch (IOException j) {
+                    j.printStackTrace();
+                }
+            }
+        });
+        System.out.println(player.getRegion());
+        RegionList.setBounds(180, 90, 200, 40);
+        view.add(welcome);
+        view.add(map);
+        view.add(location);
+        view.add(RegionList, BorderLayout.SOUTH);
+
+        JPanel pan = new JPanel();
+        pan.setBackground(Color.BLUE);
+        //setContentPane(pan);
+        view.add(pan);
+
+        view.setLocationRelativeTo(null);
+        view.setLayout(new FlowLayout());
+        view.setVisible(true);
+    }
+
+    public static class SegueListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            current.view.setVisible(false);
+            current.view.dispose();
+            //next = new PlayerConfigurationView();
+            //next.main(null);
+        }
+    }
+}

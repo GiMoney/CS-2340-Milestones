@@ -2,10 +2,13 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.awt.*;
 
 public class PlayerInfoView extends ViewController {
     public static JFrame view = new JFrame();
     static PlayerInfoView current;
+    private static Game next;
 
     public static void main(String[] args) {
         view.setSize(500,600);
@@ -56,9 +59,21 @@ public class PlayerInfoView extends ViewController {
         credits.setBounds(0, 250, 200, 40);
         cp.add(credits, BorderLayout.CENTER);
 
+        JButton play = new JButton("Game on");
+        play.setSize(200, 40);
+        play.setBounds(0, 300, 4, 40);
+        cp.add(play, BorderLayout.SOUTH);
+        play.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                next = new Game();
+                next.main(args);
+                next.StartGame(args);
+                System.out.println("IT DID IT");
+            }
+        });
 
-        view.setLocationRelativeTo(null);
-        view.setVisible(true);
+            view.setLocationRelativeTo(null);
+            view.setVisible(true);
 
     }
 

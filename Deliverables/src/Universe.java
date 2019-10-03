@@ -1,12 +1,19 @@
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class Universe {
 	private Region[] regionList;
 
+	public static JFrame view = new JFrame();
+
+
 	public Universe() {
 		regionList = generateRegionList();
 	}
+
 
 	private Region[] generateRegionList() {
 		Region[] returnedList = new Region[9];
@@ -51,5 +58,24 @@ public class Universe {
 		}
 
 		return returnedList;
+	}
+
+
+	public static void main(String[] args) {
+		view.setSize(500,600);
+        Container cp = view.getContentPane();
+        cp.setLayout(new BorderLayout());
+
+
+        Universe uni = new Universe();
+        Region[] regions = uni.regionList;
+
+
+        JList<Region> regionJList = new JList<>(regions);
+        cp.add(regionJList, BorderLayout.CENTER);
+
+        view.setLocationRelativeTo(null);
+        view.setVisible(true);
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

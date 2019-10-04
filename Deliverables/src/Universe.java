@@ -23,8 +23,8 @@ public class Universe extends Game {
 
         Random r = new Random();
         while(setX.size() < 10 || setY.size() < 10) {
-            int x = r.nextInt((20) + 1) - 0;
-            int y = r.nextInt((20) + 1) - 0;
+            int x = r.nextInt(20 + 20) - 20;
+            int y = r.nextInt(20 + 20) - 20;
             setX.add(x);
             setY.add(y);
         }

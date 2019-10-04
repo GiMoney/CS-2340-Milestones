@@ -7,6 +7,8 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 import java.util.Collections;
+import java.awt.Rectangle;
+
 
 public class Universe extends Game {
 
@@ -55,11 +57,10 @@ public class Universe extends Game {
                 p++;
             }
         }
-
         while(itr.hasNext() && itr2.hasNext()) {
             region.add(new Region((Integer)itr.next() * 10, (Integer) itr2.next() * 10, tech.get(g), name[g]));
+            //System.out.print(region.get(g).getX()); BRIAN ASKF OR HELP HERREEEEEEEEE
             g++;
-            System.out.print("while2");
         }
 
 

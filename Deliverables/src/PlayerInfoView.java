@@ -9,8 +9,10 @@ public class PlayerInfoView extends ViewController {
     public static JFrame view = new JFrame();
     static PlayerInfoView current;
     private static Game next;
+    private static String[] config_args;
 
     public static void main(String[] args) {
+        config_args = args;
         view.setSize(500,600);
         Container cp = view.getContentPane();
         cp.setLayout(new BorderLayout());
@@ -63,12 +65,7 @@ public class PlayerInfoView extends ViewController {
         play.setSize(200, 40);
         play.setBounds(0, 300, 4, 40);
         cp.add(play, BorderLayout.SOUTH);
-        play.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                next = new Game();
-                next.main(args);
-            }
-        });
+        play.addActionListener(new SegueListener());
 
             view.setLocationRelativeTo(null);
             view.setVisible(true);
@@ -79,6 +76,8 @@ public class PlayerInfoView extends ViewController {
         public void actionPerformed(ActionEvent e) {
             current.view.setVisible(false);
             current.view.dispose();
+            next = new Game();
+            next.main(config_args);
         }
     }
 }

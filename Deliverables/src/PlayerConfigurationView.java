@@ -133,6 +133,7 @@ public class PlayerConfigurationView extends ViewController {
 
         view.setLocationRelativeTo(null);
         view.setVisible(true);
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private static boolean canContinueConfiguation() {

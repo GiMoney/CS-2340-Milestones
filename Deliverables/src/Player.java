@@ -1,6 +1,5 @@
-import java.util.ArrayList;
-
 public class Player {
+
     private String name; // object of T
     private int fighter; // next of Node<T>
     private int pilot;
@@ -9,9 +8,9 @@ public class Player {
     private String region;
     private int money;
     /**
-     * This is my Node construtor
+     * This is my Node constructor
      */
-    public Player(){
+    public Player() {
          name = null;
          fighter = 0;
          pilot = 0;
@@ -22,9 +21,9 @@ public class Player {
     }
     /**
      *Node constructor that take the Type T paramater
-     *@param p type of T
+     *@param args type of T
      */
-    public Player(String[] args){
+    public Player(String[] args) {
         name = args[0]; // object becomes p
         fighter =  Integer.parseInt(args[3]);
         pilot = Integer.parseInt(args[2]);
@@ -58,7 +57,7 @@ public class Player {
 
     /**
      *Sets the object to o at that node
-     *@param o type of T
+     *@param name type of T
      */
     public void setName(String name){
         this.name = name; // sets the object to o
@@ -66,7 +65,7 @@ public class Player {
 
     /**
      *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
+     *@param region type of {@code Node<T>}
      */
     public void setRegion(String region){
         this.region = region; // sets next to Node<T> o
@@ -79,7 +78,6 @@ public class Player {
 
     /**
      *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
      */
     public int getMoney(){
         return money; // sets next to Node<T> o
@@ -91,7 +89,6 @@ public class Player {
 
     /**
      *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
      */
     public int getFighter(){
         return fighter; // sets next to Node<T> o
@@ -103,7 +100,6 @@ public class Player {
 
     /**
      *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
      */
     public int getPilot(){
         return pilot; // sets next to Node<T> o
@@ -116,7 +112,6 @@ public class Player {
 
     /**
      *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
      */
     public int getEngineer(){
         return engineer; // sets next to Node<T> o
@@ -128,7 +123,6 @@ public class Player {
 
     /**
      *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
      */
     public int getMerchant(){
         return merchant; // sets next to Node<T> o

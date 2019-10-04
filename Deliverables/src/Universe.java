@@ -15,16 +15,7 @@ public class Universe extends Game {
     ArrayList<TechLevel> tech = new ArrayList(10);
     ArrayList<Region> region = new ArrayList(10);
     public Universe(String[] name){
-        /*while(i < 10){
-            String names = name[(int)(Math.random() * 10)];
-            if(!duplic.contains(names)){
-                duplic.add(names);
-                i++;
-            }
-          //  System.out.println(i);
-        }
 
-        */
         duplic = Arrays.asList(name);
         Collections.shuffle(duplic);
         Set<Integer> setX = new HashSet<Integer>();
@@ -36,10 +27,6 @@ public class Universe extends Game {
             int y = r.nextInt((20) + 1) - 0;
             setX.add(x);
             setY.add(y);
-            System.out.print(setX);
-            System.out.print(setY);
-            System.out.println("SIZEX:" + setX.size());
-            System.out.println("SIZEY:" + setY.size());
         }
 
         Iterator itr = setX.iterator();
@@ -59,39 +46,12 @@ public class Universe extends Game {
             region.add(new Region((Integer)itr.next() * 10, (Integer) itr2.next() * 10, tech.get(g), name[g]));
             g++;
         }
-        int q = 0;
-        while(q <10) {
-            JButton rec = new JButton();
-            rec.setBounds(region.get(q).getX(),region.get(q).getY(),20,20);
-            System.out.println(region.get(q).getX());
-            System.out.println(region.get(q).getY());
-            //setContentPane(pan);
-            view.add(rec,BorderLayout.SOUTH);
-            q++;
-        }
 
-        //System.out.println(duplic.size());
-        //for(int j =0; j < duplic.size();j++){
-          //  System.out.println(duplic.get(j).toString());
-       // }
-       // System.out.println(duplic);
+
         player.setRegion(name[0].toString());
-       // System.out.println(player.getRegion());
-        //duplic.remove(0);
 
-
-        //System.out.println((String) duplic.get(1));
-
-//        HashMap<String, String> loc = new HashMap<String, String>();
-//        while (i < 10) {
-//            loc.put(duplic.get(i).toString(), "16");
-//            i++;
-//        }
-        //Object[] locat = name;
         super.region = region;
         super.RegionList = new JComboBox(region.toArray());
-
-
 
 
     }

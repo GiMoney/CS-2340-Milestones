@@ -29,6 +29,13 @@ public class Region {
         this.techLevel = techLevel;
     }
 
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+
     public String toString() {
         return this.name + "(" + this.x + "," + this.y + ")" + this.techLevel ;
     }

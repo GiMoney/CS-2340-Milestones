@@ -10,7 +10,7 @@ public class Region {
         this.y = y;
         this.techLevel = techlevel;
     }
-     public int getX(){
+    public int getX(){
         return x;
      }
     public int getY(){

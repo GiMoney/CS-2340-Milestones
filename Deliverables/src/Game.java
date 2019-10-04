@@ -65,10 +65,11 @@ public class Game extends ViewController{
         System.out.println(player.getRegion());
         RegionList.setBounds(1000, 1000, 1000, 1000);
         view.add(welcome);
-        view.add(map);
+        //view.add(map);
         view.add(location);
         view.add(RegionList, BorderLayout.SOUTH);
         view.add(Money);
+
 
         JPanel pan = new JPanel();
         pan.setBackground(Color.BLUE);

@@ -9,14 +9,16 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.awt.Rectangle;
 
 
 public class Game extends ViewController{
-
+    ArrayList<Region> region = new ArrayList(10);
     public static JFrame view = new JFrame();
     static Game current;
     public static JComboBox RegionList;
@@ -39,8 +41,9 @@ public class Game extends ViewController{
         startGame(args);
         String difficulty = args[1];
         view.setSize(1000,600);
+        Container cp = view.getContentPane();
+        cp.setLayout(new BorderLayout());
 
-        JButton map = new JButton("See Map");
         int sgb_x = view.getWidth() / 2 - 50;
         int sgb_y = view.getHeight() / 2 - 40;
 
@@ -49,8 +52,8 @@ public class Game extends ViewController{
         JLabel location = new JLabel("Current Location:");
         location.setBounds(sgb_x - 25, sgb_y - 300,200,40);
         JLabel Money = new JLabel("Current Money:" + player.getMoney());
-        Money.setBounds(sgb_x - 1000, sgb_y - 400,200,40);
-        map.addActionListener(new ActionListener() {
+        Money.setBounds(sgb_x - -25, sgb_y - 400,200,40);
+      /*  map.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     BufferedImage img = ImageIO.read(new File("http://oi65.tinypic.com/30uwp6b.jpg"));
@@ -62,19 +65,16 @@ public class Game extends ViewController{
                 }
             }
         });
+
+       */
         System.out.println(player.getRegion());
         RegionList.setBounds(1000, 1000, 1000, 1000);
-        view.add(welcome);
+        cp.add(welcome,BorderLayout.CENTER);
         //view.add(map);
-        view.add(location);
-        view.add(RegionList, BorderLayout.SOUTH);
-        view.add(Money);
+        cp.add(location,BorderLayout.CENTER);
+        cp.add(RegionList,BorderLayout.CENTER);
+        cp.add(Money,BorderLayout.CENTER);
 
-
-        JPanel pan = new JPanel();
-        pan.setBackground(Color.BLUE);
-        //setContentPane(pan);
-        view.add(pan);
 
         view.setLocationRelativeTo(null);
         view.setLayout(new FlowLayout());

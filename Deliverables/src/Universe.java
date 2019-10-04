@@ -11,12 +11,10 @@ import java.awt.Rectangle;
 
 
 public class Universe extends Game {
-
+    List<String> duplic = new ArrayList<>(10);
+    ArrayList<TechLevel> tech = new ArrayList(10);
+    ArrayList<Region> region = new ArrayList(10);
     public Universe(String[] name){
-        List<String> duplic = new ArrayList<>(10);
-        ArrayList<TechLevel> tech = new ArrayList(10);
-        ArrayList region = new ArrayList(10);
-
         /*while(i < 10){
             String names = name[(int)(Math.random() * 10)];
             if(!duplic.contains(names)){
@@ -59,10 +57,18 @@ public class Universe extends Game {
         }
         while(itr.hasNext() && itr2.hasNext()) {
             region.add(new Region((Integer)itr.next() * 10, (Integer) itr2.next() * 10, tech.get(g), name[g]));
-            //System.out.print(region.get(g).getX()); BRIAN ASKF OR HELP HERREEEEEEEEE
             g++;
         }
-
+        int q = 0;
+        while(q <10) {
+            JButton rec = new JButton();
+            rec.setBounds(region.get(q).getX(),region.get(q).getY(),20,20);
+            System.out.println(region.get(q).getX());
+            System.out.println(region.get(q).getY());
+            //setContentPane(pan);
+            view.add(rec,BorderLayout.SOUTH);
+            q++;
+        }
 
         //System.out.println(duplic.size());
         //for(int j =0; j < duplic.size();j++){
@@ -82,11 +88,15 @@ public class Universe extends Game {
 //            i++;
 //        }
         //Object[] locat = name;
+        super.region = region;
         super.RegionList = new JComboBox(region.toArray());
 
 
 
 
     }
+
+
+
 
 }

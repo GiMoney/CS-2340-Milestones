@@ -23,13 +23,20 @@ public class Game extends ViewController{
     static Universe universe;
     public static Player player;
     public static String names[] = {"Alpha-20","Beta-43","Charlie-28", "Delta-8","EEEEE-E","Falcon-69","Gamma-Hamma","Helix-Felix","I-99","Ben-10"};
-    public void StartGame(String[] args) {
+    public static void startGame(String[] args) {
         universe = new Universe(names);
+        if (args[1].equals("Easy")) {
+           player.setMoney(1000);
+        } else if (args[1].equals("Medium")) {
+            player.setMoney(500);
+        } else {
+            player.setMoney(100);
+        }
     }
 
     public static void main(String[] args) {
         player = new Player(args);
-        universe = new Universe(names);
+        startGame(args);
         String difficulty = args[1];
         view.setSize(1000,600);
 
@@ -39,8 +46,10 @@ public class Game extends ViewController{
 
         JLabel welcome = new JLabel("Current Difficulty:" + difficulty);
         welcome.setBounds(sgb_x - 25, sgb_y - 100, 200, 40);
-        JLabel location = new JLabel("Current Location:" + player.getRegion());
+        JLabel location = new JLabel("Current Location:");
         location.setBounds(sgb_x - 25, sgb_y - 300,200,40);
+        JLabel Money = new JLabel("Current Money:" + player.getMoney());
+        Money.setBounds(sgb_x - 1000, sgb_y - 400,200,40);
         map.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -54,11 +63,12 @@ public class Game extends ViewController{
             }
         });
         System.out.println(player.getRegion());
-        RegionList.setBounds(180, 90, 200, 40);
+        RegionList.setBounds(1000, 1000, 1000, 1000);
         view.add(welcome);
         view.add(map);
         view.add(location);
         view.add(RegionList, BorderLayout.SOUTH);
+        view.add(Money);
 
         JPanel pan = new JPanel();
         pan.setBackground(Color.BLUE);

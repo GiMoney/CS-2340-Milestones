@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.util.HashMap;
 
 public class PlayerConfigurationView extends ViewController {
-    protected static JFrame view = new JFrame();
+    public static JFrame view = new JFrame();
     private static PlayerConfigurationView current;
     private static PlayerInfoView next;
     private static String[] inputData = new String[7];
@@ -18,7 +18,7 @@ public class PlayerConfigurationView extends ViewController {
     private static JFormattedTextField eSkill;
 
     public static void main(String[] args) {
-        view.setSize(500, 600);
+        view.setSize(500,600);
         Container cp = view.getContentPane();
         cp.setLayout(new BorderLayout());
 
@@ -144,17 +144,6 @@ public class PlayerConfigurationView extends ViewController {
         return didFillName && didAllocatedAllPoints;
     }
 
-    private static int getAllocatedPoints() {
-        return Integer.parseInt(pSkill.getValue().toString())
-                + Integer.parseInt(fSkill.getValue().toString())
-                + Integer.parseInt(mSkill.getValue().toString())
-                + Integer.parseInt(eSkill.getValue().toString());
-    }
-
-    private static int getTextValue(JFormattedTextField field) {
-        return Integer.parseInt(field.getValue().toString());
-    }
-
     private static class SkillPointFieldUpdater implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JFormattedTextField editedField =
@@ -174,29 +163,38 @@ public class PlayerConfigurationView extends ViewController {
         }
     }
 
+    private static int getAllocatedPoints() {
+        return Integer.parseInt(pSkill.getValue().toString()) +
+                Integer.parseInt(fSkill.getValue().toString()) +
+                Integer.parseInt(mSkill.getValue().toString()) +
+                Integer.parseInt(eSkill.getValue().toString());
+    }
+
+    private static int getTextValue(JFormattedTextField field) {
+        return Integer.parseInt(field.getValue().toString());
+    }
 
     public static class SegueListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             current.view.setVisible(false);
             current.view.dispose();
             next = new PlayerInfoView();
-            inputData = new String[] {
-                nameField.getText(),
-                diffList.getSelectedItem().toString(),
-                pSkill.getValue().toString(),
-                fSkill.getValue().toString(),
-                mSkill.getValue().toString(),
-                eSkill.getValue().toString(),
-                null
+            inputData = new String[]{ nameField.getText(),
+                    diffList.getSelectedItem().toString(),
+                    pSkill.getValue().toString(),
+                    fSkill.getValue().toString(),
+                    mSkill.getValue().toString(),
+                    eSkill.getValue().toString(),
+                    null
+
             };
 
-            if (getAllocatedPoints() == maxPoints && !nameField.getText().equals("")
-                    && maxPoints != 0) {
+            if(getAllocatedPoints() == maxPoints && !nameField.getText().equals("") && maxPoints != 0){
                 next.main(inputData);
-            } else {
+            } else{
                 view.setVisible(true);
-                JOptionPane.showMessageDialog(view, "Double check if you configured properly"
-                        + " i.e included name, game mode, and correct skill points");
+                JOptionPane.showMessageDialog(view, "Double check if you configured properly" +
+                        " i.e included name, game mode, and correct skill points");
                 view.setVisible(true);
             }
 

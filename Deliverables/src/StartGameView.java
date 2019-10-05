@@ -3,21 +3,21 @@ import java.awt.FlowLayout;
 import java.awt.event.*;
 
 public class StartGameView extends ViewController {
-    protected static JFrame view = new JFrame();
-    protected static StartGameView current;
-    protected static PlayerConfigurationView next;
+    public static JFrame view = new JFrame();
+    static StartGameView current;
+    static PlayerConfigurationView next;
 
     public static void main(String[] args) {
-        view.setSize(500, 600);
+        view.setSize(500,600);
 
         JButton startGameButton = new JButton("Start Game!");
-        int sgbX = view.getWidth() / 2 - 50;
-        int sgbY = view.getHeight() / 2 - 40;
+        int sgb_x = view.getWidth() / 2 - 50;
+        int sgb_y = view.getHeight() / 2 - 40;
 
         JLabel welcome = new JLabel("Welcome to Space Trader!");
 
-        startGameButton.setBounds(sgbX, sgbY, 100, 40);
-        welcome.setBounds(sgbX - 25, sgbY - 100, 200, 40);
+        startGameButton.setBounds(sgb_x, sgb_y, 100, 40);
+        welcome.setBounds(sgb_x - 25, sgb_y - 100, 200, 40);
 
         startGameButton.addActionListener(new SegueListener());
 

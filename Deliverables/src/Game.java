@@ -48,6 +48,7 @@ public class Game extends ViewController{
         int sgb_y = view.getHeight() / 2 - 40;
 
         JLabel welcome = new JLabel("Current Difficulty:" + difficulty);
+<<<<<<< Updated upstream
         welcome.setBounds(sgb_x - 25, sgb_y - 100, 200, 40);
         JLabel location = new JLabel("Current Location:");
         location.setBounds(sgb_x - 25, sgb_y - 300,200,40);
@@ -65,6 +66,37 @@ public class Game extends ViewController{
                 }
             }
         });
+=======
+        welcome.setBounds(sgbX - 25, sgbY - 100, 200, 40);
+        JLabel location = new JLabel("Current Location:" + player.getRegion());
+        location.setBounds(500, 300, 200, 40);
+        JLabel listR = new JLabel("List of Regions:");
+        listR.setBounds(500, 300, 200, 40);
+        JLabel money = new JLabel("Current money:" + player.getMoney());
+        money.setBounds(sgbX - 25, sgbY - 400, 200, 40);
+
+
+        //ArrayList<Double> coordinates = new ArrayList<>()
+        ArrayList<JButton> buttons = new ArrayList<>();
+        Button buts = new Button();
+        String name = null;
+        player.setX(region.get(0).getX());
+        player.setY(region.get(0).getY());
+        for (int i = 0; i < 10; i++) {
+            JButton btn = new JButton();
+            int x = (player.getX() - region.get(i).getX());
+            int y = (player.getY() - region.get(i).getY());
+            int distance = (int) Math.sqrt(((x * x) + (y * y)));
+            btn.setText(region.get(i).toString() + "/ " + "distance:" + distance);
+            location.setText("Current Location:" + player.getRegion());
+            int newx = region.get(i).getX();
+            int newy = region.get(i).getY();
+            name = region.get(i).getName();
+            buttons.add(btn);
+            cp.add(buttons.get(i));
+            buts.addbuttons(buttons, name, location, region, i);
+        }
+>>>>>>> Stashed changes
 
        */
         System.out.println(player.getRegion());

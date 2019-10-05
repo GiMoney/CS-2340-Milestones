@@ -1,8 +1,6 @@
-import java.util.ArrayList;
-
 public class Player {
-    private String name; // object of T
-    private int fighter; // next of Node<T>
+    private String name;
+    private int fighter;
     private int pilot;
     private int merchant;
     private int engineer;
@@ -10,26 +8,21 @@ public class Player {
     private int money;
     private int x;
     private int y;
-    /**
-     * This is my Node construtor
-     */
-    public Player(){
-         name = null;
-         fighter = 0;
-         pilot = 0;
-         merchant = 0;
-         engineer = 0;
-         money = 0;
-         region = null;
-         x=0;
-         y=0;
+    
+    public Player() {
+        name = null;
+        fighter = 0;
+        pilot = 0;
+        merchant = 0;
+        engineer = 0;
+        money = 0;
+        region = null;
+        x = 0;
+        y = 0;
     }
-    /**
-     *Node constructor that take the Type T paramater
-     *@param p type of T
-     */
-    public Player(String[] args){
-        name = args[0]; // object becomes p
+    
+    public Player(String[] args) {
+        name = args[0];
         fighter =  Integer.parseInt(args[3]);
         pilot = Integer.parseInt(args[2]);
         merchant = Integer.parseInt(args[4]);
@@ -42,114 +35,76 @@ public class Player {
         } else {
             money = 100;
         }
-        x=0;
-        y=0;
+        x = 0;
+        y = 0;
     }
 
-    /**
-     *Gets the next in the node
-     *@return {@code Node<T>} the next node
-     */
-    public String getRegion(){
-        return region;  // returns the next node
+    public String getRegion() {
+        return region;
+    }
+    
+    public String getName() {
+        return this.name;
     }
 
-    /**
-     *Gets the Object at that Node
-     *@return T type of T
-     */
-    public String getName(){
-        return this.name; // returns the object
+    public void setName(String name) {
+        this.name = name; 
+    }
+    
+    public void setRegion(String region) {
+        this.region = region; 
     }
 
-    /**
-     *Sets the object to o at that node
-     *@param o type of T
-     */
-    public void setName(String name){
-        this.name = name; // sets the object to o
+    public void setMoney(int money) {
+        this.money = money; 
+    }
+    
+    public int getMoney() {
+        return money; 
     }
 
-    /**
-     *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
-     */
-    public void setRegion(String region){
-        this.region = region; // sets next to Node<T> o
+    public void setFighter(int fighter) {
+        this.fighter = fighter; 
+    }
+    
+    public int getFighter() {
+        return fighter; 
     }
 
-
-    public void setMoney(int Money){
-        this.money = money; // sets the object to o
+    public void setPilot(int pilot) {
+        this.pilot = pilot; 
+    }
+    
+    public int getPilot() {
+        return pilot; 
     }
 
-    /**
-     *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
-     */
-    public int getMoney(){
-        return money; // sets next to Node<T> o
+    public void setEngineer(int engineer) {
+        this.engineer = engineer; 
+    }
+    
+    public int getEngineer() {
+        return engineer; 
     }
 
-    public void setFighter(int fighter){
-        this.fighter = fighter; // sets the object to o
+    public void setMerchant(int merchant) {
+        this.merchant = merchant; 
+    }
+    
+    public int getMerchant() {
+        return merchant; 
     }
 
-    /**
-     *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
-     */
-    public int getFighter(){
-        return fighter; // sets next to Node<T> o
-    }
-
-    public void setPilot(int pilot){
-        this.pilot = pilot; // sets the object to o
-    }
-
-    /**
-     *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
-     */
-    public int getPilot(){
-        return pilot; // sets next to Node<T> o
-    }
-
-
-    public void setEngineer(int engineer){
-        this.engineer = engineer; // sets the object to o
-    }
-
-    /**
-     *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
-     */
-    public int getEngineer(){
-        return engineer; // sets next to Node<T> o
-    }
-
-    public void setMerchant(int merchant){
-        this.merchant = merchant; // sets the object to o
-    }
-
-    /**
-     *Sets the Next node to that object
-     *@param o type of {@code Node<T>}
-     */
-    public int getMerchant(){
-        return merchant; // sets next to Node<T> o
-    }
-
-    public int getX(){
+    public int getX() {
         return x;
     }
-    public int getY(){
+    public int getY() {
         return y;
     }
-    public void setX(int x){
+    public void setX(int x) {
         this.x = x;
     }
-    public void setY(int y){
+    public void setY(int y) {
         this.y = y;
     }
 

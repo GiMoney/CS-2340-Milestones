@@ -2,16 +2,14 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.awt.*;
 
 public class PlayerInfoView extends ViewController {
-    public static JFrame view = new JFrame();
-    static PlayerInfoView current;
-    private static Game next;
+    protected static JFrame view = new JFrame();
+    protected static PlayerInfoView current;
+    protected static Game next;
 
     public static void main(String[] args) {
-        view.setSize(500,600);
+        view.setSize(500, 600);
         Container cp = view.getContentPane();
         cp.setLayout(new BorderLayout());
 
@@ -71,9 +69,8 @@ public class PlayerInfoView extends ViewController {
             }
         });
 
-            view.setLocationRelativeTo(null);
-            view.setVisible(true);
-
+        view.setLocationRelativeTo(null);
+        view.setVisible(true);
     }
 
     public static class SegueListener implements ActionListener {

@@ -84,6 +84,7 @@ public class Game extends ViewController {
         view.setLocationRelativeTo(null);
         view.setLayout(new FlowLayout());
         view.setVisible(true);
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static void change(Container cp, JLabel location, JButton rec) {

@@ -27,6 +27,7 @@ public class StartGameView extends ViewController {
         view.setLocationRelativeTo(null);
         view.setLayout(new FlowLayout());
         view.setVisible(true);
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static class SegueListener implements ActionListener {

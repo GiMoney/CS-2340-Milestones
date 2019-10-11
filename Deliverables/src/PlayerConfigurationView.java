@@ -4,10 +4,10 @@ import java.awt.event.*;
 import java.util.HashMap;
 
 public class PlayerConfigurationView extends ViewController {
-    public static JFrame view = new JFrame();
+    protected static JFrame view = new JFrame();
     private static PlayerConfigurationView current;
     private static PlayerInfoView next;
-    private static String[] inputData = new String[6];
+    private static String[] inputData = new String[7];
     private static int maxPoints = 0;
     private static JTextField nameField;
     private static JComboBox diffList;
@@ -18,7 +18,7 @@ public class PlayerConfigurationView extends ViewController {
     private static JFormattedTextField eSkill;
 
     public static void main(String[] args) {
-        view.setSize(500,600);
+        view.setSize(500, 600);
         Container cp = view.getContentPane();
         cp.setLayout(new BorderLayout());
 
@@ -37,6 +37,10 @@ public class PlayerConfigurationView extends ViewController {
         JLabel difficulty = new JLabel("Select Game Difficulty:");
         difficulty.setBounds(20, 90, 200, 40);
         cp.add(difficulty, BorderLayout.CENTER);
+
+        JLabel note = new JLabel("Must press enter when entering skill points");
+        note.setBounds(20, 300, 300, 100);
+        cp.add(note, BorderLayout.CENTER);
 
         HashMap<String, String> diffsToPoints = new HashMap<>();
         diffsToPoints.put("Easy", "16");
@@ -101,7 +105,6 @@ public class PlayerConfigurationView extends ViewController {
         cp.add(space, BorderLayout.CENTER);
 
         b = new JButton("Configure Player");
-
         b.setSize(200, 40);
 
         select.addActionListener(new ActionListener() {
@@ -117,20 +120,20 @@ public class PlayerConfigurationView extends ViewController {
                 fSkill.setValue(0);
                 mSkill.setValue(0);
                 eSkill.setValue(0);
-
-                b.setEnabled(canContinueConfiguation());
+                b.setEnabled(true);
             }
         });
 
+
         b.addActionListener(new SegueListener());
-        b.setEnabled(canContinueConfiguation());
+        b.setEnabled(true);
         cp.add(b, BorderLayout.SOUTH);
 
         pSkill.addActionListener(new SkillPointFieldUpdater());
         fSkill.addActionListener(new SkillPointFieldUpdater());
         mSkill.addActionListener(new SkillPointFieldUpdater());
         eSkill.addActionListener(new SkillPointFieldUpdater());
-
+        b.setEnabled(true);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
     }
@@ -139,6 +142,17 @@ public class PlayerConfigurationView extends ViewController {
         boolean didFillName = !nameField.getText().equals("");
         boolean didAllocatedAllPoints = getAllocatedPoints() == maxPoints;
         return didFillName && didAllocatedAllPoints;
+    }
+
+    private static int getAllocatedPoints() {
+        return Integer.parseInt(pSkill.getValue().toString())
+                + Integer.parseInt(fSkill.getValue().toString())
+                + Integer.parseInt(mSkill.getValue().toString())
+                + Integer.parseInt(eSkill.getValue().toString());
+    }
+
+    private static int getTextValue(JFormattedTextField field) {
+        return Integer.parseInt(field.getValue().toString());
     }
 
     private static class SkillPointFieldUpdater implements ActionListener {
@@ -156,19 +170,8 @@ public class PlayerConfigurationView extends ViewController {
                 editedField.setValue(remainingPoints);
             }
 
-            b.setEnabled(canContinueConfiguation());
+            b.setEnabled(true);
         }
-    }
-
-    private static int getAllocatedPoints() {
-        return Integer.parseInt(pSkill.getValue().toString()) +
-                Integer.parseInt(fSkill.getValue().toString()) +
-                Integer.parseInt(mSkill.getValue().toString()) +
-                Integer.parseInt(eSkill.getValue().toString());
-    }
-
-    private static int getTextValue(JFormattedTextField field) {
-        return Integer.parseInt(field.getValue().toString());
     }
 
     public static class SegueListener implements ActionListener {
@@ -176,14 +179,24 @@ public class PlayerConfigurationView extends ViewController {
             current.view.setVisible(false);
             current.view.dispose();
             next = new PlayerInfoView();
-            inputData = new String[]{ nameField.getText(),
-                    diffList.getSelectedItem().toString(),
-                    pSkill.getValue().toString(),
-                    fSkill.getValue().toString(),
-                    mSkill.getValue().toString(),
-                    eSkill.getValue().toString()
+            inputData = new String[] {
+                nameField.getText(), diffList.getSelectedItem().toString(),
+                pSkill.getValue().toString(),
+                fSkill.getValue().toString(),
+                mSkill.getValue().toString(),
+                eSkill.getValue().toString(), null
             };
-            next.main(inputData);
+
+            if (getAllocatedPoints() == maxPoints && !nameField.getText().equals("")
+                    && maxPoints != 0) {
+                next.main(inputData);
+            } else {
+                view.setVisible(true);
+                JOptionPane.showMessageDialog(view, "Double check if you configured properly"
+                        +  " i.e included name, game mode, and correct skill points");
+                view.setVisible(true);
+            }
+
         }
     }
 }

@@ -1,3 +1,4 @@
 checkstyle-*.jar
 Deliverables/bin/
 .idea/
+*.class

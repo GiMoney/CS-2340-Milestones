@@ -67,6 +67,7 @@ public class PlayerInfoView extends ViewController {
 
         view.setLocationRelativeTo(null);
         view.setVisible(true);
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static class SegueListener implements ActionListener {

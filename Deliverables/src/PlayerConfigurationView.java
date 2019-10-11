@@ -165,7 +165,9 @@ public class PlayerConfigurationView extends ViewController {
             int distributedPoints = getAllocatedPoints();
             int remainingPoints = maxPoints - distributedPoints;
 
-            if (attemptedPoints < remainingPoints) {
+            if (attemptedPoints < 0) {
+                editedField.setValue(0);
+            } else if (attemptedPoints < remainingPoints) {
                 editedField.setValue(attemptedPoints);
             } else {
                 editedField.setValue(remainingPoints);

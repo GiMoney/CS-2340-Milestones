@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.JLabel;
@@ -19,9 +21,9 @@ public class Game extends ViewController {
     protected static TravelUI next;
     private static String[] configArgs = new String[1];
     protected static String[] names = new String[] {
-        "Alpha-20", "Beta-43", "Charlie-28",
-        "Delta-8", "EEEEE-E", "Falcon-69",
-        "Gamma-Hamma", "Helix-Felix", "I-99", "Ben-10"
+            "Alpha-20", "Beta-43", "Charlie-28",
+            "Delta-8", "EEEEE-E", "Falcon-69",
+            "Gamma-Hamma", "Helix-Felix", "I-99", "Ben-10"
     };
 
     public static void startGame(String[] args) {
@@ -43,7 +45,8 @@ public class Game extends ViewController {
 
         view.setSize(1000, 600);
         Container cp = view.getContentPane();
-        cp.setLayout(null);
+        cp.setLayout(new FlowLayout());
+        ship = new Ship();
 
         int sgbX = view.getWidth() / 2 - 50;
         int sgbY = view.getHeight() / 2 - 40;
@@ -56,6 +59,13 @@ public class Game extends ViewController {
         listR.setBounds(500, 300, 200, 40);
         JLabel money = new JLabel("Current money:" + player.getMoney());
         money.setBounds(sgbX - 25, sgbY - 400, 200, 40);
+        JLabel shipInfo = new JLabel("Player Ship information:"
+                + " Ship type: " + ship.getShipType()
+                + " Ship cargo space: " + ship.getCargoSpace()
+                + " Ship fuel capacity: " + ship.getFuelCapacity()
+                + " Ship health: " + ship.getHealth());
+        shipInfo.setBounds(500, 500, 200, 40);
+        cp.add(shipInfo, BorderLayout.CENTER);
 
 
         //ArrayList<Double> coordinates = new ArrayList<>()
@@ -73,8 +83,9 @@ public class Game extends ViewController {
             int newy = region.get(i).getY();
             name = region.get(i).getName();
             buttons.add(btn);
-            cp.add(buttons.get(i));
-            buts.addbuttons(buttons, name, location, region, i);
+            cp.add(buttons.get(i), BorderLayout.CENTER);
+            buts.addbuttons(buttons, name, location, region, i,ship,shipInfo);
+            btn.addActionListener(new PageActionListener(name));
         }
 
         regionList.setBounds(1000, 1000, 1000, 1000);
@@ -82,7 +93,6 @@ public class Game extends ViewController {
             buts.addbuttons(buttons, name, location, region, i, ship, shipInfo);
             btn.addActionListener(new PageActionListener(name));
         }
-
 
         cp.add(welcome, BorderLayout.CENTER);
         //view.add(map);
@@ -93,7 +103,6 @@ public class Game extends ViewController {
         cp.add(regionList, BorderLayout.CENTER);
 
         view.setLocationRelativeTo(null);
-        view.setLayout(new FlowLayout());
         view.setVisible(true);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -142,6 +151,7 @@ public class Game extends ViewController {
         }
 
     }
+
     /*
     public static class SegueListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -153,5 +163,5 @@ public class Game extends ViewController {
     }
 
     */
-
+}
 

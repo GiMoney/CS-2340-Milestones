@@ -29,6 +29,9 @@ public class Game extends ViewController {
     protected static JComboBox regionList;
     protected static Universe universe;
     protected static Player player;
+    protected static Ship ship;
+    protected static TravelUI next;
+    private static String[] configArgs = new String[1];
     protected static String[] names = new String[] {
         "Alpha-20", "Beta-43", "Charlie-28",
         "Delta-8", "EEEEE-E", "Falcon-69",
@@ -89,6 +92,12 @@ public class Game extends ViewController {
         }
 
         regionList.setBounds(1000, 1000, 1000, 1000);
+            cp.add(buttons.get(i), BorderLayout.CENTER);
+            buts.addbuttons(buttons, name, location, region, i, ship, shipInfo);
+            btn.addActionListener(new PageActionListener(name));
+        }
+
+
         cp.add(welcome, BorderLayout.CENTER);
         //view.add(map);
         cp.add(location, BorderLayout.CENTER);
@@ -132,6 +141,22 @@ public class Game extends ViewController {
         }
     }
 
+    private static class PageActionListener implements ActionListener {
+        private String stringValue;
+        private int intValue;
+
+        public PageActionListener(String stringValue) {
+            this.stringValue = stringValue;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            configArgs[0] = stringValue;
+            next = new TravelUI();
+            next.main(configArgs);
+        }
+
+    }
+    /*
     public static class SegueListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             current.view.setVisible(false);
@@ -141,5 +166,6 @@ public class Game extends ViewController {
         }
     }
 
+    */
 }
 

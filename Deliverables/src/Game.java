@@ -1,17 +1,3 @@
-
-public class Game {
-	private enum difficulty {
-		EASY, MEDIUM, HARD
-	};
-
-	public static void main(String[] args) {
-		startGame();
-	}
-
-	private static void startGame() {
-		Universe u = new Universe();
-	}
-}
 import javax.swing.*;
 import java.awt.FlowLayout;
 import java.awt.event.*;
@@ -167,5 +153,5 @@ public class Game extends ViewController {
     }
 
     */
-}
+
 

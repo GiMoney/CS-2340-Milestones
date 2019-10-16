@@ -42,7 +42,6 @@ public class Game extends ViewController {
         player = new Player(args);
         startGame(args);
         String difficulty = args[1];
-
         view.setSize(1000, 600);
         Container cp = view.getContentPane();
         cp.setLayout(new FlowLayout());
@@ -88,17 +87,11 @@ public class Game extends ViewController {
             btn.addActionListener(new PageActionListener(name));
         }
 
-        regionList.setBounds(1000, 1000, 1000, 1000);
-            cp.add(buttons.get(i), BorderLayout.CENTER);
-            buts.addbuttons(buttons, name, location, region, i, ship, shipInfo);
-            btn.addActionListener(new PageActionListener(name));
-        }
-
+        regionList.setBounds(500, 500, 200, 50);
         cp.add(welcome, BorderLayout.CENTER);
         //view.add(map);
         cp.add(location, BorderLayout.CENTER);
         cp.add(money, BorderLayout.CENTER);
-
         cp.add(listR);
         cp.add(regionList, BorderLayout.CENTER);
 
@@ -161,7 +154,5 @@ public class Game extends ViewController {
             //next.main(null);
         }
     }
-
     */
 }
-

@@ -15,8 +15,12 @@ public class TravelUI extends ViewController {
         name.setBounds(0, 50, 150, 150);
         cp.add(name, BorderLayout.CENTER);
 
+        JLabel name = new JLabel(": " + args[1]);
+        name.setBounds(0, 50, 150, 150);
+        cp.add(name, BorderLayout.CENTER);
+
         view.setLocation(1000, 300);
         view.setVisible(true);
-        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       // view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

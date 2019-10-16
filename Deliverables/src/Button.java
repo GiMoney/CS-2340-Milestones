@@ -29,11 +29,12 @@ public class Button extends Game {
                         player.setRegion(name);
                         location.setText("Current Location:" + player.getRegion());
                     if(k == 9) {
-                        int lostFuel = (ship.getFuelCapacity() - Math.abs(player.getX()) / 10);
+                        int lostFuel = (ship.getFuelCapacity() - Math.abs(newDistance / 10));
                         if (lostFuel < 0) {
                             System.out.println("CANT TRAVEL NOT ENOUGH FUEL");
                         } else {
                             ship.setFuelCapacity(lostFuel);
+                            btn.addActionListener(new PageActionListener(name));
                         }
                         player.setX(newX);
                         player.setY(newY);

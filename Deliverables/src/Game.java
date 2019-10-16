@@ -19,12 +19,13 @@ public class Game extends ViewController {
     protected static Player player;
     protected static Ship ship;
     protected static TravelUI next;
-    private static String[] configArgs = new String[1];
+    private static String[] configArgs = new String[1000];
     protected static String[] names = new String[] {
             "Alpha-20", "Beta-43", "Charlie-28",
             "Delta-8", "EEEEE-E", "Falcon-69",
             "Gamma-Hamma", "Helix-Felix", "I-99", "Ben-10"
     };
+    boolean noTravel = false;
 
     public static void startGame(String[] args) {
         universe = new Universe(names);
@@ -84,7 +85,7 @@ public class Game extends ViewController {
             buttons.add(btn);
             cp.add(buttons.get(i), BorderLayout.CENTER);
             buts.addbuttons(buttons, name, location, region, i,ship,shipInfo);
-            btn.addActionListener(new PageActionListener(name));
+                btn.addActionListener(new PageActionListener(name));
         }
 
         regionList.setBounds(500, 500, 200, 50);

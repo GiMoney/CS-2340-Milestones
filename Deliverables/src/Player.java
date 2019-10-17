@@ -5,6 +5,7 @@ public class Player {
     private int merchant;
     private int engineer;
     private String region;
+    private Region region1;
     private int money;
     private int x;
     private int y;
@@ -42,6 +43,10 @@ public class Player {
     public String getRegion() {
         return region;
     }
+
+    public Region getRegion1() {
+        return region1;
+    }
     
     public String getName() {
         return this.name;
@@ -53,6 +58,10 @@ public class Player {
     
     public void setRegion(String region) {
         this.region = region; 
+    }
+
+    public void setRegion1(Region region1) {
+        this.region1 = region1;
     }
 
     public void setMoney(int money) {

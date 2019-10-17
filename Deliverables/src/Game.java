@@ -68,23 +68,23 @@ public class Game extends ViewController {
         cp.add(shipInfo, BorderLayout.CENTER);
 
 
-        //ArrayList<Double> coordinates = new ArrayList<>()
         ArrayList<JButton> buttons = new ArrayList<>();
         Button buts = new Button();
         String name = null;
-        for (int i = 0; i < 10; i++) {
+        for (int id = 0; id < 10; id++) {
             JButton btn = new JButton();
-            int x = (player.getX() - region.get(i).getX());
-            int y = (player.getY() - region.get(i).getY());
+            int x = (player.getX() - region.get(id).getX());
+            int y = (player.getY() - region.get(id).getY());
             int distance = (int) Math.sqrt(((x * x) + (y * y)));
-            btn.setText(region.get(i).toString() + "/ " + "distance:" + distance);
+            btn.setText(region.get(id).toString() + "/ " + "distance:" + distance +
+                    "/ " + "Fuel Cost: -" + (distance / 10));
             location.setText("Current Location:" + player.getRegion());
-            int newx = region.get(i).getX();
-            int newy = region.get(i).getY();
-            name = region.get(i).getName();
+            int newx = region.get(id).getX();
+            int newy = region.get(id).getY();
+            name = region.get(id).getName();
             buttons.add(btn);
-            cp.add(buttons.get(i), BorderLayout.CENTER);
-            buts.addbuttons(buttons, name, location, region, i,ship,shipInfo);
+            cp.add(buttons.get(id), BorderLayout.CENTER);
+            buts.addbuttons(buttons, name, location, region, id,ship,shipInfo);
                 btn.addActionListener(new PageActionListener(name));
         }
 
@@ -99,35 +99,6 @@ public class Game extends ViewController {
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    public static void change(Container cp, JLabel location, JButton rec) {
-        view.getContentPane().remove(rec);
-        view.repaint();
-        view.setSize(1000, 600);
-        int q = 0;
-        while (q < 10) {
-            double x = (player.getX() - region.get(q).getX());
-            double y = (player.getY() - region.get(q).getY());
-            double distance = Math.sqrt(((x * x) + (y * y)));
-            String name = region.get(q).getName();
-            String wholeRegion = region.get(q).toString();
-            int newx = region.get(q).getX();
-            int newy = region.get(q).getY();
-            JButton rec2 = new JButton(region.get(q).toString() + "/ " + "distance:" + distance);
-            rec.setLayout(null);
-            rec.setBounds(region.get(q).getX(), region.get(q).getY(), 200, 200);
-            cp.add(rec, BorderLayout.CENTER);
-            rec2.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    player.setRegion(name);
-                    player.setX(newx);
-                    player.setY(newy);
-                    location.setText("Current Location:" + player.getRegion());
-                }
-            });
-            q++;
-        }
     }
 
     private static class PageActionListener implements ActionListener {

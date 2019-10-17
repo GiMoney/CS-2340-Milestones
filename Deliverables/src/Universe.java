@@ -46,7 +46,9 @@ public class Universe extends Game {
 
 
         player.setRegion(name[0]);
-
+        player.setRegion1(region.get(0));
+        player.setX(region.get(0).getX());
+        player.setY(region.get(0).getY());
         super.region = region;
         super.regionList = new JComboBox<>(region.toArray());
 

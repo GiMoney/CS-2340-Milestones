@@ -8,8 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.util.ArrayList;
 
-
-
 public class Game extends ViewController {
     protected static ArrayList<Region> region;
     protected static JFrame view = new JFrame("Click on a region on the map to travel there");

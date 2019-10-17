@@ -177,6 +177,43 @@ public class PlayerConfigurationView extends ViewController {
         }
     }
 
+    private static boolean canContinueConfiguation() {
+        boolean didFillName = !nameField.getText().equals("");
+        boolean didAllocatedAllPoints = getAllocatedPoints() == maxPoints;
+        return didFillName && didAllocatedAllPoints;
+    }
+
+    private static int getAllocatedPoints() {
+        return Integer.parseInt(pSkill.getValue().toString())
+                + Integer.parseInt(fSkill.getValue().toString())
+                + Integer.parseInt(mSkill.getValue().toString())
+                + Integer.parseInt(eSkill.getValue().toString());
+    }
+
+    private static int getTextValue(JFormattedTextField field) {
+        return Integer.parseInt(field.getValue().toString());
+    }
+
+    private static class SkillPointFieldUpdater implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JFormattedTextField editedField =
+                    (JFormattedTextField) e.getSource();
+            int attemptedPoints = getTextValue(editedField);
+            editedField.setValue(0);
+            int distributedPoints = getAllocatedPoints();
+            int remainingPoints = maxPoints - distributedPoints;
+
+            if (attemptedPoints < remainingPoints) {
+                editedField.setValue(attemptedPoints);
+            } else {
+                editedField.setValue(remainingPoints);
+            }
+
+            b.setEnabled(true);
+        }
+    }
+
+
     public static class SegueListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             current.view.setVisible(false);
@@ -196,7 +233,7 @@ public class PlayerConfigurationView extends ViewController {
             } else {
                 view.setVisible(true);
                 JOptionPane.showMessageDialog(view, "Double check if you configured properly"
-                        +  " i.e included name, game mode, and correct skill points");
+                        + " i.e included name, game mode, and correct skill points");
                 view.setVisible(true);
             }
 

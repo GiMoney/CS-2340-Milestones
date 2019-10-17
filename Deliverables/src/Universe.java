@@ -11,7 +11,6 @@ public class Universe extends Game {
     protected ArrayList<Region> region = new ArrayList<>(10);
 
     public Universe(String[] name) {
-
         duplic = Arrays.asList(name);
         Collections.shuffle(duplic);
         Set<Integer> setX = new HashSet<>();
@@ -44,7 +43,6 @@ public class Universe extends Game {
             g++;
         }
 
-
         player.setRegion(name[0]);
         player.setRegion1(region.get(0));
         player.setX(region.get(0).getX());
@@ -54,8 +52,4 @@ public class Universe extends Game {
 
 
     }
-
-
-
-
 }

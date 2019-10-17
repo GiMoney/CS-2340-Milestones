@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.awt.*;
 
 public class PlayerInfoView extends ViewController {
     protected static JFrame view = new JFrame();
@@ -12,6 +14,7 @@ public class PlayerInfoView extends ViewController {
     public static void main(String[] args) {
         configArgs = args;
         view.setSize(500, 600);
+
         Container cp = view.getContentPane();
         cp.setLayout(new BorderLayout());
 

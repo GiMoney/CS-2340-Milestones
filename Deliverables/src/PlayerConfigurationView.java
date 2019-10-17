@@ -136,6 +136,45 @@ public class PlayerConfigurationView extends ViewController {
         b.setEnabled(true);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private static boolean canContinueConfiguation() {
+        boolean didFillName = !nameField.getText().equals("");
+        boolean didAllocatedAllPoints = getAllocatedPoints() == maxPoints;
+        return didFillName && didAllocatedAllPoints;
+    }
+
+    private static int getAllocatedPoints() {
+        return Integer.parseInt(pSkill.getValue().toString())
+                + Integer.parseInt(fSkill.getValue().toString())
+                + Integer.parseInt(mSkill.getValue().toString())
+                + Integer.parseInt(eSkill.getValue().toString());
+    }
+
+    private static int getTextValue(JFormattedTextField field) {
+        return Integer.parseInt(field.getValue().toString());
+    }
+
+    private static class SkillPointFieldUpdater implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JFormattedTextField editedField =
+                    (JFormattedTextField) e.getSource();
+            int attemptedPoints = getTextValue(editedField);
+            editedField.setValue(0);
+            int distributedPoints = getAllocatedPoints();
+            int remainingPoints = maxPoints - distributedPoints;
+
+            if (attemptedPoints < 0) {
+                editedField.setValue(0);
+            } else if (attemptedPoints < remainingPoints) {
+                editedField.setValue(attemptedPoints);
+            } else {
+                editedField.setValue(remainingPoints);
+            }
+
+            b.setEnabled(true);
+        }
     }
 
     private static boolean canContinueConfiguation() {
@@ -181,13 +220,11 @@ public class PlayerConfigurationView extends ViewController {
             current.view.dispose();
             next = new PlayerInfoView();
             inputData = new String[] {
-                nameField.getText(),
-                diffList.getSelectedItem().toString(),
+                nameField.getText(), diffList.getSelectedItem().toString(),
                 pSkill.getValue().toString(),
                 fSkill.getValue().toString(),
                 mSkill.getValue().toString(),
-                eSkill.getValue().toString(),
-                null
+                eSkill.getValue().toString(), null
             };
 
             if (getAllocatedPoints() == maxPoints && !nameField.getText().equals("")

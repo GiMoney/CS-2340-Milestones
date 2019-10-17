@@ -37,14 +37,8 @@ public class Region {
         this.name = name;
     }
 
-    public static double distBetween(Region curr, Region dest) {
-        double dist = Math.sqrt(Math.pow(curr.getX() - dest.getX(), 2)
-                + Math.pow(curr.getY() - dest.getY(), 2));
-        return dist;
-    }
-
     public String toString() {
-        return this.name + " (" + this.x + ", " + this.y + ") " + this.techLevel;
+        return this.name + "(" + this.x + "," + this.y + ")" + this.techLevel;
     }
 
 }

@@ -29,6 +29,7 @@ public class Player {
         merchant = Integer.parseInt(args[4]);
         engineer = Integer.parseInt(args[5]);
         region = getRegion();
+        region1 = null;
         if (args[1].equals("Easy")) {
             money = 1000;
         } else if (args[1].equals("Medium")) {

@@ -25,7 +25,7 @@ public class Region {
     public TechLevel getTechLevel() {
         return techLevel;
     }
-    public void setTechLevel() {
+    public void setTechLevel(TechLevel techLevel) {
         this.techLevel = techLevel;
     }
 

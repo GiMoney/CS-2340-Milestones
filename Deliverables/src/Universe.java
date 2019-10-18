@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.Collections;
 
 public class Universe extends Game {
-    private List<String> duplic;
-    private ArrayList<TechLevel> tech = new ArrayList<>(10);
     protected ArrayList<Region> region = new ArrayList<>(10);
 
     public Universe(String[] name) {
-        duplic = Arrays.asList(name);
+        ArrayList<TechLevel> tech = new ArrayList<>(10);
+        List<String> duplic = Arrays.asList(name);
         Collections.shuffle(duplic);
         Set<Integer> setX = new HashSet<>();
         Set<Integer> setY = new HashSet<>();
@@ -47,8 +46,8 @@ public class Universe extends Game {
         player.setRegion1(region.get(0));
         player.setX(region.get(0).getX());
         player.setY(region.get(0).getY());
-        super.region = region;
-        super.regionList = new JComboBox<>(region.toArray());
+        Game.region = region;
+        Game.regionList = new JComboBox<>(region.toArray());
 
 
     }

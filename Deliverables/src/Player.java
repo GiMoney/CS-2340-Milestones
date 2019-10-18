@@ -10,18 +10,6 @@ public class Player {
     private int x;
     private int y;
     
-    public Player() {
-        name = null;
-        fighter = 0;
-        pilot = 0;
-        merchant = 0;
-        engineer = 0;
-        money = 0;
-        region = null;
-        x = 0;
-        y = 0;
-    }
-    
     public Player(String[] args) {
         name = args[0];
         fighter =  Integer.parseInt(args[3]);

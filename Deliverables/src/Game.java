@@ -3,30 +3,25 @@ import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.*;
-import java.awt.*;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.util.ArrayList;
 
 public class Game extends ViewController {
     protected static ArrayList<Region> region;
-    protected static JFrame view = new JFrame("Click on a region on the map to travel there");
-    protected static Game current;
+    private static JFrame view = new JFrame("Click on a region on the map to travel there");
     protected static JComboBox regionList;
-    protected static Universe universe;
     protected static Player player;
-    protected static Ship ship;
-    protected static TravelUI next;
     private static String[] configArgs = new String[1000];
-    protected static String[] names = new String[] {
-            "Alpha-20", "Beta-43", "Charlie-28",
-            "Delta-8", "EEEEE-E", "Falcon-69",
-            "Gamma-Hamma", "Helix-Felix", "I-99", "Ben-10"
+    private static String[] names = new String[] {
+        "Alpha-20", "Beta-43", "Charlie-28",
+        "Delta-8", "EEEEE-E", "Falcon-69",
+        "Gamma-Hamma", "Helix-Felix", "I-99", "Ben-10"
     };
-    boolean noTravel = false;
+    private boolean noTravel = false;
 
-    public static void startGame(String[] args) {
-        universe = new Universe(names);
+    private static void startGame(String[] args) {
+        Universe universe = new Universe(names);
         region = universe.region;
         if (args[1].equals("Easy")) {
             player.setMoney(1000);
@@ -44,7 +39,7 @@ public class Game extends ViewController {
         view.setSize(1000, 600);
         Container cp = view.getContentPane();
         cp.setLayout(new FlowLayout());
-        ship = new Ship();
+        Ship ship = new Ship();
 
         int sgbX = view.getWidth() / 2 - 50;
         int sgbY = view.getHeight() / 2 - 40;
@@ -67,23 +62,24 @@ public class Game extends ViewController {
 
 
         ArrayList<JButton> buttons = new ArrayList<>();
-        Button buts = new Button();
-        String name = null;
+        String name;
         for (int id = 0; id < 10; id++) {
             JButton btn = new JButton();
             int x = (player.getX() - region.get(id).getX());
             int y = (player.getY() - region.get(id).getY());
             int distance = (int) Math.sqrt(((x * x) + (y * y)));
-            btn.setText(region.get(id).toString() + "/ " + "distance:" + distance +
-                    "/ " + "Fuel Cost: -" + (distance / 10));
+            btn.setText(region.get(id).toString() + "/ " + "distance:" + distance
+                    + "/ " + "Fuel Cost: -" + (distance / 10));
             location.setText("Current Location:" + player.getRegion());
             int newx = region.get(id).getX();
             int newy = region.get(id).getY();
             name = region.get(id).getName();
             buttons.add(btn);
             cp.add(buttons.get(id), BorderLayout.CENTER);
-            buts.addbuttons(buttons, name, location, region, id,ship,shipInfo);
-                btn.addActionListener(new PageActionListener(name));
+            Button.addButtons(buttons, location, region, id, ship, shipInfo);
+            PageActionListener popUp = new PageActionListener();
+            popUp.stringValue = name;
+            btn.addActionListener(popUp);
         }
 
         regionList.setBounds(500, 500, 200, 50);
@@ -103,26 +99,9 @@ public class Game extends ViewController {
         private String stringValue;
         private int intValue;
 
-        public PageActionListener(String stringValue) {
-            this.stringValue = stringValue;
-        }
-
         public void actionPerformed(ActionEvent e) {
             configArgs[0] = stringValue;
-            next = new TravelUI();
-            next.main(configArgs);
-        }
-
-    }
-
-    /*
-    public static class SegueListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            current.view.setVisible(false);
-            current.view.dispose();
-            //next = new PlayerConfigurationView();
-            //next.main(null);
+            TravelUI.main(configArgs);
         }
     }
-    */
 }

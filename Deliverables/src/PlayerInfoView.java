@@ -2,13 +2,9 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.awt.*;
 
 public class PlayerInfoView extends ViewController {
-    protected static JFrame view = new JFrame();
-    protected static PlayerInfoView current;
-    protected static Game next;
+    private static JFrame view = new JFrame();
     private static String[] configArgs;
 
     public static void main(String[] args) {
@@ -75,10 +71,9 @@ public class PlayerInfoView extends ViewController {
 
     public static class SegueListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            current.view.setVisible(false);
-            current.view.dispose();
-            next = new Game();
-            next.main(configArgs);
+            view.setVisible(false);
+            view.dispose();
+            Game.main(configArgs);
         }
     }
 }

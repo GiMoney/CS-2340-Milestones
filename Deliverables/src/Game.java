@@ -70,12 +70,10 @@ public class Game extends ViewController {
         Button buts = new Button();
         String name = null;
 
-        JButton marketplace = new JButton("Market Place");
+
         for (int id = 0; id < region.size(); id++) {
 
             JButton btn = new JButton();
-            marketplace.setBounds(40, 300, 200, 30);
-            cp.add(marketplace, BorderLayout.CENTER);
             int x = (player.getX() - region.get(id).getX());
             int y = (player.getY() - region.get(id).getY());
             int distance = (int) Math.sqrt(((x * x) + (y * y)));
@@ -94,7 +92,6 @@ public class Game extends ViewController {
             //System.out.println(region.get(id));
             System.out.println("2" + currRegion);
             btn.addActionListener(new PageActionListener(currRegion));
-            marketplace.addActionListener(new PageActionListener(currRegion));
 
         }
 

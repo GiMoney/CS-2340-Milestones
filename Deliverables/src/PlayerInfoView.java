@@ -75,7 +75,7 @@ public class PlayerInfoView extends ViewController {
             current.view.setVisible(false);
             current.view.dispose();
             next = new Game();
-            next.main(configArgs);
+            next.start(configArgs);
         }
     }
 }

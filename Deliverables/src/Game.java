@@ -39,7 +39,7 @@ public class Game extends ViewController {
         }
     }
 
-    public static void main(String[] args) {
+    public void start(String[] args) {
         player = new Player(args);
         startGame(args);
         String difficulty = args[1];

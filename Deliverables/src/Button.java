@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Button extends Game {
 
-    public static void addbuttons(ArrayList<JButton> buttons, String name,
+    public void update(ArrayList<JButton> buttons, String name,
                                   JLabel location, ArrayList<Region> region, int id,Ship ship, JLabel shipInfo) {
 
         ArrayList<Integer> distanceArray = new ArrayList<>();
@@ -27,11 +27,15 @@ public class Button extends Game {
                     String name = region.get(id).getName();
                     Region current = player.getRegion1();
                     int remFuel = (ship.getFuelCapacity() - Math.abs(distance(current,region.get(id)) / 10));
-                    System.out.println(remFuel);
+                    //System.out.println(remFuel);
 
                     player.setRegion1(region.get(id));
                     player.setRegion(name);
+                    //System.out.println(region.get(id));
+                    //System.out.println(player.getRegion1());
+                    //super.currRegion = region.get(id);
                     location.setText("Current Location:" + player.getRegion());
+                    //super.marketplace.addActionListener(new PageActionListener(region.get(id)));
                     //Region current = player.getRegion1();
                     if (k == 9) {
                          remFuel = (ship.getFuelCapacity() - Math.abs(distance(current,region.get(id)) / 10));
@@ -67,9 +71,11 @@ public class Button extends Game {
                                 + " Ship health: " + ship.getHealth());
 
 
+
                 }
             });
         }
+        //return player.getRegion1();
     }
 
     public static int distance(Region r1, Region r2){

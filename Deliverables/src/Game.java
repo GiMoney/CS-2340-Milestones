@@ -13,11 +13,11 @@ public class Game extends ViewController {
     protected static JFrame view = new JFrame("Click on a region on the map to travel there");
     protected static Game current;
     protected static JComboBox regionList;
+    protected static Region currRegion;
     protected static Universe universe;
     protected static Player player;
     protected static Ship ship;
     protected static TravelUI next;
-    private static String[] configArgs = new String[1000];
     protected static String[] names = new String[] {
             "Alpha-20", "Beta-43", "Charlie-28",
             "Delta-8", "EEEEE-E", "Falcon-69",
@@ -37,56 +37,71 @@ public class Game extends ViewController {
         }
     }
 
-    public static void main(String[] args) {
+    public void start(String[] args) {
         player = new Player(args);
         startGame(args);
         String difficulty = args[1];
         view.setSize(1000, 600);
         Container cp = view.getContentPane();
-        cp.setLayout(new FlowLayout());
+        cp.setLayout(null);
         ship = new Ship();
 
         int sgbX = view.getWidth() / 2 - 50;
         int sgbY = view.getHeight() / 2 - 40;
 
         JLabel welcome = new JLabel("Current Difficulty:" + difficulty);
-        welcome.setBounds(sgbX - 25, sgbY - 100, 200, 40);
+        welcome.setBounds(0, 0, 200, 40);
         JLabel location = new JLabel("Current Location:" + player.getRegion());
-        location.setBounds(500, 300, 200, 40);
+        location.setBounds(400, 0, 200, 40);
         JLabel listR = new JLabel("List of Regions:");
-        listR.setBounds(500, 300, 200, 40);
+        listR.setBounds(765, 0, 200, 40);
         JLabel money = new JLabel("Current money:" + player.getMoney());
-        money.setBounds(sgbX - 25, sgbY - 400, 200, 40);
+        money.setBounds(1200, 0, 200, 40);
         JLabel shipInfo = new JLabel("Player Ship information:"
                 + " Ship type: " + ship.getShipType()
                 + " Ship cargo space: " + ship.getCargoSpace()
                 + " Ship fuel capacity: " + ship.getFuelCapacity()
                 + " Ship health: " + ship.getHealth());
-        shipInfo.setBounds(500, 500, 200, 40);
+        shipInfo.setBounds( 0, 20, 800, 40);
         cp.add(shipInfo, BorderLayout.CENTER);
 
 
         ArrayList<JButton> buttons = new ArrayList<>();
         Button buts = new Button();
         String name = null;
-        for (int id = 0; id < 10; id++) {
+
+        JButton marketplace = new JButton("Market Place");
+        for (int id = 0; id < region.size(); id++) {
+
             JButton btn = new JButton();
+            marketplace.setBounds(40, 300, 200, 30);
+            cp.add(marketplace, BorderLayout.CENTER);
             int x = (player.getX() - region.get(id).getX());
             int y = (player.getY() - region.get(id).getY());
             int distance = (int) Math.sqrt(((x * x) + (y * y)));
             btn.setText(region.get(id).toString() + "/ " + "distance:" + distance +
                     "/ " + "Fuel Cost: -" + (distance / 10));
+            btn.setBounds(40,(id*20) + 50, 400, 18);
             location.setText("Current Location:" + player.getRegion());
             int newx = region.get(id).getX();
             int newy = region.get(id).getY();
             name = region.get(id).getName();
+            currRegion = region.get(id);
+            System.out.println("1" + currRegion);
             buttons.add(btn);
             cp.add(buttons.get(id), BorderLayout.CENTER);
-            buts.addbuttons(buttons, name, location, region, id,ship,shipInfo);
-                btn.addActionListener(new PageActionListener(name));
+            buts.update(buttons, name, location, region, id,ship,shipInfo);
+            //System.out.println(region.get(id));
+            System.out.println("2" + currRegion);
+            btn.addActionListener(new PageActionListener(currRegion));
+            marketplace.addActionListener(new PageActionListener(currRegion));
+
         }
 
-        regionList.setBounds(500, 500, 200, 50);
+        //System.out.println(player.getRegion1());
+
+
+        regionList.setBounds(860, 10, 130, 20);
         cp.add(welcome, BorderLayout.CENTER);
         //view.add(map);
         cp.add(location, BorderLayout.CENTER);
@@ -100,17 +115,17 @@ public class Game extends ViewController {
     }
 
     private static class PageActionListener implements ActionListener {
-        private String stringValue;
         private int intValue;
+        private Region region;
 
-        public PageActionListener(String stringValue) {
-            this.stringValue = stringValue;
+
+        public PageActionListener(Region region) {
+            this.region = region;
         }
 
         public void actionPerformed(ActionEvent e) {
-            configArgs[0] = stringValue;
             next = new TravelUI();
-            next.main(configArgs);
+            next.display(region);
         }
 
     }

@@ -58,7 +58,7 @@ public class Game extends ViewController {
         JLabel listR = new JLabel("List of Regions:");
         listR.setBounds(765, 0, 200, 40);
         JLabel money = new JLabel("Current money:" + player.getMoney());
-        money.setBounds(1200, 0, 200, 40);
+        money.setBounds(200, 0, 200, 40);
         JLabel shipInfo = new JLabel("Player Ship information:"
                 + " Ship type: " + ship.getShipType()
                 + " Ship cargo space: " + ship.getCargoSpace()
@@ -90,7 +90,7 @@ public class Game extends ViewController {
             System.out.println("1" + currRegion);
             buttons.add(btn);
             cp.add(buttons.get(id), BorderLayout.CENTER);
-            buts.update(buttons, name, location, region, id,ship,shipInfo);
+            buts.update(buttons, name, location, region, id,ship,shipInfo, money);
             //System.out.println(region.get(id));
             System.out.println("2" + currRegion);
             btn.addActionListener(new PageActionListener(currRegion));
@@ -125,11 +125,21 @@ public class Game extends ViewController {
         public void actionPerformed(ActionEvent e) {
             next = new TravelUI();
             try {
+                ship.setFuelCapacity(ship.getFuelCapacity() - Math.abs(distance(player.getRegion1(),region) / 10));
+                player.setRegion1(region);
                 next.display(region);
+
             }
             catch(Exception j){
 
             }
+
+        }
+
+        public static int distance(Region r1, Region r2){
+            int x = (r1.getX() - r2.getX());
+            int y = (r1.getY() - r2.getY());
+            return (int) Math.sqrt(((x * x) + (y * y)));
 
         }
 

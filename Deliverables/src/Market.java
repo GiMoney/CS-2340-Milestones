@@ -23,7 +23,7 @@ public class Market extends Game {
         cp.add(marketplace, BorderLayout.CENTER);
 
         JLabel regionTech = new JLabel("Tech: " + region.getTechLevel());
-        regionTech.setBounds(0, 10, 100, 100);
+        regionTech.setBounds(0, 10, 150, 100);
         cp.add(regionTech, BorderLayout.CENTER);
 
         JLabel fuel = new JLabel("Fuel: " + ship.getFuelCapacity());
@@ -87,7 +87,7 @@ public class Market extends Game {
         sell.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(jList2.getSelectedValue() != null) {
-                    marketside.addElement(jList2.getSelectedValue() + "1");
+                    marketside.addElement(jList2.getSelectedValue());
                     inventory.removeElement(jList2.getSelectedValue());
                     //remove sellected item to player invetory;
                     jList.setModel(marketside);

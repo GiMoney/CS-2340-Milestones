@@ -146,19 +146,8 @@ public class Game extends ViewController {
 
     }
 
-    /*
-    public static class SegueListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            current.view.setVisible(false);
-            current.view.dispose();
-            //next = new PlayerConfigurationView();
-            //next.main(null);
-        }
-    }
-    */
 }
 
 
 
-}
 

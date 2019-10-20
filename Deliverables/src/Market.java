@@ -62,23 +62,25 @@ public class Market extends Game {
         jList2.setModel(inventory);
         buy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(jList.getSelectedValue() != null) {
-                    if (jList.getSelectedValue() != region.getItems().get(0)) {
-                        inventory.addElement(jList.getSelectedValue());
-                        marketside.removeElement(jList.getSelectedValue());
-                        region.getItems().remove(jList.getSelectedValue());
-                        //add sellected item to player invetory;
-                        jList2.setModel(inventory);
-                        ship.setCargoSpace(ship.getCargoSpace() - 1);
-                        cargo.setText("Cargo: " + ship.getCargoSpace());
-                    } else {
-                        ship.setFuelCapacity(ship.getFuelCapacity() + 10);
-                        ship.setCargoSpace(ship.getCargoSpace() - 1);
-                        fuel.setText("Fuel: " + ship.getFuelCapacity());
-                        cargo.setText("Cargo: " + ship.getCargoSpace());
+                if (!(ship.getCargoSpace() - 1 < 0) || !(player.getMoney() - 10 < 0)) {
+                    if (jList.getSelectedValue() != null) {
+                        if (jList.getSelectedValue() != region.getItems().get(0)) {
+                            inventory.addElement(jList.getSelectedValue());
+                            marketside.removeElement(jList.getSelectedValue());
+                            System.out.println(region.getItems().remove(jList.getSelectedValue()));
+                            //add sellected item to player invetory;
+                            jList2.setModel(inventory);
+                            ship.setCargoSpace(ship.getCargoSpace() - 1);
+                            cargo.setText("Cargo: " + ship.getCargoSpace());
+                        } else {
+                            ship.setFuelCapacity(ship.getFuelCapacity() + 10);
+                            ship.setCargoSpace(ship.getCargoSpace() - 1);
+                            fuel.setText("Fuel: " + ship.getFuelCapacity());
+                            cargo.setText("Cargo: " + ship.getCargoSpace());
+                        }
+                        player.setMoney(player.getMoney() - 10);
+                        money.setText("Money: " + player.getMoney());
                     }
-                    player.setMoney(player.getMoney() - 10);
-                    money.setText("Money: " + player.getMoney());
                 }
             }
         });

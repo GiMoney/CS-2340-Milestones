@@ -7,6 +7,7 @@ import java.awt.*;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.util.ArrayList;
+import java.io.IOException;
 
 
 
@@ -20,6 +21,7 @@ public class Game extends ViewController {
     protected static Player player;
     protected static Ship ship;
     protected static TravelUI next;
+    protected static DefaultListModel inventory = new DefaultListModel();
     protected static String[] names = new String[] {
             "Alpha-20", "Beta-43", "Charlie-28",
             "Delta-8", "EEEEE-E", "Falcon-69",
@@ -124,7 +126,13 @@ public class Game extends ViewController {
 
         public void actionPerformed(ActionEvent e) {
             next = new TravelUI();
-            next.display(region);
+            try {
+                next.display(region);
+            }
+            catch(Exception j){
+
+            }
+
         }
 
     }

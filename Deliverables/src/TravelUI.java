@@ -1,9 +1,8 @@
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.event.*;
 
-public class TravelUI extends ViewController {
+public class TravelUI {
     protected static JDialog view = new JDialog();
 
     public static void main(String[] args) {

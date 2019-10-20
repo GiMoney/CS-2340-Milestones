@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 
-public class StartGameView extends ViewController {
+public class StartGameView {
     private static JFrame view = new JFrame();
 
     public static void main(String[] args) {

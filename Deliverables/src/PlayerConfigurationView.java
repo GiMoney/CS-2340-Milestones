@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
 
-public class PlayerConfigurationView extends ViewController {
+public class PlayerConfigurationView {
     private static JFrame view = new JFrame();
     private static int maxPoints = 0;
     private static JTextField nameField;

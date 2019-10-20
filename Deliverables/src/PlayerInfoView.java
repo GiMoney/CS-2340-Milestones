@@ -3,7 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.*;
 
-public class PlayerInfoView extends ViewController {
+public class PlayerInfoView {
     private static JFrame view = new JFrame();
     private static String[] configArgs;
 

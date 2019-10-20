@@ -22,19 +22,15 @@ public class Button extends Game {
                 }
                 int newX = region.get(id).getX();
                 int newY = region.get(id).getY();
-                //String name = region.get(id).getName();
+                
                 Region current = player.getRegion1();
                 int remFuel;
-                //System.out.println(remFuel);
+                
 
                 player.setRegion1(region.get(id));
-                //player.setRegion(name);
-                //System.out.println(region.get(id));
-                //System.out.println(player.getRegion1());
-                //super.currRegion = region.get(id);
+                
                 location.setText("Current Location: " + player.getRegion());
-                //super.marketplace.addActionListener(new PageActionListener(region.get(id)));
-                //Region current = player.getRegion1();
+                
                 if (k == 9) {
                     remFuel = (ship.getFuelCapacity()
                              - Math.abs(distance(current, region.get(id)) / 10));
@@ -42,9 +38,6 @@ public class Button extends Game {
                         System.out.println("CANT TRAVEL NOT ENOUGH FUEL");
                     } else {
                         ship.setFuelCapacity(remFuel);
-                        //player.setRegion1(region.get(id));
-                        //player.setRegion(name);
-                        //location.setText("Current Location:" + player.getRegion());
                     }
                 }
 
@@ -70,7 +63,6 @@ public class Button extends Game {
                         + " Ship health: " + ship.getHealth());
             });
         }
-        //return player.getRegion1();
     }
 
     private static int distance(Region r1, Region r2) {

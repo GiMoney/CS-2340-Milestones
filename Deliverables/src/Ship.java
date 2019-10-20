@@ -23,6 +23,10 @@ public class Ship {
         return cargoSpace;
     }
 
+    public void setCargoSpace(int cargoSpace) {
+        this.cargoSpace = cargoSpace;
+    }
+
     public int getFuelCapacity() {
         return fuelCapacity;
     }

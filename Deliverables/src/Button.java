@@ -29,7 +29,7 @@ public class Button extends Game {
 
                 player.setRegion1(region.get(id));
                 
-                location.setText("Current Location: " + player.getRegion());
+                location.setText("Current Location: " + current.getName());
                 
                 if (k == 9) {
                     remFuel = (ship.getFuelCapacity()
@@ -38,6 +38,7 @@ public class Button extends Game {
                         System.out.println("CANT TRAVEL NOT ENOUGH FUEL");
                     } else {
                         ship.setFuelCapacity(remFuel);
+                        System.out.println(current.getName());
                     }
                 }
 

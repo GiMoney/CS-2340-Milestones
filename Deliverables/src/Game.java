@@ -1,21 +1,20 @@
 import javax.swing.*;
-import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.*;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.util.ArrayList;
-import java.io.IOException;
 
 public class Game {
     protected static ArrayList<Region> region;
+    private static Region currRegion;
     private static JFrame view = new JFrame("Click on a region on the map to travel there");
     protected static JComboBox regionList;
     protected static Player player;
     private static String[] configArgs = new String[1000];
     protected static Ship ship;
-    protected static DefaultListModel inventory = new DefaultListModel();
+    protected static DefaultListModel<String> inventory = new DefaultListModel<>();
     private static String[] names = new String[] {
         "Alpha-20", "Beta-43", "Charlie-28",
         "Delta-8", "EEEEE-E", "Falcon-69",
@@ -35,7 +34,7 @@ public class Game {
         }
     }
 
-    public void start(String[] args) {
+    public static void start(String[] args) {
         player = new Player(args);
         startGame(args);
         String difficulty = args[1];
@@ -61,7 +60,8 @@ public class Game {
                 + " Ship cargo space: " + ship.getCargoSpace()
                 + " Ship fuel capacity: " + ship.getFuelCapacity()
                 + " Ship health: " + ship.getHealth());
-        shipInfo.setBounds( 0, 20, 800, 40);
+
+        shipInfo.setBounds(0, 20, 800, 40);
         cp.add(shipInfo, BorderLayout.CENTER);
 
         ArrayList<JButton> buttons = new ArrayList<>();
@@ -81,17 +81,16 @@ public class Game {
             int newx = region.get(id).getX();
             int newy = region.get(id).getY();
             currRegion = region.get(id);
-            System.out.println("1" + currRegion);
             buttons.add(btn);
             cp.add(buttons.get(id), BorderLayout.CENTER);
 
-            buts.update(buttons,location, region, id, ship, shipInfo, money);
-            //System.out.println(region.get(id));
-            System.out.println("2" + currRegion);
+            buts.update(buttons, location, region, id, ship, shipInfo, money);
             btn.addActionListener(new PageActionListener(currRegion));
         }
 
-        //System.out.println(player.getRegion1());
+        JButton market = new JButton("Go to Market");
+        market.setBounds(view.getWidth() / 2, view.getHeight() - 100, 100, 50);
+        market.addActionListener(new SegueListener(currRegion));
 
         regionList.setBounds(860, 10, 130, 20);
         cp.add(welcome, BorderLayout.CENTER);
@@ -100,6 +99,7 @@ public class Game {
         cp.add(money, BorderLayout.CENTER);
         cp.add(listR);
         cp.add(regionList, BorderLayout.CENTER);
+        cp.add(market, BorderLayout.SOUTH);
 
         view.setLocationRelativeTo(null);
         view.setVisible(true);
@@ -115,18 +115,9 @@ public class Game {
         }
 
         public void actionPerformed(ActionEvent e) {
-            next = new TravelUI();
-            try {
-                ship.setFuelCapacity(ship.getFuelCapacity()
-                        - Math.abs(distance(player.getRegion1(), region) / 10));
-                player.setRegion1(region);
-                next.display(region);
-
-            }
-            catch(Exception j) {
-
-            }
-
+            ship.setFuelCapacity(ship.getFuelCapacity()
+                    - Math.abs(distance(player.getRegion1(), region) / 10));
+            player.setRegion1(region);
         }
 
         public static int distance(Region r1, Region r2) {
@@ -137,13 +128,16 @@ public class Game {
 
     }
 
-    /*
     public static class SegueListener implements ActionListener {
+        private Region region;
+
+        public SegueListener(Region region) {
+            this.region = region;
+        }
+
         public void actionPerformed(ActionEvent e) {
-            current.view.setVisible(false);
-            current.view.dispose();
-            //next = new PlayerConfigurationView();
-            //next.main(null);
+            TravelUI tui = new TravelUI();
+            tui.display(region);
         }
     }
 }

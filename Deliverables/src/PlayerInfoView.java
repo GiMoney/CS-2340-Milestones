@@ -73,7 +73,7 @@ public class PlayerInfoView {
         public void actionPerformed(ActionEvent e) {
             view.setVisible(false);
             view.dispose();
-            Game.main(configArgs);
+            Game.start(configArgs);
         }
     }
 }

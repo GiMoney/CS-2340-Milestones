@@ -36,12 +36,12 @@ public class Button extends Game {
                 //super.marketplace.addActionListener(new PageActionListener(region.get(id)));
                 //Region current = player.getRegion1();
                 if (k == 9) {
-                     remFuel = (ship.getFuelCapacity()
+                    remFuel = (ship.getFuelCapacity()
                              - Math.abs(distance(current, region.get(id)) / 10));
                     if (remFuel < 0) {
                         System.out.println("CANT TRAVEL NOT ENOUGH FUEL");
                     } else {
-                         ship.setFuelCapacity(remFuel);
+                        ship.setFuelCapacity(remFuel);
                         //player.setRegion1(region.get(id));
                         //player.setRegion(name);
                         //location.setText("Current Location:" + player.getRegion());

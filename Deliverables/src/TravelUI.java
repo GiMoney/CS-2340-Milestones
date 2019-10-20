@@ -9,6 +9,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
+
 public class TravelUI extends Game {
     protected static JDialog view = new JDialog();
     protected static TravelUI current;

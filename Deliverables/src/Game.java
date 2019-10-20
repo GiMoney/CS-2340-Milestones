@@ -19,6 +19,7 @@ public class Game extends ViewController {
     protected static Region currRegion;
     protected static Universe universe;
     protected static Player player;
+    private static String[] configArgs = new String[1000];
     protected static Ship ship;
     protected static TravelUI next;
     protected static DefaultListModel inventory = new DefaultListModel();
@@ -156,3 +157,8 @@ public class Game extends ViewController {
     }
     */
 }
+
+
+
+}
+

@@ -6,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.util.ArrayList;
+import java.io.IOException;
 
 public class Game {
     protected static ArrayList<Region> region;
@@ -13,6 +14,8 @@ public class Game {
     protected static JComboBox regionList;
     protected static Player player;
     private static String[] configArgs = new String[1000];
+    protected static Ship ship;
+    protected static DefaultListModel inventory = new DefaultListModel();
     private static String[] names = new String[] {
         "Alpha-20", "Beta-43", "Charlie-28",
         "Delta-8", "EEEEE-E", "Falcon-69",
@@ -32,57 +35,65 @@ public class Game {
         }
     }
 
-    public static void main(String[] args) {
+    public void start(String[] args) {
         player = new Player(args);
         startGame(args);
         String difficulty = args[1];
         view.setSize(1000, 600);
         Container cp = view.getContentPane();
-        cp.setLayout(new FlowLayout());
-        Ship ship = new Ship();
+        cp.setLayout(null);
+        ship = new Ship();
 
         int sgbX = view.getWidth() / 2 - 50;
         int sgbY = view.getHeight() / 2 - 40;
 
         JLabel welcome = new JLabel("Current Difficulty: " + difficulty);
-        welcome.setBounds(sgbX - 25, sgbY - 100, 200, 40);
+        welcome.setBounds(0, 0, 200, 40);
         JLabel location = new JLabel("Current Location: " + player.getRegion());
-        location.setBounds(500, 300, 200, 40);
+        location.setBounds(400, 0, 200, 40);
         JLabel listR = new JLabel("List of Regions: ");
-        listR.setBounds(500, 300, 200, 40);
+        listR.setBounds(765, 0, 200, 40);
         JLabel money = new JLabel("Current money: " + player.getMoney());
-        money.setBounds(sgbX - 25, sgbY - 400, 200, 40);
+        money.setBounds(200, 0, 200, 40);
+      
         JLabel shipInfo = new JLabel("Player Ship information:"
                 + " Ship type: " + ship.getShipType()
                 + " Ship cargo space: " + ship.getCargoSpace()
                 + " Ship fuel capacity: " + ship.getFuelCapacity()
                 + " Ship health: " + ship.getHealth());
-        shipInfo.setBounds(500, 500, 200, 40);
+        shipInfo.setBounds( 0, 20, 800, 40);
         cp.add(shipInfo, BorderLayout.CENTER);
 
-
         ArrayList<JButton> buttons = new ArrayList<>();
-        String name;
-        for (int id = 0; id < 10; id++) {
+        Button buts = new Button();
+      
+        for (int id = 0; id < region.size(); id++) {
             JButton btn = new JButton();
             int x = (player.getX() - region.get(id).getX());
             int y = (player.getY() - region.get(id).getY());
             int distance = (int) Math.sqrt(((x * x) + (y * y)));
+
             btn.setText(region.get(id).toString() + "/ " + "distance: " + distance
                     + "/ " + "Fuel Cost: -" + (distance / 10));
+            btn.setBounds(40, (id * 20) + 50, 400, 18);
             location.setText("Current Location: " + player.getRegion());
+          
             int newx = region.get(id).getX();
             int newy = region.get(id).getY();
-            name = region.get(id).getName();
+            currRegion = region.get(id);
+            System.out.println("1" + currRegion);
             buttons.add(btn);
             cp.add(buttons.get(id), BorderLayout.CENTER);
-            Button.addButtons(buttons, location, region, id, ship, shipInfo);
-            PageActionListener popUp = new PageActionListener();
-            popUp.stringValue = name;
-            btn.addActionListener(popUp);
+
+            buts.update(buttons,location, region, id, ship, shipInfo, money);
+            //System.out.println(region.get(id));
+            System.out.println("2" + currRegion);
+            btn.addActionListener(new PageActionListener(currRegion));
         }
 
-        regionList.setBounds(500, 500, 200, 50);
+        //System.out.println(player.getRegion1());
+
+        regionList.setBounds(860, 10, 130, 20);
         cp.add(welcome, BorderLayout.CENTER);
         //view.add(map);
         cp.add(location, BorderLayout.CENTER);
@@ -96,12 +107,43 @@ public class Game {
     }
 
     private static class PageActionListener implements ActionListener {
-        private String stringValue;
         private int intValue;
+        private Region region;
+
+        public PageActionListener(Region region) {
+            this.region = region;
+        }
 
         public void actionPerformed(ActionEvent e) {
-            configArgs[0] = stringValue;
-            TravelUI.main(configArgs);
+            next = new TravelUI();
+            try {
+                ship.setFuelCapacity(ship.getFuelCapacity()
+                        - Math.abs(distance(player.getRegion1(), region) / 10));
+                player.setRegion1(region);
+                next.display(region);
+
+            }
+            catch(Exception j) {
+
+            }
+
+        }
+
+        public static int distance(Region r1, Region r2) {
+            int x = (r1.getX() - r2.getX());
+            int y = (r1.getY() - r2.getY());
+            return (int) Math.sqrt(((x * x) + (y * y)));
+        }
+
+    }
+
+    /*
+    public static class SegueListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            current.view.setVisible(false);
+            current.view.dispose();
+            //next = new PlayerConfigurationView();
+            //next.main(null);
         }
     }
 }

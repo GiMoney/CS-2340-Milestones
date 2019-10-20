@@ -1,8 +1,10 @@
+import java.util.LinkedList;
 public class Region {
     private int x;
     private int y;
     private TechLevel techLevel;
     private String name;
+    private LinkedList items;
 
     public Region(int x, int y, TechLevel techlevel, String name) {
         this.name = name;
@@ -35,6 +37,13 @@ public class Region {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LinkedList getItems() {
+        return items;
+    }
+    public void setItems(LinkedList items) {
+        this.items = items;
     }
 
     public String toString() {

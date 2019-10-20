@@ -3,14 +3,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
 
-public class PlayerConfigurationView extends ViewController {
-    protected static JFrame view = new JFrame();
-    private static PlayerConfigurationView current;
-    private static PlayerInfoView next;
-    private static String[] inputData = new String[7];
+public class PlayerConfigurationView {
+    private static JFrame view = new JFrame();
     private static int maxPoints = 0;
     private static JTextField nameField;
-    private static JComboBox diffList;
+    private static JComboBox<Object> diffList;
     private static JButton b;
     private static JFormattedTextField pSkill;
     private static JFormattedTextField fSkill;
@@ -48,7 +45,7 @@ public class PlayerConfigurationView extends ViewController {
         diffsToPoints.put("Hard", "8");
 
         Object[] diffs = diffsToPoints.keySet().toArray();
-        diffList = new JComboBox(diffs);
+        diffList = new JComboBox<>(diffs);
         diffList.setBounds(180, 90, 200, 40);
         cp.add(diffList, BorderLayout.CENTER);
 
@@ -107,23 +104,20 @@ public class PlayerConfigurationView extends ViewController {
         b = new JButton("Configure Player");
         b.setSize(200, 40);
 
-        select.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String selection = (String) diffList.getSelectedItem();
-                String points = diffsToPoints.get(selection);
-                maxPoints = Integer.parseInt(points);
-                skillsnum.setText(points);
-                skillsnum.updateUI();
+        select.addActionListener(e -> {
+            String selection = (String) diffList.getSelectedItem();
+            String points = diffsToPoints.get(selection);
+            maxPoints = Integer.parseInt(points);
+            skillsnum.setText(points);
+            skillsnum.updateUI();
 
-                // Flush all entered values
-                pSkill.setValue(0);
-                fSkill.setValue(0);
-                mSkill.setValue(0);
-                eSkill.setValue(0);
-                b.setEnabled(true);
-            }
+            // Flush all entered values
+            pSkill.setValue(0);
+            fSkill.setValue(0);
+            mSkill.setValue(0);
+            eSkill.setValue(0);
+            b.setEnabled(true);
         });
-
 
         b.addActionListener(new SegueListener());
         b.setEnabled(true);
@@ -137,12 +131,6 @@ public class PlayerConfigurationView extends ViewController {
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    private static boolean canContinueConfiguation() {
-        boolean didFillName = !nameField.getText().equals("");
-        boolean didAllocatedAllPoints = getAllocatedPoints() == maxPoints;
-        return didFillName && didAllocatedAllPoints;
     }
 
     private static int getAllocatedPoints() {
@@ -177,63 +165,26 @@ public class PlayerConfigurationView extends ViewController {
         }
     }
 
-    private static boolean canContinueConfiguation() {
-        boolean didFillName = !nameField.getText().equals("");
-        boolean didAllocatedAllPoints = getAllocatedPoints() == maxPoints;
-        return didFillName && didAllocatedAllPoints;
-    }
-
-    private static int getAllocatedPoints() {
-        return Integer.parseInt(pSkill.getValue().toString())
-                + Integer.parseInt(fSkill.getValue().toString())
-                + Integer.parseInt(mSkill.getValue().toString())
-                + Integer.parseInt(eSkill.getValue().toString());
-    }
-
-    private static int getTextValue(JFormattedTextField field) {
-        return Integer.parseInt(field.getValue().toString());
-    }
-
-    private static class SkillPointFieldUpdater implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            JFormattedTextField editedField =
-                    (JFormattedTextField) e.getSource();
-            int attemptedPoints = getTextValue(editedField);
-            editedField.setValue(0);
-            int distributedPoints = getAllocatedPoints();
-            int remainingPoints = maxPoints - distributedPoints;
-
-            if (attemptedPoints < remainingPoints) {
-                editedField.setValue(attemptedPoints);
-            } else {
-                editedField.setValue(remainingPoints);
-            }
-
-            b.setEnabled(true);
-        }
-    }
-
-
     public static class SegueListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            current.view.setVisible(false);
-            current.view.dispose();
-            next = new PlayerInfoView();
-            inputData = new String[] {
-                nameField.getText(), diffList.getSelectedItem().toString(),
-                pSkill.getValue().toString(),
-                fSkill.getValue().toString(),
-                mSkill.getValue().toString(),
-                eSkill.getValue().toString(), null
+            view.setVisible(false);
+            view.dispose();
+
+            String[] inputData = new String[] {
+                    nameField.getText(), diffList.getSelectedItem().toString(),
+                    pSkill.getValue().toString(),
+                    fSkill.getValue().toString(),
+                    mSkill.getValue().toString(),
+                    eSkill.getValue().toString(), null
             };
 
             if (getAllocatedPoints() == maxPoints && !nameField.getText().equals("")
                     && maxPoints != 0) {
-                next.main(inputData);
+                PlayerInfoView.main(inputData);
             } else {
                 view.setVisible(true);
                 JOptionPane.showMessageDialog(view, "Double check if you configured properly"
-                        + " i.e included name, game mode, and correct skill points");
+                        +  " i.e included name, game mode, and correct skill points");
                 view.setVisible(true);
             }
 

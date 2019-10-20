@@ -9,7 +9,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
-public class TravelUI extends Game {
+public class TravelUI {
     protected static JDialog view = new JDialog();
     protected static TravelUI current;
     protected static Market next;
@@ -81,7 +81,7 @@ public class TravelUI extends Game {
 
         JLabel label = new JLabel(new ImageIcon(image));
         cp.add(label);
-        label.setBounds(200,200,150,150);
+        label.setBounds(200, 200, 150, 150);
 
         marketplace.addActionListener(new PageActionListener(region));
 
@@ -93,7 +93,6 @@ public class TravelUI extends Game {
     private static class PageActionListener implements ActionListener {
         private int intValue;
         private Region region;
-
 
         public PageActionListener(Region region) {
             this.region = region;

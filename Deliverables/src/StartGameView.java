@@ -2,10 +2,8 @@ import javax.swing.*;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 
-public class StartGameView extends ViewController {
-    protected static JFrame view = new JFrame();
-    protected static StartGameView current;
-    protected static PlayerConfigurationView next;
+public class StartGameView {
+    private static JFrame view = new JFrame();
 
     public static void main(String[] args) {
         view.setSize(500, 600);
@@ -32,10 +30,9 @@ public class StartGameView extends ViewController {
 
     public static class SegueListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            current.view.setVisible(false);
-            current.view.dispose();
-            next = new PlayerConfigurationView();
-            next.main(null);
+            view.setVisible(false);
+            view.dispose();
+            PlayerConfigurationView.main(null);
         }
     }
 }

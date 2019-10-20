@@ -7,7 +7,7 @@ public class Ship {
     private int health;
 
     public Ship() {
-        shipType = new ArrayList<String>();
+        shipType = new ArrayList<>();
         shipType.add("Fighter Jet");
         cargoSpace = 100;
         fuelCapacity = 100;

@@ -114,8 +114,8 @@ public class Universe extends Game {
         preAgItems.add("Wood");
         preAgItems.add("Leather");
         preAgItems.add("Fish");
-        preAgItems.add("Dear Meat");
-        preAgItems.add("Dinasuar Meat");
+        preAgItems.add("Deer Meat");
+        preAgItems.add("Dinosaur Meat");
         preAgItems.add("Water");
         preAgItems.add("Gold");
 
@@ -170,13 +170,13 @@ public class Universe extends Game {
 
         modItems = new LinkedList<>(); // NEED to add quantity
         modItems.add("Fuel + 10"); // Important need to update fuel afterwards
-        modItems.add("Car v2 (autonimous)");
+        modItems.add("Car v2 (autonomous)");
         modItems.add("Pizza");
         modItems.add("Bitcoin");
         modItems.add("SmartPhone v1");
         modItems.add("Airpods");
         modItems.add("Computer");
-        modItems.add("AR-15 assualt rifle");
+        modItems.add("AR-15 assault rifle");
         modItems.add("Water");
         modItems.add("Gold");
 
@@ -214,7 +214,7 @@ public class Universe extends Game {
         steamItems.add("Steam Machina suit");
         steamItems.add("Top hat");
         steamItems.add("Steam core");
-        steamItems.add("Animiatronic pet");
+        steamItems.add("Animatronic pet");
         steamItems.add("Water");
         steamItems.add("Gold");
 

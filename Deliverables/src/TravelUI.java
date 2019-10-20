@@ -2,14 +2,15 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.*;
-/*import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
-*/
+
 public class TravelUI {
     private static JFrame view = new JFrame();
+
     private static final String IMAGE_URL = "/resource/bar.png";
 
     public void display(Region region) {
@@ -32,7 +33,7 @@ public class TravelUI {
         name.setBounds(0, 40, 150, 150);
         cp.add(regionTech, BorderLayout.CENTER);
 
-        /*BufferedImage image;
+        BufferedImage image;
         switch (region.getTechLevel()) {
 
         case PREAG :
@@ -79,7 +80,7 @@ public class TravelUI {
         JLabel label = new JLabel(new ImageIcon(image));
         cp.add(label);
         label.setBounds(200, 200, 150, 150);
-*/
+
         marketplace.addActionListener(new PageActionListener(region));
 
         view.setLocation(1000, 300);

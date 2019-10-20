@@ -64,6 +64,7 @@ public class Market extends Game {
         }
         jList.setModel(marketside);
         jList2.setModel(inventory);
+
         buy.addActionListener(e -> {
             int remainingMon = player.getMoney() - currRegion.priceCalculator(20);
             if (jList.getSelectedValue() != null && remainingMon >= 0) {

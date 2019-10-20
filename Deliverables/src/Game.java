@@ -70,7 +70,6 @@ public class Game extends ViewController {
 
         ArrayList<JButton> buttons = new ArrayList<>();
         Button buts = new Button();
-        String name = null;
 
 
         for (int id = 0; id < region.size(); id++) {
@@ -85,12 +84,11 @@ public class Game extends ViewController {
             location.setText("Current Location:" + player.getRegion());
             int newx = region.get(id).getX();
             int newy = region.get(id).getY();
-            name = region.get(id).getName();
             currRegion = region.get(id);
             System.out.println("1" + currRegion);
             buttons.add(btn);
             cp.add(buttons.get(id), BorderLayout.CENTER);
-            buts.update(buttons, name, location, region, id,ship,shipInfo, money);
+            buts.update(buttons,location, region, id,ship,shipInfo, money);
             //System.out.println(region.get(id));
             System.out.println("2" + currRegion);
             btn.addActionListener(new PageActionListener(currRegion));

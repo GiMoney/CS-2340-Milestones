@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Button extends Game {
 
-    public void update(ArrayList<JButton> buttons, String name,
+    public void update(ArrayList<JButton> buttons,
                                   JLabel location, ArrayList<Region> region, int id,Ship ship, JLabel shipInfo,JLabel money) {
 
         ArrayList<Integer> distanceArray = new ArrayList<>();
@@ -24,13 +24,13 @@ public class Button extends Game {
                     }
                     int newX = region.get(id).getX();
                     int newY = region.get(id).getY();
-                    String name = region.get(id).getName();
+                    //String name = region.get(id).getName();
                     Region current = player.getRegion1();
                     int remFuel = (ship.getFuelCapacity() - Math.abs(distance(current,region.get(id)) / 10));
                     //System.out.println(remFuel);
 
                     player.setRegion1(region.get(id));
-                    player.setRegion(name);
+                    //player.setRegion(name);
                     //System.out.println(region.get(id));
                     //System.out.println(player.getRegion1());
                     //super.currRegion = region.get(id);

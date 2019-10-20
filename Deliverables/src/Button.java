@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Button extends Game {
 
     public void update(ArrayList<JButton> buttons, String name,
-                                  JLabel location, ArrayList<Region> region, int id,Ship ship, JLabel shipInfo) {
+                                  JLabel location, ArrayList<Region> region, int id,Ship ship, JLabel shipInfo,JLabel money) {
 
         ArrayList<Integer> distanceArray = new ArrayList<>();
         for (int g = 0; g < region.size(); g++) {
@@ -42,7 +42,7 @@ public class Button extends Game {
                         if (remFuel < 0) {
                             System.out.println("CANT TRAVEL NOT ENOUGH FUEL");
                         } else {
-                            ship.setFuelCapacity(remFuel);
+                             ship.setFuelCapacity(remFuel);
                             //player.setRegion1(region.get(id));
                             //player.setRegion(name);
                             //location.setText("Current Location:" + player.getRegion());
@@ -63,7 +63,7 @@ public class Button extends Game {
                                 buttons.get(l).setEnabled(true);
                             }
                         }
-
+                        money.setText("Current money:" + player.getMoney());
                         shipInfo.setText("Player Ship information:"
                                 + " Ship type: " + ship.getShipType()
                                 + " Ship cargo space: " + ship.getCargoSpace()

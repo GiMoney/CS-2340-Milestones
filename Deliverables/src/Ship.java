@@ -9,7 +9,7 @@ public class Ship {
     public Ship() {
         shipType = new ArrayList<>();
         shipType.add("Fighter Jet");
-        cargoSpace = 100;
+        cargoSpace = 17;
         fuelCapacity = 100;
         health = 100;
     }

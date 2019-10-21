@@ -63,7 +63,8 @@ public class Market extends Game {
         jList2.setModel(inventory);
         buy.addActionListener(e -> {
             int remainingMon = player.getMoney() - currRegion.priceCalculator(20, player);
-            if (jList.getSelectedValue() != null && remainingMon >= 0) {
+            if (jList.getSelectedValue() != null && remainingMon >= 0
+                    && ship.getCargoSpace() - 1 >= 0) {
                 if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
                     inventory.addElement(jList.getSelectedValue());
                     marketside.removeElement(jList.getSelectedValue());
@@ -74,7 +75,9 @@ public class Market extends Game {
                     cargo.setText("Cargo: " + ship.getCargoSpace());
                 } else {
                     ship.setFuelCapacity(ship.getFuelCapacity() + 10);
-                    ship.setCargoSpace(ship.getCargoSpace() - 1);
+                    if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
+                        ship.setCargoSpace(ship.getCargoSpace() - 1);
+                    }
                     fuel.setText("Fuel: " + ship.getFuelCapacity());
                     cargo.setText("Cargo: " + ship.getCargoSpace());
                 }

@@ -1,9 +1,7 @@
 import javax.swing.*;
-import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.*;
-import java.awt.*;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.util.ArrayList;
@@ -15,7 +13,6 @@ public class Game extends ViewController {
     protected static ArrayList<Region> region;
     protected static JFrame view = new JFrame("Click on a region on the map to travel there");
     protected static Game current;
-    protected static JComboBox regionList;
     protected static Region currRegion;
     protected static Universe universe;
     protected static Player player;
@@ -24,11 +21,10 @@ public class Game extends ViewController {
     protected static TravelUI next;
     protected static DefaultListModel inventory = new DefaultListModel();
     protected static String[] names = new String[] {
-            "Alpha-20", "Beta-43", "Charlie-28",
-            "Delta-8", "EEEEE-E", "Falcon-69",
-            "Gamma-Hamma", "Helix-Felix", "I-99", "Ben-10"
+        "Alpha-20", "Beta-43", "Charlie-28",
+        "Delta-8", "EEEEE-E", "Falcon-69",
+        "Gamma-Hamma", "Helix-Felix", "I-99", "Ben-10"
     };
-    boolean noTravel = false;
 
     public static void startGame(String[] args) {
         universe = new Universe(names);
@@ -51,29 +47,31 @@ public class Game extends ViewController {
         cp.setLayout(null);
         ship = new Ship();
 
-        int sgbX = view.getWidth() / 2 - 50;
-        int sgbY = view.getHeight() / 2 - 40;
+        JLabel welcome = new JLabel("Current Difficulty: " + difficulty);
+        welcome.setBounds(20, 0, 200, 40);
+        JLabel location = new JLabel("Current Location: " + player.getRegion());
+        location.setBounds(750, 0, 300, 40);
+        JLabel money = new JLabel("Current money: " + player.getMoney());
+        money.setBounds(400, 0, 200, 40);
+        JLabel shipInfo = new JLabel("Player Ship information:");
+        shipInfo.setBounds(50, 100, 500, 40);
+        JLabel shipType = new JLabel(" Ship type: " + ship.getShipType());
+        shipType.setBounds(80, 130, 200, 40);
+        JLabel shipCargo = new JLabel(" Ship cargo space: " + ship.getCargoSpace());
+        shipCargo.setBounds(80, 160, 200, 40);
+        JLabel shipFuel = new JLabel(" Ship fuel capacity: " + ship.getFuelCapacity());
+        shipFuel.setBounds(80, 190, 200, 40);
+        JLabel shipHealth = new JLabel(" Ship health: " + ship.getHealth());
+        shipHealth.setBounds(80, 220, 200, 40);
 
-        JLabel welcome = new JLabel("Current Difficulty:" + difficulty);
-        welcome.setBounds(0, 0, 200, 40);
-        JLabel location = new JLabel("Current Location:" + player.getRegion());
-        location.setBounds(400, 0, 200, 40);
-        JLabel listR = new JLabel("List of Regions:");
-        listR.setBounds(765, 0, 200, 40);
-        JLabel money = new JLabel("Current money:" + player.getMoney());
-        money.setBounds(200, 0, 200, 40);
-        JLabel shipInfo = new JLabel("Player Ship information:"
-                + " Ship type: " + ship.getShipType()
-                + " Ship cargo space: " + ship.getCargoSpace()
-                + " Ship fuel capacity: " + ship.getFuelCapacity()
-                + " Ship health: " + ship.getHealth());
-        shipInfo.setBounds( 0, 20, 800, 40);
         cp.add(shipInfo, BorderLayout.CENTER);
-
+        cp.add(shipType, BorderLayout.CENTER);
+        cp.add(shipCargo, BorderLayout.CENTER);
+        cp.add(shipFuel, BorderLayout.CENTER);
+        cp.add(shipHealth, BorderLayout.CENTER);
 
         ArrayList<JButton> buttons = new ArrayList<>();
         Button buts = new Button();
-
 
         for (int id = 0; id < region.size(); id++) {
 
@@ -81,33 +79,24 @@ public class Game extends ViewController {
             int x = (player.getX() - region.get(id).getX());
             int y = (player.getY() - region.get(id).getY());
             int distance = (int) Math.sqrt(((x * x) + (y * y)));
-            btn.setText(region.get(id).toString() + "/ " + "distance:" + distance +
-                    "/ " + "Fuel Cost: -" + (distance / 10));
-            btn.setBounds(40,(id*20) + 50, 400, 18);
-            location.setText("Current Location:" + player.getRegion());
-            int newx = region.get(id).getX();
-            int newy = region.get(id).getY();
+            btn.setText(region.get(id).toString() + " / " + "distance: " + distance
+                    + " / " + "Fuel Cost: -" + (distance / 2 / player.getPilot()));
+            btn.setBounds(view.getWidth() / 2 - 100, (id * 40) + 100, 500, 40);
+            location.setText("Current Location: " + player.getRegion());
             currRegion = region.get(id);
-            System.out.println("1" + currRegion);
             buttons.add(btn);
             cp.add(buttons.get(id), BorderLayout.CENTER);
-            buts.update(buttons,location, region, id,ship,shipInfo, money);
-            //System.out.println(region.get(id));
-            System.out.println("2" + currRegion);
+            JLabel[] labels = new JLabel[] {
+                shipInfo, shipType, shipCargo,
+                shipFuel, shipHealth, money};
+            buts.update(buttons, location, region, id, ship, labels);
             btn.addActionListener(new PageActionListener(currRegion));
 
         }
-
-        //System.out.println(player.getRegion1());
-
-
-        regionList.setBounds(860, 10, 130, 20);
         cp.add(welcome, BorderLayout.CENTER);
         //view.add(map);
         cp.add(location, BorderLayout.CENTER);
         cp.add(money, BorderLayout.CENTER);
-        cp.add(listR);
-        cp.add(regionList, BorderLayout.CENTER);
 
         view.setLocationRelativeTo(null);
         view.setVisible(true);
@@ -115,7 +104,6 @@ public class Game extends ViewController {
     }
 
     private static class PageActionListener implements ActionListener {
-        private int intValue;
         private Region region;
 
 
@@ -126,18 +114,18 @@ public class Game extends ViewController {
         public void actionPerformed(ActionEvent e) {
             next = new TravelUI();
             try {
-                ship.setFuelCapacity(ship.getFuelCapacity() - Math.abs(distance(player.getRegion1(),region) / 10));
+                ship.setFuelCapacity(ship.getFuelCapacity()
+                        - Math.abs(distance(player.getRegion1(), region) / 2 / player.getPilot()));
                 player.setRegion1(region);
                 next.display(region);
 
-            }
-            catch(Exception j){
-
+            } catch (IOException j) {
+                j.printStackTrace();
             }
 
         }
 
-        public static int distance(Region r1, Region r2){
+        public static int distance(Region r1, Region r2) {
             int x = (r1.getX() - r2.getX());
             int y = (r1.getY() - r2.getY());
             return (int) Math.sqrt(((x * x) + (y * y)));

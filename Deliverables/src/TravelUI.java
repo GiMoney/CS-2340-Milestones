@@ -1,19 +1,14 @@
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Container;
+import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.File;
-import java.net.URL;
-import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
 
 public class TravelUI extends Game {
-    protected static JDialog view = new JDialog();
-    protected static TravelUI current;
-    protected static Market next;
+    private static JDialog view = new JDialog();
+    private static TravelUI current;
+    private static Market next;
     private static final String IMAGE_URL = "/resource/bar.png";
 
 
@@ -26,7 +21,7 @@ public class TravelUI extends Game {
         cp.setLayout(new BorderLayout());
 
         JLabel name = new JLabel("Location: " + region.getName());
-        name.setBounds(0, 50, 150, 150);
+        name.setBounds(0, 50, 400, 200);
         cp.add(name, BorderLayout.CENTER);
 
         JButton marketplace = new JButton("Market Place");
@@ -34,56 +29,56 @@ public class TravelUI extends Game {
         cp.add(marketplace, BorderLayout.CENTER);
 
         JLabel regionTech = new JLabel("Tech: " + region.getTechLevel());
-        name.setBounds(0, 40, 150, 150);
+        name.setBounds(0, 40, 400, 200);
         cp.add(regionTech, BorderLayout.CENTER);
 
-        BufferedImage image;
-        switch(region.getTechLevel()) {
-            case PREAG :
-                image = ImageIO.read(new File("./resource/Stone.jpg"));
-                break; // optional
+        /*BufferedImage image;
+        switch (region.getTechLevel()) {
+        case PREAG :
+            image = ImageIO.read(new File("Stone.jpg"));
+            break; // optional
 
-            case AGRICULTURE :
-                image = ImageIO.read(new File("./resource/PreAg.jpg"));
-                break; // optional
+        case AGRICULTURE :
+            image = ImageIO.read(new File("PreAg.jpg"));
+            break; // optional
 
-            case MEDIEVAL :
-                image = ImageIO.read(new File("./resource/Medieval.jpg"));
-                break;
+        case MEDIEVAL :
+            image = ImageIO.read(new File("Medieval.jpg"));
+            break;
 
-            case RENAISSANCE :
-                image = ImageIO.read(new File("./resource/R.jpg"));
-                break;
+        case RENAISSANCE :
+            image = ImageIO.read(new File("R.jpg"));
+            break;
 
-            case INDUSTRIAL :
-                image = ImageIO.read(new File("./resource/I.jpg"));
-                break;
+        case INDUSTRIAL :
+            image = ImageIO.read(new File("I.jpg"));
+            break;
 
-            case MODERN :
-                image = ImageIO.read(new File("./resource/M.jpg"));
-                break;
+        case MODERN :
+            image = ImageIO.read(new File("M.jpg"));
+            break;
 
-            case FUTURISTIC :
-                image = ImageIO.read(new File("./resource/f.jpg"));
-                break;
+        case FUTURISTIC :
+            image = ImageIO.read(new File("f.jpg"));
+            break;
 
-            case DARK :
-                image = ImageIO.read(new File("./resource/d.jpg"));
-                break;
+        case DARK :
+            image = ImageIO.read(new File("d.jpg"));
+            break;
 
-            case STEAMPUNK :
-                image = ImageIO.read(new File("./resource/s.jpg"));
-                break;
+        case STEAMPUNK :
+            image = ImageIO.read(new File("s.jpg"));
+            break;
 
-            // You can have any number of case statements.
-            default : // Optional
-                image = ImageIO.read(new File("./resource/c.jpg"));
+        // You can have any number of case statements.
+        default : // Optional
+            image = ImageIO.read(new File("c.jpg"));
         }
 
         JLabel label = new JLabel(new ImageIcon(image));
         cp.add(label);
         label.setBounds(200,200,150,150);
-
+*/
         marketplace.addActionListener(new PageActionListener(region));
 
         view.setLocation(1000, 300);

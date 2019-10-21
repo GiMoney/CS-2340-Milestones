@@ -1,15 +1,12 @@
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.event.*;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
-import java.util.LinkedList;
-
 
 public class Market extends Game {
-    protected static JDialog view = new JDialog();
+    private static JDialog view = new JDialog();
 
     public static void displayMarket(Region region) {
         view.setModal(true);
@@ -38,34 +35,34 @@ public class Market extends Game {
         money.setBounds(200, 10, 100, 100);
         cp.add(money, BorderLayout.CENTER);
 
-        JLabel cost = new JLabel("Cost of each item: " + currRegion.priceCalculator(20,player.getRegion1()));
+        JLabel cost = new JLabel("Cost of each item: " + currRegion.priceCalculator(20, player));
         cost.setBounds(200, 30, 200, 100);
         cp.add(cost, BorderLayout.CENTER);
 
         JButton buy = new JButton("Buy");
-        buy.setBounds(30, 110, 60,20);
+        buy.setBounds(30, 110, 60, 20);
         cp.add(buy, BorderLayout.CENTER);
 
         JButton sell = new JButton("Sell");
-        sell.setBounds(200, 110, 60,20);
+        sell.setBounds(200, 110, 60, 20);
         cp.add(sell, BorderLayout.CENTER);
 
         JList jList = new JList();
-        jList.setBounds(30, 140, 150,310);
+        jList.setBounds(30, 140, 150, 310);
         cp.add(jList, BorderLayout.CENTER);
         JList jList2 = new JList();
-        jList2.setBounds(200, 140, 150,310);
+        jList2.setBounds(200, 140, 150, 310);
         cp.add(jList2, BorderLayout.CENTER);
 
 
         DefaultListModel marketside = new DefaultListModel();
-        for (int i = 0; i < region.getItems().size();i++) {
+        for (int i = 0; i < region.getItems().size(); i++) {
             marketside.addElement(region.getItems().get(i));
         }
         jList.setModel(marketside);
         jList2.setModel(inventory);
         buy.addActionListener(e -> {
-            int remainingMon = player.getMoney() - currRegion.priceCalculator(20,player.getRegion1());
+            int remainingMon = player.getMoney() - currRegion.priceCalculator(20, player);
             if (jList.getSelectedValue() != null && remainingMon >= 0) {
                 if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
                     inventory.addElement(jList.getSelectedValue());
@@ -92,7 +89,7 @@ public class Market extends Game {
                 inventory.removeElement(jList2.getSelectedValue());
                 //remove selected item to player inventory;
                 jList.setModel(marketside);
-                player.setMoney(player.getMoney() + currRegion.priceCalculator(20,player.getRegion1()));
+                player.setMoney(player.getMoney() + currRegion.priceCalculator(20, player));
                 ship.setCargoSpace(ship.getCargoSpace() + 1);
                 cargo.setText("Cargo: " + ship.getCargoSpace());
                 money.setText("Money: " + player.getMoney());

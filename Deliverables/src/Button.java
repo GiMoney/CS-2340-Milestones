@@ -45,9 +45,9 @@ public class Button extends Game {
                 for (int l = 0; l < buttons.size(); l++) {
                     Region toRegion = region.get(l);
                     int remFuel2 = (ship.getFuelCapacity()
-                            - Math.abs(distance(current, toRegion) / 2) / player.getPilot());
+                            - Math.abs(distance(current, toRegion) / player.getPilot()));
                     buttons.get(l).setText(buttons.get(l).getText() + "/ " + "Fuel Cost: -"
-                            + Math.abs(distance(current, toRegion) / 2) / player.getPilot());
+                            + Math.abs(distance(current, toRegion) / player.getPilot()));
                     if (remFuel2 < 0) {
                         buttons.get(l).setEnabled(false);
                     } else {

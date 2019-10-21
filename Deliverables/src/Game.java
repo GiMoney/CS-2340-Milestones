@@ -79,8 +79,13 @@ public class Game extends ViewController {
             int x = (player.getX() - region.get(id).getX());
             int y = (player.getY() - region.get(id).getY());
             int distance = (int) Math.sqrt(((x * x) + (y * y)));
-            btn.setText(region.get(id).toString() + " / " + "distance: " + distance
-                    + " / " + "Fuel Cost: -" + (distance / 2 / player.getPilot()));
+            if(player.getPilot() == 0){
+                btn.setText(region.get(id).toString() + " / " + "distance: " + distance
+                        + " / " + "Fuel Cost: -" + (distance));
+            } else {
+                btn.setText(region.get(id).toString() + " / " + "distance: " + distance
+                        + " / " + "Fuel Cost: -" + (distance / player.getPilot()));
+            }
             btn.setBounds(view.getWidth() / 2 - 100, (id * 40) + 100, 500, 40);
             location.setText("Current Location: " + player.getRegion());
             currRegion = region.get(id);

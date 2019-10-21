@@ -63,7 +63,7 @@ public class Market extends Game {
         jList2.setModel(inventory);
         buy.addActionListener(e -> {
             int remainingMon = player.getMoney() - currRegion.priceCalculator(20, player);
-            if (jList.getSelectedValue() != null && remainingMon >= 0) {
+            if (jList.getSelectedValue() != null && remainingMon >= 0 && ship.getCargoSpace() -1 > 0) {
                 if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
                     inventory.addElement(jList.getSelectedValue());
                     marketside.removeElement(jList.getSelectedValue());

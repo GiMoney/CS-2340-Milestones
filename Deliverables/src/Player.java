@@ -6,21 +6,10 @@ public class Player {
     private int merchant;
     private int engineer;
     private String region;
+    private Region region1;
     private int money;
     private int x;
     private int y;
-
-    public Player() {
-        name = null;
-        fighter = 0;
-        pilot = 0;
-        merchant = 0;
-        engineer = 0;
-        money = 0;
-        region = null;
-        x = 0;
-        y = 0;
-    }
 
     public Player(String[] args) {
         name = args[0];
@@ -29,6 +18,7 @@ public class Player {
         merchant = Integer.parseInt(args[4]);
         engineer = Integer.parseInt(args[5]);
         region = getRegion();
+        region1 = null;
         if (args[1].equals("Easy")) {
             money = 1000;
         } else if (args[1].equals("Medium")) {
@@ -54,6 +44,10 @@ public class Player {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public void setRegion1(Region region1) {
+        this.region1 = region1;
     }
 
     public void setMoney(int money) {

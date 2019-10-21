@@ -7,9 +7,9 @@ public class Ship {
     private int health;
 
     public Ship() {
-        shipType = new ArrayList<String>();
+        shipType = new ArrayList<>();
         shipType.add("Fighter Jet");
-        cargoSpace = 100;
+        cargoSpace = 17;
         fuelCapacity = 100;
         health = 100;
     }
@@ -21,6 +21,10 @@ public class Ship {
 
     public int getCargoSpace() {
         return cargoSpace;
+    }
+
+    public void setCargoSpace(int cargoSpace) {
+        this.cargoSpace = cargoSpace;
     }
 
     public int getFuelCapacity() {

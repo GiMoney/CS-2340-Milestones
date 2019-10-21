@@ -1,7 +1,6 @@
 
 import java.util.Random;
 import java.util.ArrayList;
-import javax.swing.*;
 import java.util.*;
 import java.util.List;
 import java.util.Collections;
@@ -104,7 +103,6 @@ public class Universe extends Game {
             region.get(i).setTechLevel(tech.get(i));
         }
         Game.region = region;
-        Game.regionList = new JComboBox<>(region.toArray());
     }
 
     private void populateLists() {

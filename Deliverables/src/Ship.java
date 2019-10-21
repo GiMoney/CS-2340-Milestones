@@ -18,7 +18,6 @@ public class Ship {
         return shipType.get(0);
     }
 
-
     public int getCargoSpace() {
         return cargoSpace;
     }
@@ -30,6 +29,7 @@ public class Ship {
     public int getFuelCapacity() {
         return fuelCapacity;
     }
+
     public void setFuelCapacity(int x) {
         this.fuelCapacity = x;
     }

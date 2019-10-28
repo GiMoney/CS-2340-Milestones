@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Bandit extends Game{
+public class Bandit extends Game {
     protected static JFrame view = new JFrame("WARNING: YOU HAVE BEEN APPROACHED BY A BANDIT");
     protected static int creditsDemanded;
 
@@ -18,15 +18,15 @@ public class Bandit extends Game{
         }
 
         JButton pay = new JButton("Pay the demand");
-        pay.setBounds (0, 290, 200, 40);
+        pay.setBounds(0, 290, 200, 40);
         cp.add(pay, BorderLayout.CENTER);
 
         JButton flee = new JButton("Attempt to flee");
-        flee.setBounds (400, 290, 200, 40);
+        flee.setBounds(400, 290, 200, 40);
         cp.add(flee, BorderLayout.CENTER);
 
         JButton fight = new JButton("Engage in Combat");
-        fight.setBounds (800, 290, 200, 40);
+        fight.setBounds(800, 290, 200, 40);
         cp.add(fight, BorderLayout.CENTER);
 
         JLabel welcome = new JLabel("Current Difficulty: " + player.getDifficulty());
@@ -55,7 +55,7 @@ public class Bandit extends Game{
         cp.add(shipHealth, BorderLayout.CENTER);
 
         JLabel demand = new JLabel("A bandit has attacked your ship! He demands " + creditsDemanded
-        + " credits. What do you decide to do?");
+                + " credits. What do you decide to do?");
         demand.setBounds(0, 260, 100, 40);
         cp.add(demand, BorderLayout.CENTER);
 

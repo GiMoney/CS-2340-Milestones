@@ -9,6 +9,10 @@ public class Player {
     private int money;
     private int x;
     private int y;
+    private int banditChance;
+    private int policeChance;
+    private int traderChance;
+    private String difficulty;
     
     public Player(String[] args) {
         name = args[0];
@@ -18,15 +22,24 @@ public class Player {
         engineer = Integer.parseInt(args[5]);
         region = getRegion();
         region1 = null;
-        if (args[1].equals("Easy")) {
+        difficulty = args[1];
+        if (difficulty.equals("Easy")) {
             money = 1000;
-        } else if (args[1].equals("Medium")) {
+            banditChance = 100; //change back to 10 when not testing
+            policeChance = 10;
+        } else if (difficulty.equals("Medium")) {
             money = 500;
+            banditChance = 20;
+            policeChance = 20;
         } else {
             money = 100;
+            banditChance = 30;
+            policeChance = 30;
         }
         x = 0;
         y = 0;
+        traderChance = 20;
+
     }
 
     public String getRegion() {
@@ -106,4 +119,19 @@ public class Player {
         this.y = y;
     }
 
+    public int getBanditChance() {
+        return banditChance;
+    }
+
+    public int getPoliceChance() {
+        return policeChance;
+    }
+
+    public int getTraderChance() {
+        return traderChance;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
 }

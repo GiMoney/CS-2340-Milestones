@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.util.ArrayList;
 import java.io.IOException;
+//import java.util.Random;
 
 
 
@@ -41,7 +42,7 @@ public class Game extends ViewController {
     public void start(String[] args) {
         player = new Player(args);
         startGame(args);
-        String difficulty = args[1];
+        String difficulty = player.getDifficulty();
         view.setSize(1000, 600);
         Container cp = view.getContentPane();
         cp.setLayout(null);
@@ -115,18 +116,24 @@ public class Game extends ViewController {
         }
 
         public void actionPerformed(ActionEvent e) {
-            next = new TravelUI();
-            double pilotFactor = (player.getPilot() > 0) ? 1.0 / player.getPilot() : 1;
-            int fuelCost = (int) Math.ceil(
-                    distance(player.getRegion1(), region) / 5.0 * pilotFactor);
-            try {
-                ship.setFuelCapacity(ship.getFuelCapacity()
-                        - fuelCost);
-                player.setRegion1(region);
-                next.display(region);
+            int banditNum = (int) (Math.random() * 99);
 
-            } catch (IOException j) {
-                j.printStackTrace();
+            if (banditNum < player.getBanditChance()) {
+                Bandit.main(null);
+            } else {
+                next = new TravelUI();
+                double pilotFactor = (player.getPilot() > 0) ? 1.0 / player.getPilot() : 1;
+                int fuelCost = (int) Math.ceil(
+                        distance(player.getRegion1(), region) / 5.0 * pilotFactor);
+                try {
+                    ship.setFuelCapacity(ship.getFuelCapacity()
+                            - fuelCost);
+                    player.setRegion1(region);
+                    next.display(region);
+
+                } catch (IOException j) {
+                    j.printStackTrace();
+                }
             }
 
         }

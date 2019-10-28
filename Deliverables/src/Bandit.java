@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Bandit extends Game{
-    protected static JFrame view = new JFrame("WARNING: YOU HAVE BEEN ATTACKED BY A BANDIT");
+    protected static JFrame view = new JFrame("WARNING: YOU HAVE BEEN APPROACHED BY A BANDIT");
     protected static int creditsDemanded;
 
     public static void main(String[] args) {

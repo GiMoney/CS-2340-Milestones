@@ -24,15 +24,17 @@ public class Button extends Game {
                 
                 Region current = player.getRegion1();
                 int remFuel;
-                
 
                 player.setRegion1(region.get(id));
                 
                 location.setText("Current Location: " + current.getName());
-                
+
+                double pilotFactor = (player.getPilot() > 0) ? 1.0 / player.getPilot() : 1;
+
                 if (k == 9) {
-                    remFuel = (ship.getFuelCapacity()
-                             - Math.abs(distance(current, region.get(id)) / 2) / player.getPilot());
+                    int fuelCost = (int) Math.ceil(
+                            distance(current, region.get(id)) / 5.0 * pilotFactor);
+                    remFuel = ship.getFuelCapacity() - fuelCost;
                     if (remFuel < 0) {
                         System.out.println("CANT TRAVEL NOT ENOUGH FUEL");
                     } else {
@@ -43,11 +45,13 @@ public class Button extends Game {
                 player.setX(newX);
                 player.setY(newY);
                 for (int l = 0; l < buttons.size(); l++) {
+
                     Region toRegion = region.get(l);
-                    int remFuel2 = (ship.getFuelCapacity()
-                            - Math.abs(distance(current, toRegion) / 2) / player.getPilot());
+                    int fuelCost = (int) Math.ceil(
+                            distance(current, toRegion) / 5.0 * pilotFactor);
+                    int remFuel2 = ship.getFuelCapacity() - fuelCost;
                     buttons.get(l).setText(buttons.get(l).getText() + "/ " + "Fuel Cost: -"
-                            + Math.abs(distance(current, toRegion) / 2) / player.getPilot());
+                            + fuelCost);
                     if (remFuel2 < 0) {
                         buttons.get(l).setEnabled(false);
                     } else {
@@ -60,7 +64,7 @@ public class Button extends Game {
                 labels[2].setText(" Ship cargo space: " + ship.getCargoSpace());
                 labels[3].setText(" Ship fuel capacity: " + ship.getFuelCapacity());
                 labels[4].setText(" Ship health: " + ship.getHealth());
-                labels[5].setText("Current money:" + player.getMoney());
+                labels[5].setText("Current money: " + player.getMoney());
             });
         }
     }

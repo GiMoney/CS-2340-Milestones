@@ -63,7 +63,8 @@ public class Market extends Game {
         jList2.setModel(inventory);
         buy.addActionListener(e -> {
             int remainingMon = player.getMoney() - currRegion.priceCalculator(20, player);
-            if (jList.getSelectedValue() != null && remainingMon >= 0) {
+            if (jList.getSelectedValue() != null && remainingMon >= 0
+                    && ship.getCargoSpace() - 1 >= 0) {
                 if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
                     inventory.addElement(jList.getSelectedValue());
                     marketside.removeElement(jList.getSelectedValue());
@@ -72,20 +73,25 @@ public class Market extends Game {
                     jList2.setModel(inventory);
                     ship.setCargoSpace(ship.getCargoSpace() - 1);
                     cargo.setText("Cargo: " + ship.getCargoSpace());
+                    player.setMoney(remainingMon);
                 } else {
-                    ship.setFuelCapacity(ship.getFuelCapacity() + 10);
-                    ship.setCargoSpace(ship.getCargoSpace() - 1);
+                    if (!(ship.getFuelCapacity() + 10 > 100)) {
+                        ship.setFuelCapacity(ship.getFuelCapacity() + 10);
+                        player.setMoney(remainingMon);
+                    }
+                    if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
+                        ship.setCargoSpace(ship.getCargoSpace() - 1);
+                    }
                     fuel.setText("Fuel: " + ship.getFuelCapacity());
                     cargo.setText("Cargo: " + ship.getCargoSpace());
                 }
-                player.setMoney(remainingMon);
                 money.setText("Money: " + player.getMoney());
             }
         });
 
         sell.addActionListener(e -> {
             if (jList2.getSelectedValue() != null) {
-                marketside.addElement(jList2.getSelectedValue());
+                //marketside.addElement(jList2.getSelectedValue());
                 inventory.removeElement(jList2.getSelectedValue());
                 //remove selected item to player inventory;
                 jList.setModel(marketside);

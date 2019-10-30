@@ -22,7 +22,8 @@ public class TravelUI extends Game {
         Container cp = view.getContentPane();
         cp.removeAll();
         cp.setLayout(new BorderLayout());
-
+        //player.setRegionPrev(region);
+        player.setRegion1(region);
         JLabel name = new JLabel("Location: " + region.getName());
         name.setBounds(0, 50, 400, 200);
         cp.add(name, BorderLayout.CENTER);

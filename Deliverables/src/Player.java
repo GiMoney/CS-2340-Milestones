@@ -6,6 +6,7 @@ public class Player {
     private int engineer;
     private String region;
     private Region region1;
+    private Region regionPrev;
     private int money;
     private int x;
     private int y;
@@ -13,6 +14,8 @@ public class Player {
     private int policeChance;
     private int traderChance;
     private String difficulty;
+    private boolean successfulTravel;
+    private boolean dialogOpen;
     
     public Player(String[] args) {
         name = args[0];
@@ -26,15 +29,15 @@ public class Player {
         if (difficulty.equals("Easy")) {
             money = 1000;
             banditChance = 100; //change back to 10 when not testing
-            policeChance = 10;
+            policeChance = 15;
         } else if (difficulty.equals("Medium")) {
             money = 500;
-            banditChance = 20;
-            policeChance = 20;
+            banditChance = 25;
+            policeChance = 25;
         } else {
             money = 100;
-            banditChance = 30;
-            policeChance = 30;
+            banditChance = 40;
+            policeChance = 40;
         }
         x = 0;
         y = 0;
@@ -48,6 +51,14 @@ public class Player {
 
     public Region getRegion1() {
         return region1;
+    }
+
+    public Region getRegionPrev() {
+        return regionPrev;
+    }
+
+    public void setRegionPrev(Region regionPrev) {
+        this.regionPrev = regionPrev;
     }
     
     public String getName() {
@@ -134,4 +145,21 @@ public class Player {
     public String getDifficulty() {
         return difficulty;
     }
+
+    public boolean getSuccessfulTravel() {
+        return successfulTravel;
+    }
+
+    public void setSuccessfulTravel(boolean successfulTravel) {
+         this.successfulTravel = successfulTravel;
+    }
+
+    public boolean getDialogOpen() {
+        return dialogOpen;
+    }
+
+    public void setDialogOpen(boolean dialogOpen) {
+        this.dialogOpen = dialogOpen;
+    }
+
 }

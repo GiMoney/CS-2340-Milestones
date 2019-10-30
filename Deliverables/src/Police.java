@@ -8,7 +8,8 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 
-public class Bandit extends Game {
+
+public class Police extends Game {
     protected static JDialog view = new JDialog();
     protected static int creditsDemanded;
     protected static boolean fleePressed = false;
@@ -16,7 +17,7 @@ public class Bandit extends Game {
     protected static Bandit current;
     protected static int banditMoney = 1000;
 
-    public static void banditMain(Region regionPrev,ArrayList<JButton> buttons,JFrame mainView,
+    public static void policeMain(Region regionPrev,ArrayList<JButton> buttons,JFrame mainView,
                                   JLabel money,Region region1,Button buts,JLabel location,
                                   JLabel[] shiplabels,Ship ship) {
         view.setSize(1000, 600);
@@ -24,24 +25,27 @@ public class Bandit extends Game {
         cp.removeAll();
         cp.setLayout(new BorderLayout());
 
-        if (player.getDifficulty().equals("Hard")) {
-            creditsDemanded = 50;
-        } else {
-            creditsDemanded = 100;
-        }
         BufferedImage image = null;
-        try{
-        image = ImageIO.read(new File("./resource/bandits.jpg"));
+        try {
+            image = ImageIO.read(new File("./resource/police.jpg"));
         } catch(Exception e) {
 
         }
         JLabel label = new JLabel(new ImageIcon(image));
         cp.add(label);
-        label.setBounds(300,40,400,200);
+        label.setBounds(400,60,256,197);
 
-        JButton pay = new JButton("Pay the demand");
-        pay.setBounds(0, 290, 200, 40);
-        cp.add(pay, BorderLayout.CENTER);
+
+        if (player.getDifficulty().equals("Hard")) {
+            creditsDemanded = 50;
+        } else {
+            creditsDemanded = 100;
+        }
+
+        JButton forfeit = new JButton("Give the items " + inventory.get(1)
+                + ", " + inventory.get(2));
+        forfeit.setBounds(0, 290, 200, 40);
+        cp.add(forfeit, BorderLayout.CENTER);
 
         JButton flee = new JButton("Attempt to flee");
         flee.setBounds(400, 290, 200, 40);
@@ -82,47 +86,40 @@ public class Bandit extends Game {
         demand.setBounds(0, 260, 100, 40);
         cp.add(demand, BorderLayout.CENTER);
 
-        pay.addActionListener(e -> {
-                player.setSuccessfulTravel(true);
-                player.setDialogOpen(true);
-                if((player.getMoney() - creditsDemanded) < 0) {
-                    System.out.println("SHip health1" + ship.getHealth());
-                    if(ship.getCargoSpace() != 17){
-                        inventory.clear();
-                        ship.setCargoSpace(17);
-                    } else {
-                        shiplabels[0].setText("Player Ship information: ");
-                        shiplabels[1].setText(" Ship type: " + ship.getShipType());
-                        shiplabels[2].setText(" Ship cargo space: " + ship.getCargoSpace());
-                        shiplabels[3].setText(" Ship fuel capacity: " + ship.getFuelCapacity());
-                        shiplabels[4].setText(" Ship health: " + (ship.getHealth() - 20));
-                        shiplabels[5].setText("Current money: " + player.getMoney());
-                        ship.setHealth(ship.getHealth() - 20);
-                    }
-                    JOptionPane.showMessageDialog(view,
-                            "Payment Failed (Lost ALL money or items) but Traveled to new Region");
-                } else {
-                    player.setMoney(player.getMoney() - creditsDemanded);
-                    shiplabels[5].setText("Current money: " + (player.getMoney() - creditsDemanded));
-                    System.out.println("SHip health2" + ship.getHealth());
-                    JOptionPane.showMessageDialog(mainView, "Payment Succeeded");
-                }
-                view.dispose();
-                mainView.setVisible(true);
-                mainView.revalidate();
-                mainView.repaint();
-                player.setSuccessfulTravel(true);
-                player.setRegionPrev(player.getRegion1());// now they match
-                player.setRegion1(region1);
-                //next = new TravelUI();
-                //try{
-                  //  next.display(player.getRegion1());
-                //} catch(IOException j){
+        forfeit.addActionListener(e -> {
+            player.setSuccessfulTravel(true);
+            player.setDialogOpen(true);
+                if(ship.getCargoSpace() != 17){
+                    inventory.removeElementAt(1);
+                    inventory.removeElementAt(1);
+                    ship.setCargoSpace(ship.getCargoSpace() + 2);
 
-                //}
-                money.setText("Current money: " + player.getMoney());
-                System.out.println(player.getMoney());
-                });
+                    shiplabels[0].setText("Player Ship information: ");
+                    shiplabels[1].setText(" Ship type: " + ship.getShipType());
+                    shiplabels[2].setText(" Ship cargo space: " + ship.getCargoSpace());
+                    shiplabels[3].setText(" Ship fuel capacity: " + ship.getFuelCapacity());
+                    shiplabels[4].setText(" Ship health: " + (ship.getHealth() - 20));
+                    shiplabels[5].setText("Current money: " + player.getMoney());
+                    ship.setHealth(ship.getHealth() - 20);
+                JOptionPane.showMessageDialog(view,
+                        "Payment Succeeded (Lost 'stolen' items) but Traveled to new Region");
+            }
+            view.dispose();
+            mainView.setVisible(true);
+            mainView.revalidate();
+            mainView.repaint();
+            player.setSuccessfulTravel(true);
+            player.setRegionPrev(player.getRegion1());// now they match
+            player.setRegion1(region1);
+            //next = new TravelUI();
+            //try{
+            //  next.display(player.getRegion1());
+            //} catch(IOException j){
+
+            //}
+            money.setText("Current money: " + player.getMoney());
+            System.out.println(player.getMoney());
+        });
 
         flee.addActionListener(e -> {
             if(player.getPilot() > 10) {

@@ -23,7 +23,7 @@ public class Trader extends Game {
         BufferedImage image = null;
         try {
             image = ImageIO.read(new File("./resource/trader.jpg"));
-        } catch(Exception e) {
+        } catch (Exception e) {
 
         }
 
@@ -31,7 +31,7 @@ public class Trader extends Game {
         //player.setRegion1(region);
         JLabel label = new JLabel(new ImageIcon(image));
         cp.add(label);
-        label.setBounds(200,600,400,221);
+        label.setBounds(200, 600, 400, 221);
 
         JLabel marketplace = new JLabel("TRADER");
         marketplace.setBounds(0, 0, 200, 30);
@@ -130,8 +130,8 @@ public class Trader extends Game {
             }
         });
 
-        neg.addActionListener(e ->{
-            if(player.getMerchant() > 4) {
+        neg.addActionListener(e -> {
+            if (player.getMerchant() > 4) {
                 traderCost = traderCost - 2;
                 cost.setText("Cost of each item: " + traderCost);
             } else {

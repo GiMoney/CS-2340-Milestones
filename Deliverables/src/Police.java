@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.io.IOException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -17,9 +16,9 @@ public class Police extends Game {
     protected static Bandit current;
     protected static int banditMoney = 1000;
 
-    public static void policeMain(Region regionPrev,ArrayList<JButton> buttons,JFrame mainView,
-                                  JLabel money,Region region1,Button buts,JLabel location,
-                                  JLabel[] shiplabels,Ship ship) {
+    public static void policeMain(Region regionPrev, ArrayList<JButton> buttons, JFrame mainView,
+                                  JLabel money, Region region1, Button buts, JLabel location,
+                                  JLabel[] shiplabels, Ship ship) {
         view.setSize(1000, 600);
         Container cp = view.getContentPane();
         cp.removeAll();
@@ -28,12 +27,12 @@ public class Police extends Game {
         BufferedImage image = null;
         try {
             image = ImageIO.read(new File("./resource/police.jpg"));
-        } catch(Exception e) {
+        } catch (Exception e) {
 
         }
         JLabel label = new JLabel(new ImageIcon(image));
         cp.add(label);
-        label.setBounds(400,60,256,197);
+        label.setBounds(400, 60, 256, 197);
 
 
         if (player.getDifficulty().equals("Hard")) {
@@ -89,18 +88,18 @@ public class Police extends Game {
         forfeit.addActionListener(e -> {
             player.setSuccessfulTravel(true);
             player.setDialogOpen(true);
-                if(ship.getCargoSpace() != 17){
-                    inventory.removeElementAt(1);
-                    inventory.removeElementAt(1);
-                    ship.setCargoSpace(ship.getCargoSpace() + 2);
+            if (ship.getCargoSpace() != 17) {
+                inventory.removeElementAt(1);
+                inventory.removeElementAt(1);
+                ship.setCargoSpace(ship.getCargoSpace() + 2);
 
-                    shiplabels[0].setText("Player Ship information: ");
-                    shiplabels[1].setText(" Ship type: " + ship.getShipType());
-                    shiplabels[2].setText(" Ship cargo space: " + ship.getCargoSpace());
-                    shiplabels[3].setText(" Ship fuel capacity: " + ship.getFuelCapacity());
-                    shiplabels[4].setText(" Ship health: " + (ship.getHealth() - 20));
-                    shiplabels[5].setText("Current money: " + player.getMoney());
-                    ship.setHealth(ship.getHealth() - 20);
+                shiplabels[0].setText("Player Ship information: ");
+                shiplabels[1].setText(" Ship type: " + ship.getShipType());
+                shiplabels[2].setText(" Ship cargo space: " + ship.getCargoSpace());
+                shiplabels[3].setText(" Ship fuel capacity: " + ship.getFuelCapacity());
+                shiplabels[4].setText(" Ship health: " + (ship.getHealth() - 20));
+                shiplabels[5].setText("Current money: " + player.getMoney());
+                ship.setHealth(ship.getHealth() - 20);
                 JOptionPane.showMessageDialog(view,
                         "Payment Succeeded (Lost 'stolen' items) but Traveled to new Region");
             }
@@ -109,7 +108,7 @@ public class Police extends Game {
             mainView.revalidate();
             mainView.repaint();
             player.setSuccessfulTravel(true);
-            player.setRegionPrev(player.getRegion1());// now they match
+            player.setRegionPrev(player.getRegion1()); // now they match
             player.setRegion1(region1);
             //next = new TravelUI();
             //try{
@@ -122,7 +121,7 @@ public class Police extends Game {
         });
 
         flee.addActionListener(e -> {
-            if(player.getPilot() > 10) {
+            if (player.getPilot() > 10) {
                 System.out.println("is this still the same" + player.getRegionPrev());
                 player.setRegion1(player.getRegionPrev());
                 System.out.println("Should match above" + player.getRegionPrev());
@@ -145,7 +144,8 @@ public class Police extends Game {
                     double pilotFactor = (player.getPilot() > 0) ? 1.0 / player.getPilot() : 1;
                     int fuelCost = (int) Math.ceil(distance / 5.0 * pilotFactor);
                     //System.out.println(buttons.get(id).getText());
-                    buttons.get(id).setText(region.get(id).toString() + " / " + "distance: " + distance
+                    buttons.get(id).setText(region.get(id).toString() + " / "
+                            + "distance: " + distance
                             + " / " + "Fuel Cost: -" + fuelCost);
                     // System.out.println("After" + buttons.get(id).getText());
                     buttons.get(id).setBounds(view.getWidth() / 2 - 100, (id * 40) + 100, 500, 40);
@@ -166,14 +166,14 @@ public class Police extends Game {
                 player.setRegionPrev(player.getRegion1());
                 mainView.setVisible(true);
                 JOptionPane.showMessageDialog(mainView, "Flee Succeeded (Did not travel)");
-            /*next = new TravelUI();
-            try {
-                next.display(player.getRegion1());
-                mainView.setVisible(true);
-            } catch(IOException j){
+                /*next = new TravelUI();
+                try {
+                    next.display(player.getRegion1());
+                    mainView.setVisible(true);
+                } catch(IOException j){
 
-            }
-             */
+                }
+                 */
                 System.out.println(player.getRegion1());
                 System.out.println(player.getRegionPrev());
                 location.setText("Current Location: " + player.getRegion1().getName());
@@ -195,15 +195,16 @@ public class Police extends Game {
         });
 
         fight.addActionListener(e -> {
-            if(player.getFighter() > 4) {
+            if (player.getFighter() > 4) {
                 player.setSuccessfulTravel(true);
-                player.setRegionPrev(player.getRegion1());// now they match
+                player.setRegionPrev(player.getRegion1()); // now they match
                 player.setRegion1(region1);
                 player.setMoney(player.getMoney() + banditMoney);
                 mainView.revalidate();
                 mainView.repaint();
                 mainView.setVisible(true);
-                JOptionPane.showMessageDialog(mainView, "Fight Succeeded (Travel to new Region and won money)");
+                JOptionPane.showMessageDialog(mainView,
+                        "Fight Succeeded (Travel to new Region and won money)");
             } else {
                 banditMoney = player.getMoney();
                 player.setMoney(0);
@@ -233,7 +234,8 @@ public class Police extends Game {
                     double pilotFactor = (player.getPilot() > 0) ? 1.0 / player.getPilot() : 1;
                     int fuelCost = (int) Math.ceil(distance / 5.0 * pilotFactor);
                     //System.out.println(buttons.get(id).getText());
-                    buttons.get(id).setText(region.get(id).toString() + " / " + "distance: " + distance
+                    buttons.get(id).setText(region.get(id).toString() + " / "
+                            + "distance: " + distance
                             + " / " + "Fuel Cost: -" + fuelCost);
                     // System.out.println("After" + buttons.get(id).getText());
                     buttons.get(id).setBounds(view.getWidth() / 2 - 100, (id * 40) + 100, 500, 40);
@@ -248,7 +250,8 @@ public class Police extends Game {
                 mainView.repaint();
                 player.setRegionPrev(player.getRegion1());
                 mainView.setVisible(true);
-                JOptionPane.showMessageDialog(mainView, "Fight Failed (Did not travel, lost money and ship health)");
+                JOptionPane.showMessageDialog(mainView,
+                        "Fight Failed (Did not travel, lost money and ship health)");
 
             }
         });

@@ -81,7 +81,7 @@ public class TravelUI extends Game {
 
         JLabel label = new JLabel(new ImageIcon(image));
         cp.add(label);
-        label.setBounds(200,200,150,150);
+        label.setBounds(200, 200, 150, 150);
 
         marketplace.addActionListener(new PageActionListener(region));
 

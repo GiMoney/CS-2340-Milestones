@@ -151,7 +151,7 @@ public class Player {
     }
 
     public void setSuccessfulTravel(boolean successfulTravel) {
-         this.successfulTravel = successfulTravel;
+        this.successfulTravel = successfulTravel;
     }
 
     public boolean getDialogOpen() {

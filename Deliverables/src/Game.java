@@ -78,7 +78,8 @@ public class Game extends ViewController {
         cp.add(shipHealth, BorderLayout.CENTER);
         ArrayList<JButton> buttons = new ArrayList<>();
         Button buts = new Button();
-        JLabel[] labels = new JLabel[] {shipInfo, shipType, shipCargo, shipFuel, shipHealth, money, location};
+        JLabel[] labels = new JLabel[] {shipInfo, shipType, shipCargo, shipFuel,
+            shipHealth, money, location};
         for (int id = 0; id < region.size(); id++) {
 
             JButton btn = new JButton();
@@ -135,8 +136,8 @@ public class Game extends ViewController {
         private Ship ship;
 
         public PageActionListener(Region region, Boolean banditWon, Region regionPrev,
-                                  ArrayList<JButton> buttons, Button buts
-                                  ,JLabel[] shiplabels, Ship ship) {
+                                  ArrayList<JButton> buttons, Button buts,
+                                  JLabel[] shiplabels, Ship ship) {
             this.region = region;
             this.banditWon = banditWon;
             this.regionPrev = regionPrev;

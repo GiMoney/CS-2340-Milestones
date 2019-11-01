@@ -15,8 +15,8 @@ public class Bandit extends Game {
     protected static Bandit current;
     protected static int banditMoney = 1000;
 
-    public static void banditMain(Region regionPrev, ArrayList<JButton> buttons, JFrame mainView
-                                  , Region region1, Button buts,
+    public static void banditMain(Region regionPrev, ArrayList<JButton> buttons, JFrame mainView,
+                                  Region region1, Button buts,
                                   JLabel[] shiplabels, Ship ship) {
         view.setSize(1000, 600);
         Container cp = view.getContentPane();

@@ -78,7 +78,7 @@ public class Game extends ViewController {
         cp.add(shipHealth, BorderLayout.CENTER);
         ArrayList<JButton> buttons = new ArrayList<>();
         Button buts = new Button();
-        JLabel[] labels = new JLabel[] {shipInfo, shipType, shipCargo, shipFuel, shipHealth, money};
+        JLabel[] labels = new JLabel[] {shipInfo, shipType, shipCargo, shipFuel, shipHealth, money, location};
         for (int id = 0; id < region.size(); id++) {
 
             JButton btn = new JButton();
@@ -98,7 +98,7 @@ public class Game extends ViewController {
             buts.update(buttons, location, region, id, ship, labels);
             cp.add(buttons.get(id), BorderLayout.CENTER);
             btn.addActionListener(new PageActionListener(currRegion, banditWon, regionPrev,
-                    buttons, money, buts, location, labels, ship));
+                    buttons, buts, labels, ship));
             cp.add(welcome, BorderLayout.CENTER);
             //view.add(map);
             cp.add(location, BorderLayout.CENTER);
@@ -135,15 +135,13 @@ public class Game extends ViewController {
         private Ship ship;
 
         public PageActionListener(Region region, Boolean banditWon, Region regionPrev,
-                                  ArrayList<JButton> buttons, JLabel money, Button buts,
-                                  JLabel location, JLabel[] shiplabels, Ship ship) {
+                                  ArrayList<JButton> buttons, Button buts
+                                  ,JLabel[] shiplabels, Ship ship) {
             this.region = region;
             this.banditWon = banditWon;
             this.regionPrev = regionPrev;
             this.buttons = buttons;
-            this.money = money;
             this.buts = buts;
-            this.location = location;
             this.shiplabels = shiplabels;
             this.ship = ship;
         }
@@ -162,8 +160,8 @@ public class Game extends ViewController {
                 System.out.println("LOOK AT THIS" + regionPrev);
                 player.setDialogOpen(true);
                 player.setSuccessfulTravel(true);
-                bandit.banditMain(regionPrev, buttons, view, money,
-                        region, buts, location, shiplabels, ship);
+                bandit.banditMain(regionPrev, buttons, view,
+                        region, buts, shiplabels, ship);
                 view.setVisible(false);
                 view.revalidate();
                 view.repaint();
@@ -198,8 +196,8 @@ public class Game extends ViewController {
                             - fuelCost);
                     player.setRegionPrev(player.getRegion1());
                     player.setRegion1(region);
-                    police.policeMain(regionPrev, buttons, view, money,
-                            region, buts, location, shiplabels, ship);
+                    police.policeMain(regionPrev, buttons, view,
+                            region, buts, shiplabels, ship);
                     view.revalidate();
                     view.repaint();
 

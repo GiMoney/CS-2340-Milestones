@@ -15,8 +15,8 @@ public class Bandit extends Game {
     protected static Bandit current;
     protected static int banditMoney = 1000;
 
-    public static void banditMain(Region regionPrev, ArrayList<JButton> buttons, JFrame mainView,
-                                  JLabel money, Region region1, Button buts, JLabel location,
+    public static void banditMain(Region regionPrev, ArrayList<JButton> buttons, JFrame mainView
+                                  , Region region1, Button buts,
                                   JLabel[] shiplabels, Ship ship) {
         view.setSize(1000, 600);
         Container cp = view.getContentPane();
@@ -119,7 +119,7 @@ public class Bandit extends Game {
             //} catch(IOException j){
 
             //}
-            money.setText("Current money: " + player.getMoney());
+            shiplabels[5].setText("Current money: " + player.getMoney());
             System.out.println(player.getMoney());
         });
 
@@ -179,9 +179,9 @@ public class Bandit extends Game {
                  */
                 System.out.println(player.getRegion1());
                 System.out.println(player.getRegionPrev());
-                location.setText("Current Location: " + player.getRegion1().getName());
+                shiplabels[6].setText("Current Location: " + player.getRegion1().getName());
                 System.out.println(player.getMoney());
-                money.setText("Current money: " + player.getMoney());
+                shiplabels[5].setText("Current money: " + player.getMoney());
             } else {
                 banditMoney = player.getMoney();
                 player.setMoney(0);
@@ -247,7 +247,7 @@ public class Bandit extends Game {
                     cp.revalidate();
                     cp.repaint();
                 }
-                location.setText("Current Location: " + player.getRegion1().getName());
+                shiplabels[6].setText("Current Location: " + player.getRegion1().getName());
                 view.dispose();
                 mainView.revalidate();
                 mainView.repaint();

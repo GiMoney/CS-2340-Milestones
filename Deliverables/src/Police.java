@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
@@ -16,20 +18,24 @@ public class Police extends Game {
     protected static int policeMoney = 1000;
     protected static double fleeNum = (Math.random() * 99);
     protected static double fightNum = (Math.random() * 99);
+    private static JLabel[] shiplabels;
+    private static JFrame mainView;
+    private static Region region1;
+    private static ArrayList<JButton> buttons;
+    private static Container cp;
 
-    public void policeMain(Region regionPrev, ArrayList<JButton> buttons, JFrame mainView,
-                                  Region region1, Button buts,
-                                  JLabel[] shiplabels, Ship ship) throws IOException {
+    public void policeMain(ArrayList<JButton> buttons, JFrame mainView,
+                           Region region1, JLabel[] shiplabels) throws IOException {
         view.setSize(1200, 600);
-        Container cp = view.getContentPane();
+        cp = view.getContentPane();
         cp.removeAll();
         cp.setLayout(new BorderLayout());
 
-        BufferedImage image;
-        image = ImageIO.read(getClass().getResource("/resource/police.jpg"));
-        JLabel label = new JLabel(new ImageIcon(image));
-        cp.add(label);
-        label.setBounds(400, 60, 256, 197);
+        createGUI();
+        Police.shiplabels = shiplabels;
+        Police.mainView = mainView;
+        Police.region1 = region1;
+        Police.buttons = buttons;
 
         /*
         if (player.getDifficulty().equals("Hard")) {
@@ -50,6 +56,27 @@ public class Police extends Game {
         JButton fight = new JButton("Engage in Combat");
         fight.setBounds(800, 290, 200, 40);
         cp.add(fight, BorderLayout.CENTER);
+
+        JLabel demand = new JLabel("The Police have suspected you of stealing " + inventory.get(0)
+                + ". What do you decide to do?");
+        demand.setBounds(0, 260, 100, 40);
+        cp.add(demand, BorderLayout.CENTER);
+
+        forfeit.addActionListener(new ForfeitListener());
+        flee.addActionListener(new FleeListener());
+        fight.addActionListener(new FightListener());
+
+
+        view.setLocationRelativeTo(null);
+        view.setVisible(true);
+    }
+
+    private void createGUI() throws IOException {
+        BufferedImage image;
+        image = ImageIO.read(getClass().getResource("/resource/police.jpg"));
+        JLabel label = new JLabel(new ImageIcon(image));
+        cp.add(label);
+        label.setBounds(400, 60, 256, 197);
 
         JLabel welcome = new JLabel("Current Difficulty: " + player.getDifficulty());
         welcome.setBounds(20, 0, 200, 40);
@@ -79,13 +106,12 @@ public class Police extends Game {
         JLabel shipHealthPrev = new JLabel(" Ship health: " + ship.getHealth());
         shipHealthPrev.setBounds(0, 220, 200, 40);
         cp.add(shipHealthPrev, BorderLayout.CENTER);
+    }
 
-        JLabel demand = new JLabel("The Police have suspected you of stealing " + inventory.get(0)
-                + ". What do you decide to do?");
-        demand.setBounds(0, 260, 100, 40);
-        cp.add(demand, BorderLayout.CENTER);
+    public static class ForfeitListener implements ActionListener {
 
-        forfeit.addActionListener(e -> {
+        @Override
+        public void actionPerformed(ActionEvent e) {
             player.setSuccessfulTravel(true);
             player.setDialogOpen(true);
             inventory.removeElementAt(0);
@@ -115,9 +141,13 @@ public class Police extends Game {
             //}
             shiplabels[5].setText("Current money: " + player.getMoney());
             System.out.println(player.getMoney());
-        });
+        }
+    }
 
-        flee.addActionListener(e -> {
+    public static class FleeListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
             if (fleeNum < player.getFleeChance()) {
                 System.out.println("is this still the same" + player.getRegionPrev());
                 player.setRegion1(player.getRegionPrev());
@@ -192,9 +222,13 @@ public class Police extends Game {
                         "Flee Failed (Did not travel and lost health, money, and the stolen item)");
 
             }
-        });
+        }
+    }
 
-        fight.addActionListener(e -> {
+    public static class FightListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
             if (fightNum < player.getFightChance()) {
                 player.setSuccessfulTravel(true);
                 player.setRegionPrev(player.getRegion1()); // now they match
@@ -254,10 +288,6 @@ public class Police extends Game {
                         "Fight Failed (Did not travel, lost money and ship health)");
 
             }
-        });
-
-
-        view.setLocationRelativeTo(null);
-        view.setVisible(true);
+        }
     }
 }

@@ -14,11 +14,13 @@ public class Bandit extends Game {
     protected static TravelUI next;
     protected static Bandit current;
     protected static int banditMoney = 1000;
+    protected static double fleeNum = (Math.random() * 99);
+    protected static double fightNum = (Math.random() * 99);
 
     public static void banditMain(Region regionPrev, ArrayList<JButton> buttons, JFrame mainView,
                                   Region region1, Button buts,
                                   JLabel[] shiplabels, Ship ship) {
-        view.setSize(1000, 600);
+        view.setSize(1200, 600);
         Container cp = view.getContentPane();
         cp.removeAll();
         cp.setLayout(new BorderLayout());
@@ -55,8 +57,11 @@ public class Bandit extends Game {
         cp.add(welcome, BorderLayout.CENTER);
         JLabel locationPrev = new JLabel("Currently traveling from: " + player.getRegionPrev());
         System.out.println("Currently traveling from:" + player.getRegionPrev());
-        locationPrev.setBounds(750, 0, 300, 40);
+        locationPrev.setBounds(750, 0, 400, 40);
         cp.add(locationPrev, BorderLayout.CENTER);
+        JLabel locationRegion1 = new JLabel("Currently traveling to: " + region1);
+        locationRegion1.setBounds(750, 50, 400, 40);
+        cp.add(locationRegion1, BorderLayout.CENTER);
         JLabel moneyPrev = new JLabel("Current money: " + player.getMoney());
         moneyPrev.setBounds(400, 0, 200, 40);
         cp.add(moneyPrev, BorderLayout.CENTER);
@@ -124,7 +129,7 @@ public class Bandit extends Game {
         });
 
         flee.addActionListener(e -> {
-            if (player.getPilot() > 10) {
+            if (fleeNum < player.getFleeChance()) {
                 System.out.println("is this still the same" + player.getRegionPrev());
                 player.setRegion1(player.getRegionPrev());
                 System.out.println("Should match above" + player.getRegionPrev());
@@ -165,8 +170,9 @@ public class Bandit extends Game {
                 //System.out.println("HELLOW WORD");
                 mainView.revalidate();
                 mainView.repaint();
-                // player.setRegionPrev(currRegion);
-                player.setRegionPrev(player.getRegion1());
+                //player.setRegionPrev(currRegion);
+                //player.setRegionPrev(player.getRegion1());
+                player.setRegion1(player.getRegion1());
                 mainView.setVisible(true);
                 JOptionPane.showMessageDialog(mainView, "Flee Succeeded (Did not travel)");
                 /*next = new TravelUI();
@@ -198,7 +204,7 @@ public class Bandit extends Game {
         });
 
         fight.addActionListener(e -> {
-            if (player.getFighter() > 4) {
+            if (fightNum < player.getFightChance()) {
                 player.setSuccessfulTravel(true);
                 player.setRegionPrev(player.getRegion1()); // now they match
                 player.setRegion1(region1);

@@ -155,7 +155,7 @@ public class Game extends ViewController {
             int fuelCost = (int) Math.ceil(
                     distance(player.getRegion1(), region) / 5.0 * pilotFactor);
 
-            if ((fuelCost != 0 && banditNum < player.getBanditChance())) {
+            if (fuelCost != 0 && banditNum < player.getBanditChance()) {
                 Bandit bandit = new Bandit();
                 regionPrev = player.getRegion1();
                 System.out.println("LOOK AT THIS" + regionPrev);
@@ -173,7 +173,7 @@ public class Game extends ViewController {
                     }
                 }*/
 
-            } else if ((fuelCost != 0 && traderNum < (player.getTraderChance()))) {
+            } else if (fuelCost != 0 && traderNum < player.getTraderChance()) {
                 player.setSuccessfulTravel(true);
                 Trader trader = new Trader();
                 try {
@@ -188,7 +188,7 @@ public class Game extends ViewController {
                 } catch (Exception j) {
                     j.printStackTrace();
                 }
-            } else if (ship.getCargoSpace() < 15 && policeNum < (player.getPoliceChance())
+            } else if (fuelCost != 0 && ship.getCargoSpace() < 17 && policeNum < (player.getPoliceChance())
                     && !player.getRegionPrev().equals(region)) {
                 player.setSuccessfulTravel(true);
                 Police police = new Police();

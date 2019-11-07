@@ -13,6 +13,10 @@ public class Player {
     private int banditChance;
     private int policeChance;
     private int traderChance;
+    private double fleeChance;
+    private double fightChance;
+    private double robChance;
+    private double negioateChance;
     private String difficulty;
     private boolean successfulTravel;
     private boolean dialogOpen;
@@ -28,8 +32,8 @@ public class Player {
         difficulty = args[1];
         if (difficulty.equals("Easy")) {
             money = 1000;
-            banditChance = 100; //change back to 10 when not testing
-            policeChance = 15;
+            banditChance = 0; //change back to 15 when not testing
+            policeChance = 0;
         } else if (difficulty.equals("Medium")) {
             money = 500;
             banditChance = 25;
@@ -41,8 +45,11 @@ public class Player {
         }
         x = 0;
         y = 0;
-        traderChance = 20;
-
+        traderChance = 100;
+        fleeChance = (5.625 * pilot) + 5;
+        fightChance = (5.625 * fighter) + 5;
+        robChance = fightChance;
+        negioateChance = (5.625 * merchant) + 5;
     }
 
     public String getRegion() {
@@ -162,4 +169,19 @@ public class Player {
         this.dialogOpen = dialogOpen;
     }
 
+    public double getFightChance() {
+        return fightChance;
+    }
+
+    public double getFleeChance() {
+        return fleeChance;
+    }
+
+    public double getNegioateChance() {
+        return negioateChance;
+    }
+
+    public double getRobChance() {
+        return robChance;
+    }
 }

@@ -11,6 +11,8 @@ import javax.imageio.ImageIO;
 public class Trader extends Game {
     private static JDialog view = new JDialog();
     private int traderCost = 4;
+    protected double robNum = (Math.random() * 99);
+    protected double negioateNum = (Math.random() * 99);
 
 
     public void displayTrader(Region region) {
@@ -131,10 +133,12 @@ public class Trader extends Game {
         });
 
         neg.addActionListener(e -> {
-            if (player.getMerchant() > 4) {
+            if (negioateNum < player.getNegioateChance()) {
                 traderCost = traderCost - 2;
                 cost.setText("Cost of each item: " + traderCost);
             } else {
+                traderCost = traderCost + 2;
+                cost.setText("Cost of each item: " + traderCost);
                 neg.setEnabled(false);
             }
         });

@@ -1,9 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import javax.imageio.ImageIO;
 
 
@@ -18,20 +17,16 @@ public class Police extends Game {
     protected static double fleeNum = (Math.random() * 99);
     protected static double fightNum = (Math.random() * 99);
 
-    public static void policeMain(Region regionPrev, ArrayList<JButton> buttons, JFrame mainView,
+    public void policeMain(Region regionPrev, ArrayList<JButton> buttons, JFrame mainView,
                                   Region region1, Button buts,
-                                  JLabel[] shiplabels, Ship ship) {
+                                  JLabel[] shiplabels, Ship ship) throws IOException {
         view.setSize(1200, 600);
         Container cp = view.getContentPane();
         cp.removeAll();
         cp.setLayout(new BorderLayout());
 
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File("./resource/police.jpg"));
-        } catch (Exception e) {
-
-        }
+        BufferedImage image;
+        image = ImageIO.read(getClass().getResource("/resource/police.jpg"));
         JLabel label = new JLabel(new ImageIcon(image));
         cp.add(label);
         label.setBounds(400, 60, 256, 197);

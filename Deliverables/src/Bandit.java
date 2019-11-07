@@ -1,9 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import javax.imageio.ImageIO;
 
 
@@ -17,9 +16,9 @@ public class Bandit extends Game {
     protected static double fleeNum = (Math.random() * 99);
     protected static double fightNum = (Math.random() * 99);
 
-    public static void banditMain(Region regionPrev, ArrayList<JButton> buttons, JFrame mainView,
-                                  Region region1, Button buts,
-                                  JLabel[] shiplabels, Ship ship) {
+    public void banditMain(ArrayList<JButton> buttons, JFrame mainView,
+                           Region region1, JLabel[] shiplabels,
+                           Ship ship) throws IOException {
         view.setSize(1200, 600);
         Container cp = view.getContentPane();
         cp.removeAll();
@@ -30,56 +29,22 @@ public class Bandit extends Game {
         } else {
             creditsDemanded = 100;
         }
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File("./resource/bandits.jpg"));
-        } catch (Exception e) {
-
-        }
-        JLabel label = new JLabel(new ImageIcon(image));
-        cp.add(label);
-        label.setBounds(300, 40, 400, 200);
-
+        createGUI(cp);
         JButton pay = new JButton("Pay the demand");
-        pay.setBounds(0, 290, 200, 40);
+        pay.setBounds(0, 350, 200, 40);
         cp.add(pay, BorderLayout.CENTER);
 
         JButton flee = new JButton("Attempt to flee");
-        flee.setBounds(400, 290, 200, 40);
+        flee.setBounds(400, 350, 200, 40);
         cp.add(flee, BorderLayout.CENTER);
 
         JButton fight = new JButton("Engage in Combat");
-        fight.setBounds(800, 290, 200, 40);
+        fight.setBounds(800, 350, 200, 40);
         cp.add(fight, BorderLayout.CENTER);
 
-        JLabel welcome = new JLabel("Current Difficulty: " + player.getDifficulty());
-        welcome.setBounds(20, 0, 200, 40);
-        cp.add(welcome, BorderLayout.CENTER);
-        JLabel locationPrev = new JLabel("Currently traveling from: " + player.getRegionPrev());
-        System.out.println("Currently traveling from:" + player.getRegionPrev());
-        locationPrev.setBounds(750, 0, 400, 40);
-        cp.add(locationPrev, BorderLayout.CENTER);
         JLabel locationRegion1 = new JLabel("Currently traveling to: " + region1);
         locationRegion1.setBounds(750, 50, 400, 40);
         cp.add(locationRegion1, BorderLayout.CENTER);
-        JLabel moneyPrev = new JLabel("Current money: " + player.getMoney());
-        moneyPrev.setBounds(400, 0, 200, 40);
-        cp.add(moneyPrev, BorderLayout.CENTER);
-        JLabel shipInfo = new JLabel("Player Ship information:");
-        shipInfo.setBounds(0, 100, 500, 40);
-        cp.add(shipInfo, BorderLayout.CENTER);
-        JLabel shipType = new JLabel(" Ship type: " + ship.getShipType());
-        shipType.setBounds(0, 130, 200, 40);
-        cp.add(shipType, BorderLayout.CENTER);
-        JLabel shipCargo = new JLabel(" Ship cargo space: " + ship.getCargoSpace());
-        shipCargo.setBounds(0, 160, 200, 40);
-        cp.add(shipCargo, BorderLayout.CENTER);
-        JLabel shipFuel = new JLabel(" Ship fuel capacity: " + ship.getFuelCapacity());
-        shipFuel.setBounds(0, 190, 200, 40);
-        cp.add(shipFuel, BorderLayout.CENTER);
-        JLabel shipHealthPrev = new JLabel(" Ship health: " + ship.getHealth());
-        shipHealthPrev.setBounds(0, 220, 200, 40);
-        cp.add(shipHealthPrev, BorderLayout.CENTER);
 
         JLabel demand = new JLabel("A bandit has attacked your ship! He demands " + creditsDemanded
                 + " credits. What do you decide to do?");
@@ -268,5 +233,40 @@ public class Bandit extends Game {
 
         view.setLocationRelativeTo(null);
         view.setVisible(true);
+    }
+
+    private void createGUI(Container cp) throws IOException {
+        BufferedImage image;
+        image = ImageIO.read(getClass().getResource("/resource/bandits.jpg"));
+
+        JLabel label = new JLabel(new ImageIcon(image));
+        cp.add(label);
+        label.setBounds(300, 40, 400, 200);
+
+        JLabel welcome = new JLabel("Current Difficulty: " + player.getDifficulty());
+        welcome.setBounds(20, 0, 200, 40);
+        cp.add(welcome, BorderLayout.CENTER);
+        JLabel locationPrev = new JLabel("Currently traveling from: " + player.getRegionPrev());
+        System.out.println("Currently traveling from:" + player.getRegionPrev());
+        locationPrev.setBounds(750, 0, 400, 40);
+        cp.add(locationPrev, BorderLayout.CENTER);
+        JLabel moneyPrev = new JLabel("Current money: " + player.getMoney());
+        moneyPrev.setBounds(400, 0, 200, 40);
+        cp.add(moneyPrev, BorderLayout.CENTER);
+        JLabel shipInfo = new JLabel("Player Ship information:");
+        shipInfo.setBounds(0, 100, 500, 40);
+        cp.add(shipInfo, BorderLayout.CENTER);
+        JLabel shipType = new JLabel(" Ship type: " + ship.getShipType());
+        shipType.setBounds(0, 130, 200, 40);
+        cp.add(shipType, BorderLayout.CENTER);
+        JLabel shipCargo = new JLabel(" Ship cargo space: " + ship.getCargoSpace());
+        shipCargo.setBounds(0, 160, 200, 40);
+        cp.add(shipCargo, BorderLayout.CENTER);
+        JLabel shipFuel = new JLabel(" Ship fuel capacity: " + ship.getFuelCapacity());
+        shipFuel.setBounds(0, 190, 200, 40);
+        cp.add(shipFuel, BorderLayout.CENTER);
+        JLabel shipHealthPrev = new JLabel(" Ship health: " + ship.getHealth());
+        shipHealthPrev.setBounds(0, 220, 200, 40);
+        cp.add(shipHealthPrev, BorderLayout.CENTER);
     }
 }

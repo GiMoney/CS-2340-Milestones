@@ -5,35 +5,31 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Trader extends Game {
     private static JDialog view = new JDialog();
     private int traderCost = 4;
     protected double robNum = (Math.random() * 99);
-    protected double negioateNum = (Math.random() * 99);
+    protected double negotiateNum = (Math.random() * 99);
 
 
-    public void displayTrader(Region region) {
+    public void displayTrader(Region region) throws IOException {
         view.setModal(true);
-        view.setSize(400, 800);
+        view.setSize(400, 750);
         Container cp = view.getContentPane();
         cp.removeAll();
         cp.setLayout(null);
 
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File("./resource/trader.jpg"));
-        } catch (Exception e) {
-
-        }
+        BufferedImage image;
+        image = ImageIO.read(getClass().getResource("/resource/trader.jpg"));
 
         player.setRegionPrev(region);
         //player.setRegion1(region);
         JLabel label = new JLabel(new ImageIcon(image));
         cp.add(label);
-        label.setBounds(200, 600, 400, 221);
+        label.setBounds(0, 500, 400, 221);
 
         JLabel marketplace = new JLabel("TRADER");
         marketplace.setBounds(0, 0, 200, 30);
@@ -133,7 +129,7 @@ public class Trader extends Game {
         });
 
         neg.addActionListener(e -> {
-            if (negioateNum < player.getNegioateChance()) {
+            if (negotiateNum < player.getNegotiateChance()) {
                 traderCost = traderCost - 2;
                 cost.setText("Cost of each item: " + traderCost);
             } else {

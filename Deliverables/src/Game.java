@@ -161,8 +161,12 @@ public class Game extends ViewController {
                 System.out.println("LOOK AT THIS" + regionPrev);
                 player.setDialogOpen(true);
                 player.setSuccessfulTravel(true);
-                bandit.banditMain(regionPrev, buttons, view,
-                        region, buts, shiplabels, ship);
+                try {
+                    bandit.banditMain(buttons, view,
+                            region, shiplabels, ship);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 view.setVisible(false);
                 view.revalidate();
                 view.repaint();

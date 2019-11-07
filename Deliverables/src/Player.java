@@ -16,7 +16,7 @@ public class Player {
     private double fleeChance;
     private double fightChance;
     private double robChance;
-    private double negioateChance;
+    private double negotiateChance;
     private String difficulty;
     private boolean successfulTravel;
     private boolean dialogOpen;
@@ -49,7 +49,7 @@ public class Player {
         fleeChance = (5.625 * pilot) + 5;
         fightChance = (5.625 * fighter) + 5;
         robChance = fightChance;
-        negioateChance = (5.625 * merchant) + 5;
+        negotiateChance = (5.625 * merchant) + 5;
     }
 
     public String getRegion() {
@@ -177,8 +177,8 @@ public class Player {
         return fleeChance;
     }
 
-    public double getNegioateChance() {
-        return negioateChance;
+    public double getNegotiateChance() {
+        return negotiateChance;
     }
 
     public double getRobChance() {

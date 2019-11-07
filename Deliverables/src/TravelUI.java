@@ -4,7 +4,6 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import javax.imageio.ImageIO;
 
 
@@ -15,7 +14,7 @@ public class TravelUI extends Game {
     private static final String IMAGE_URL = "/resource/bar.png";
 
 
-    public static void display(Region region) throws IOException {
+    public void display(Region region) throws IOException {
         ArrayList<String> images = new ArrayList<>();
         view.setModal(true);
         view.setSize(400, 500);
@@ -39,44 +38,44 @@ public class TravelUI extends Game {
         BufferedImage image;
         switch (region.getTechLevel()) {
         case PREAG :
-            image = ImageIO.read(new File("./resource/Stone.jpg"));
+            image = ImageIO.read(getClass().getResource("/resource/Stone.jpg"));
             break; // optional
 
         case AGRICULTURE :
-            image = ImageIO.read(new File("./resource/PreAg.jpg"));
+            image = ImageIO.read(getClass().getResource("/resource/PreAg.jpg"));
             break; // optional
 
         case MEDIEVAL :
-            image = ImageIO.read(new File("./resource/Medieval.jpg"));
+            image = ImageIO.read(getClass().getResource("/resource/Medieval.jpg"));
             break;
 
         case RENAISSANCE :
-            image = ImageIO.read(new File("./resource/R.jpg"));
+            image = ImageIO.read(getClass().getResource("/resource/R.jpg"));
             break;
 
         case INDUSTRIAL :
-            image = ImageIO.read(new File("./resource/I.jpg"));
+            image = ImageIO.read(getClass().getResource("/resource/I.jpg"));
             break;
 
         case MODERN :
-            image = ImageIO.read(new File("./resource/M.jpg"));
+            image = ImageIO.read(getClass().getResource("/resource/M.jpg"));
             break;
 
         case FUTURISTIC :
-            image = ImageIO.read(new File("./resource/f.jpg"));
+            image = ImageIO.read(getClass().getResource("/resource/f.jpg"));
             break;
 
         case DARK :
-            image = ImageIO.read(new File("./resource/d.jpg"));
+            image = ImageIO.read(getClass().getResource("/resource/d.jpg"));
             break;
 
         case STEAMPUNK :
-            image = ImageIO.read(new File("./resource/s.jpg"));
+            image = ImageIO.read(getClass().getResource("/resource/s.jpg"));
             break;
 
         // You can have any number of case statements.
         default : // Optional
-            image = ImageIO.read(new File("./resource/c.jpg"));
+            image = ImageIO.read(getClass().getResource("/resource/c.jpg"));
         }
 
         JLabel label = new JLabel(new ImageIcon(image));

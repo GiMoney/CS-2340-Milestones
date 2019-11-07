@@ -162,8 +162,7 @@ public class Game extends ViewController {
                 player.setDialogOpen(true);
                 player.setSuccessfulTravel(true);
                 try {
-                    bandit.banditMain(buttons, view,
-                            region, shiplabels, ship);
+                    bandit.banditMain(buttons, view, region, shiplabels);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -202,8 +201,7 @@ public class Game extends ViewController {
                             - fuelCost);
                     player.setRegionPrev(player.getRegion1());
                     player.setRegion1(region);
-                    police.policeMain(regionPrev, buttons, view,
-                            region, buts, shiplabels, ship);
+                    police.policeMain(buttons, view, region, shiplabels);
                     view.revalidate();
                     view.repaint();
 

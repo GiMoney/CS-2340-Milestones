@@ -24,8 +24,7 @@ public class Bandit extends Game {
     private static Container cp;
 
     public void banditMain(ArrayList<JButton> buttons, JFrame mainView,
-                           Region region1, JLabel[] shiplabels,
-                           Ship ship) throws IOException {
+                           Region region1, JLabel[] shiplabels) throws IOException {
         view.setSize(1200, 600);
         cp = view.getContentPane();
         cp.removeAll();

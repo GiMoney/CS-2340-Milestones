@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
@@ -7,20 +9,25 @@ import javax.imageio.ImageIO;
 
 
 public class Bandit extends Game {
-    protected static JDialog view = new JDialog();
-    protected static int creditsDemanded;
-    protected static boolean fleePressed = false;
+    private static JDialog view = new JDialog();
+    private static int creditsDemanded;
+    private static boolean fleePressed = false;
     protected static TravelUI next;
     protected static Bandit current;
-    protected static int banditMoney = 1000;
-    protected static double fleeNum = (Math.random() * 99);
-    protected static double fightNum = (Math.random() * 99);
+    private static int banditMoney = 1000;
+    private static double fleeNum = (Math.random() * 99);
+    private static double fightNum = (Math.random() * 99);
+    private static JLabel[] shiplabels;
+    private static JFrame mainView;
+    private static Region region1;
+    private static ArrayList<JButton> buttons;
+    private static Container cp;
 
     public void banditMain(ArrayList<JButton> buttons, JFrame mainView,
                            Region region1, JLabel[] shiplabels,
                            Ship ship) throws IOException {
         view.setSize(1200, 600);
-        Container cp = view.getContentPane();
+        cp = view.getContentPane();
         cp.removeAll();
         cp.setLayout(new BorderLayout());
 
@@ -29,7 +36,11 @@ public class Bandit extends Game {
         } else {
             creditsDemanded = 100;
         }
-        createGUI(cp);
+        createGUI();
+        Bandit.shiplabels = shiplabels;
+        Bandit.mainView = mainView;
+        Bandit.region1 = region1;
+        Bandit.buttons = buttons;
         JButton pay = new JButton("Pay the demand");
         pay.setBounds(0, 350, 200, 40);
         cp.add(pay, BorderLayout.CENTER);
@@ -51,7 +62,56 @@ public class Bandit extends Game {
         demand.setBounds(0, 260, 100, 40);
         cp.add(demand, BorderLayout.CENTER);
 
-        pay.addActionListener(e -> {
+        pay.addActionListener(new PayListener());
+
+        flee.addActionListener(new FleeListener());
+
+        fight.addActionListener(new FightListener());
+
+
+        view.setLocationRelativeTo(null);
+        view.setVisible(true);
+    }
+
+    private void createGUI() throws IOException {
+        BufferedImage image;
+        image = ImageIO.read(getClass().getResource("/resource/bandits.jpg"));
+
+        JLabel label = new JLabel(new ImageIcon(image));
+        cp.add(label);
+        label.setBounds(300, 40, 400, 200);
+
+        JLabel welcome = new JLabel("Current Difficulty: " + player.getDifficulty());
+        welcome.setBounds(20, 0, 200, 40);
+        cp.add(welcome, BorderLayout.CENTER);
+        JLabel locationPrev = new JLabel("Currently traveling from: " + player.getRegionPrev());
+        System.out.println("Currently traveling from:" + player.getRegionPrev());
+        locationPrev.setBounds(750, 0, 400, 40);
+        cp.add(locationPrev, BorderLayout.CENTER);
+        JLabel moneyPrev = new JLabel("Current money: " + player.getMoney());
+        moneyPrev.setBounds(400, 0, 200, 40);
+        cp.add(moneyPrev, BorderLayout.CENTER);
+        JLabel shipInfo = new JLabel("Player Ship information:");
+        shipInfo.setBounds(0, 100, 500, 40);
+        cp.add(shipInfo, BorderLayout.CENTER);
+        JLabel shipType = new JLabel(" Ship type: " + ship.getShipType());
+        shipType.setBounds(0, 130, 200, 40);
+        cp.add(shipType, BorderLayout.CENTER);
+        JLabel shipCargo = new JLabel(" Ship cargo space: " + ship.getCargoSpace());
+        shipCargo.setBounds(0, 160, 200, 40);
+        cp.add(shipCargo, BorderLayout.CENTER);
+        JLabel shipFuel = new JLabel(" Ship fuel capacity: " + ship.getFuelCapacity());
+        shipFuel.setBounds(0, 190, 200, 40);
+        cp.add(shipFuel, BorderLayout.CENTER);
+        JLabel shipHealthPrev = new JLabel(" Ship health: " + ship.getHealth());
+        shipHealthPrev.setBounds(0, 220, 200, 40);
+        cp.add(shipHealthPrev, BorderLayout.CENTER);
+    }
+
+    public static class PayListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
             player.setSuccessfulTravel(true);
             player.setDialogOpen(true);
             if ((player.getMoney() - creditsDemanded) < 0) {
@@ -91,9 +151,13 @@ public class Bandit extends Game {
             //}
             shiplabels[5].setText("Current money: " + player.getMoney());
             System.out.println(player.getMoney());
-        });
+        }
+    }
 
-        flee.addActionListener(e -> {
+    public static class FleeListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
             if (fleeNum < player.getFleeChance()) {
                 System.out.println("is this still the same" + player.getRegionPrev());
                 player.setRegion1(player.getRegionPrev());
@@ -166,9 +230,13 @@ public class Bandit extends Game {
                         "Flee Failed (Did not travel and Lost Health and Money)");
 
             }
-        });
+        }
+    }
 
-        fight.addActionListener(e -> {
+    public static class FightListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
             if (fightNum < player.getFightChance()) {
                 player.setSuccessfulTravel(true);
                 player.setRegionPrev(player.getRegion1()); // now they match
@@ -228,45 +296,6 @@ public class Bandit extends Game {
                         "Fight Failed (Did not travel, lost money and ship health)");
 
             }
-        });
-
-
-        view.setLocationRelativeTo(null);
-        view.setVisible(true);
-    }
-
-    private void createGUI(Container cp) throws IOException {
-        BufferedImage image;
-        image = ImageIO.read(getClass().getResource("/resource/bandits.jpg"));
-
-        JLabel label = new JLabel(new ImageIcon(image));
-        cp.add(label);
-        label.setBounds(300, 40, 400, 200);
-
-        JLabel welcome = new JLabel("Current Difficulty: " + player.getDifficulty());
-        welcome.setBounds(20, 0, 200, 40);
-        cp.add(welcome, BorderLayout.CENTER);
-        JLabel locationPrev = new JLabel("Currently traveling from: " + player.getRegionPrev());
-        System.out.println("Currently traveling from:" + player.getRegionPrev());
-        locationPrev.setBounds(750, 0, 400, 40);
-        cp.add(locationPrev, BorderLayout.CENTER);
-        JLabel moneyPrev = new JLabel("Current money: " + player.getMoney());
-        moneyPrev.setBounds(400, 0, 200, 40);
-        cp.add(moneyPrev, BorderLayout.CENTER);
-        JLabel shipInfo = new JLabel("Player Ship information:");
-        shipInfo.setBounds(0, 100, 500, 40);
-        cp.add(shipInfo, BorderLayout.CENTER);
-        JLabel shipType = new JLabel(" Ship type: " + ship.getShipType());
-        shipType.setBounds(0, 130, 200, 40);
-        cp.add(shipType, BorderLayout.CENTER);
-        JLabel shipCargo = new JLabel(" Ship cargo space: " + ship.getCargoSpace());
-        shipCargo.setBounds(0, 160, 200, 40);
-        cp.add(shipCargo, BorderLayout.CENTER);
-        JLabel shipFuel = new JLabel(" Ship fuel capacity: " + ship.getFuelCapacity());
-        shipFuel.setBounds(0, 190, 200, 40);
-        cp.add(shipFuel, BorderLayout.CENTER);
-        JLabel shipHealthPrev = new JLabel(" Ship health: " + ship.getHealth());
-        shipHealthPrev.setBounds(0, 220, 200, 40);
-        cp.add(shipHealthPrev, BorderLayout.CENTER);
+        }
     }
 }

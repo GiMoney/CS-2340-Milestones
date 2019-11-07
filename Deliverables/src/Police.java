@@ -13,7 +13,7 @@ public class Police extends Game {
     protected static boolean fleePressed = false;
     protected static TravelUI next;
     //protected static Bandit current;
-    protected static int PoliceMoney = 1000;
+    protected static int policeMoney = 1000;
     protected static double fleeNum = (Math.random() * 99);
     protected static double fightNum = (Math.random() * 99);
 
@@ -81,7 +81,7 @@ public class Police extends Game {
         cp.add(shipHealthPrev, BorderLayout.CENTER);
 
         JLabel demand = new JLabel("The Police have suspected you of stealing " + inventory.get(0)
-                +". What do you decide to do?");
+                + ". What do you decide to do?");
         demand.setBounds(0, 260, 100, 40);
         cp.add(demand, BorderLayout.CENTER);
 
@@ -178,14 +178,14 @@ public class Police extends Game {
                 System.out.println(player.getMoney());
                 shiplabels[5].setText("Current money: " + player.getMoney());
             } else {
-                PoliceMoney = player.getMoney();
+                policeMoney = player.getMoney();
                 player.setMoney(0);
                 inventory.removeElementAt(0);
                 ship.setCargoSpace(ship.getCargoSpace() + 1);
                 shiplabels[4].setText(" Ship health: " + (ship.getHealth() - 20));
                 shiplabels[5].setText("Current money: " + player.getMoney());
                 ship.setHealth(ship.getHealth() - 20);
-                System.out.println(PoliceMoney);
+                System.out.println(policeMoney);
                 view.dispose();
                 mainView.setVisible(true);
                 JOptionPane.showMessageDialog(mainView,
@@ -199,19 +199,19 @@ public class Police extends Game {
                 player.setSuccessfulTravel(true);
                 player.setRegionPrev(player.getRegion1()); // now they match
                 player.setRegion1(region1);
-                player.setMoney(player.getMoney() + PoliceMoney);
+                player.setMoney(player.getMoney() + policeMoney);
                 mainView.revalidate();
                 mainView.repaint();
                 mainView.setVisible(true);
                 JOptionPane.showMessageDialog(mainView,
                         "Fight Succeeded (Travel to new Region and won money)");
             } else {
-                PoliceMoney = player.getMoney();
+                policeMoney = player.getMoney();
                 player.setMoney(0);
                 shiplabels[4].setText(" Ship health: " + (ship.getHealth() - 20));
                 shiplabels[5].setText("Current money: " + player.getMoney());
                 ship.setHealth(ship.getHealth() - 20);
-                System.out.println(PoliceMoney);
+                System.out.println(policeMoney);
                 System.out.println("is this still the same" + player.getRegionPrev());
                 player.setRegion1(player.getRegionPrev());
                 System.out.println("Should match above" + player.getRegionPrev());

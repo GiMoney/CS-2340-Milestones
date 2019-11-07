@@ -192,7 +192,8 @@ public class Game extends ViewController {
                 } catch (Exception j) {
                     j.printStackTrace();
                 }
-            } else if (fuelCost != 0 && ship.getCargoSpace() < 17 && policeNum < (player.getPoliceChance())
+            } else if (fuelCost != 0 && ship.getCargoSpace() < 17
+                    && policeNum < (player.getPoliceChance())
                     && !player.getRegionPrev().equals(region)) {
                 player.setSuccessfulTravel(true);
                 Police police = new Police();

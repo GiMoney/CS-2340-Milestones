@@ -31,7 +31,8 @@ public class Police extends Game {
         cp.removeAll();
         cp.setLayout(new BorderLayout());
 
-        createGUI();
+
+        createGUI(region1);
         Police.shiplabels = shiplabels;
         Police.mainView = mainView;
         Police.region1 = region1;
@@ -71,7 +72,7 @@ public class Police extends Game {
         view.setVisible(true);
     }
 
-    private void createGUI() throws IOException {
+    private void createGUI(Region region1) throws IOException {
         BufferedImage image;
         image = ImageIO.read(getClass().getResource("/resource/police.jpg"));
         JLabel label = new JLabel(new ImageIcon(image));
@@ -208,6 +209,27 @@ public class Police extends Game {
                 System.out.println(player.getMoney());
                 shiplabels[5].setText("Current money: " + player.getMoney());
             } else {
+                for (int id = 0; id < region.size(); id++) {
+
+                    int x = (player.getRegionPrev().getX() - region.get(id).getX());
+                    int y = (player.getRegionPrev().getY() - region.get(id).getY());
+                    int distance = (int) Math.sqrt(((x * x) + (y * y)));
+
+                    double pilotFactor = (player.getPilot() > 0) ? 1.0 / player.getPilot() : 1;
+                    int fuelCost = (int) Math.ceil(distance / 5.0 * pilotFactor);
+                    //System.out.println(buttons.get(id).getText());
+                    buttons.get(id).setText(region.get(id).toString() + " / "
+                            + "distance: " + distance
+                            + " / " + "Fuel Cost: -" + fuelCost);
+                    // System.out.println("After" + buttons.get(id).getText());
+                    buttons.get(id).setBounds(view.getWidth() / 2 - 100, (id * 40) + 100, 500, 40);
+                    currRegion = region.get(id);
+                    //buts.update2(buttons, location, region, id, ship, labels);
+                    cp.revalidate();
+                    cp.repaint();
+                    view.dispose();
+                }
+                player.setRegion1(player.getRegionPrev());
                 policeMoney = player.getMoney();
                 player.setMoney(0);
                 inventory.removeElementAt(0);

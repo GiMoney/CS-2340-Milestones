@@ -32,8 +32,8 @@ public class Player {
         difficulty = args[1];
         if (difficulty.equals("Easy")) {
             money = 1000;
-            banditChance = 0; //change back to 15 when not testing
-            policeChance = 0;
+            banditChance = 15; //change back to 15 when not testing
+            policeChance = 15;
         } else if (difficulty.equals("Medium")) {
             money = 500;
             banditChance = 25;
@@ -45,7 +45,7 @@ public class Player {
         }
         x = 0;
         y = 0;
-        traderChance = 100;
+        traderChance = 20;
         fleeChance = (5.625 * pilot) + 5;
         fightChance = (5.625 * fighter) + 5;
         robChance = fightChance;

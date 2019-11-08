@@ -67,9 +67,9 @@ public class Trader extends Game {
         neg.setBounds(100, 110, 60, 20);
         cp.add(neg, BorderLayout.CENTER);
 
-        JButton attack = new JButton("Attack");
-        attack.setBounds(150, 110, 60, 20);
-        cp.add(attack, BorderLayout.CENTER);
+        JButton rob = new JButton("Rob");
+        rob.setBounds(150, 110, 60, 20);
+        cp.add(rob, BorderLayout.CENTER);
 
         JList jList = new JList();
         jList.setBounds(30, 140, 150, 310);
@@ -135,8 +135,20 @@ public class Trader extends Game {
             } else {
                 traderCost = traderCost + 2;
                 cost.setText("Cost of each item: " + traderCost);
-                neg.setEnabled(false);
             }
+            neg.setEnabled(false);
+        });
+
+        rob.addActionListener(e -> {
+            if (robNum < player.getRobChance()) {
+                inventory.addElement(marketside.get(1));
+                marketside.removeElementAt(1);
+                ship.setCargoSpace(ship.getCargoSpace() - 1);
+                cargo.setText("Cargo: " + ship.getCargoSpace());
+            } else {
+                ship.setHealth(ship.getHealth() - 20);
+            }
+            rob.setEnabled(false);
         });
 
         view.setLocation(1000, 300);

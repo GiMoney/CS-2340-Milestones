@@ -15,6 +15,9 @@ public class Market extends Game {
         cp.removeAll();
         cp.setLayout(null);
 
+        int repairDiscount = player.getRepairDiscount() / 10;
+        int repairCost = 10 - repairDiscount;
+
         JLabel marketplace = new JLabel("Market Place");
         marketplace.setBounds(0, 0, 200, 30);
         cp.add(marketplace, BorderLayout.CENTER);
@@ -27,6 +30,10 @@ public class Market extends Game {
         fuel.setBounds(30, 30, 100, 100);
         cp.add(fuel, BorderLayout.CENTER);
 
+        JLabel health = new JLabel("Health: " + ship.getHealth());
+        health.setBounds(30, 50, 100, 100);
+        cp.add(health, BorderLayout.CENTER);
+
         JLabel cargo = new JLabel("Cargo: " + ship.getCargoSpace());
         cargo.setBounds(200, 50, 100, 100);
         cp.add(cargo, BorderLayout.CENTER);
@@ -34,6 +41,10 @@ public class Market extends Game {
         JLabel money = new JLabel("Money: " + player.getMoney());
         money.setBounds(200, 10, 100, 100);
         cp.add(money, BorderLayout.CENTER);
+
+        JLabel repairPrice = new JLabel("Price of repairing ship: " +  repairCost);
+        repairPrice.setBounds(200, 0, 200, 100);
+        cp.add(repairPrice, BorderLayout.CENTER);
 
         JLabel cost = new JLabel("Cost of each item: " + currRegion.priceCalculator(20, player));
         cost.setBounds(200, 30, 200, 100);
@@ -65,7 +76,31 @@ public class Market extends Game {
             int remainingMon = player.getMoney() - currRegion.priceCalculator(20, player);
             if (jList.getSelectedValue() != null && remainingMon >= 0
                     && ship.getCargoSpace() - 1 >= 0) {
-                if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
+                if (jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
+                    if (!(ship.getFuelCapacity() + 10 > 100)) {
+                        ship.setFuelCapacity(ship.getFuelCapacity() + 10);
+                        player.setMoney(remainingMon);
+                    }
+                    /*
+                    if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
+                        ship.setCargoSpace(ship.getCargoSpace() - 1);
+                    }
+                    */
+                    fuel.setText("Fuel: " + ship.getFuelCapacity());
+                    //cargo.setText("Cargo: " + ship.getCargoSpace());
+                } else if (jList.getSelectedValue().equals(currRegion.getItems().get(1))) {
+                    if (!(ship.getHealth() + 10 > 100)) {
+                        ship.setHealth(ship.getHealth() + 10);
+                        player.setMoney(player.getMoney() - repairCost);
+                    }
+                    /*
+                    if (!jList.getSelectedValue().equals(currRegion.getItems().get(1))) {
+                        ship.setCargoSpace(ship.getCargoSpace() - 1);
+                    }
+                    */
+                    health.setText("Health: " + ship.getHealth());
+                    //cargo.setText("Cargo: " + ship.getCargoSpace());
+                } else {
                     inventory.addElement(jList.getSelectedValue());
                     marketside.removeElement(jList.getSelectedValue());
                     currRegion.getItems().remove(jList.getSelectedValue());
@@ -74,16 +109,6 @@ public class Market extends Game {
                     ship.setCargoSpace(ship.getCargoSpace() - 1);
                     cargo.setText("Cargo: " + ship.getCargoSpace());
                     player.setMoney(remainingMon);
-                } else {
-                    if (!(ship.getFuelCapacity() + 10 > 100)) {
-                        ship.setFuelCapacity(ship.getFuelCapacity() + 10);
-                        player.setMoney(remainingMon);
-                    }
-                    if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
-                        ship.setCargoSpace(ship.getCargoSpace() - 1);
-                    }
-                    fuel.setText("Fuel: " + ship.getFuelCapacity());
-                    cargo.setText("Cargo: " + ship.getCargoSpace());
                 }
                 money.setText("Money: " + player.getMoney());
             }

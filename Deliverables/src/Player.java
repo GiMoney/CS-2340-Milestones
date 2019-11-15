@@ -17,6 +17,7 @@ public class Player {
     private double fightChance;
     private double robChance;
     private double negotiateChance;
+    private int repairDiscount;
     private String difficulty;
     private boolean successfulTravel;
     private boolean dialogOpen;
@@ -50,6 +51,12 @@ public class Player {
         fightChance = (5.625 * fighter) + 5;
         robChance = fightChance;
         negotiateChance = (5.625 * merchant) + 5;
+        if (engineer == 0) {
+            repairDiscount = 0;
+        } else {
+            repairDiscount = (5 * engineer) + 10;
+        }
+
     }
 
     public String getRegion() {
@@ -183,5 +190,9 @@ public class Player {
 
     public double getRobChance() {
         return robChance;
+    }
+
+    public int getRepairDiscount() {
+        return repairDiscount;
     }
 }

@@ -10,6 +10,7 @@ public class Player {
     private int money;
     private int x;
     private int y;
+    private int karma;
     private int banditChance;
     private int policeChance;
     private int traderChance;
@@ -32,20 +33,20 @@ public class Player {
         difficulty = args[1];
         if (difficulty.equals("Easy")) {
             money = 1000;
-            banditChance = 0; //change back to 15 when not testing
-            policeChance = 0;
+            banditChance = 100 - karma; //change back to 15 when not testing
+            policeChance = 15 - karma;
         } else if (difficulty.equals("Medium")) {
             money = 500;
-            banditChance = 25;
-            policeChance = 25;
+            banditChance = 25 - karma;
+            policeChance = 25 - karma;
         } else {
             money = 100;
-            banditChance = 40;
-            policeChance = 40;
+            banditChance = 40 - karma;
+            policeChance = 40 - karma;
         }
         x = 0;
         y = 0;
-        traderChance = 100;
+        traderChance = 20 + karma;
         fleeChance = (5.625 * pilot) + 5;
         fightChance = (5.625 * fighter) + 5;
         robChance = fightChance;
@@ -136,6 +137,7 @@ public class Player {
     public void setY(int y) {
         this.y = y;
     }
+    public void setKarma(int karma) { this.karma = karma;}
 
     public int getBanditChance() {
         return banditChance;
@@ -184,4 +186,7 @@ public class Player {
     public double getRobChance() {
         return robChance;
     }
+
+    public int getKarma() { return karma; }
+
 }

@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.util.HashMap;
 
 public class PlayerConfigurationView {
-    private static JFrame view = new JFrame();
+    private static JFrame view;
     private static int maxPoints = 0;
     private static JTextField nameField;
     private static JComboBox<Object> diffList;
@@ -15,6 +15,7 @@ public class PlayerConfigurationView {
     private static JFormattedTextField eSkill;
 
     public static void main(String[] args) {
+        view = new JFrame();
         view.setSize(500, 600);
         Container cp = view.getContentPane();
         cp.setLayout(new BorderLayout());

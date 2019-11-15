@@ -3,9 +3,9 @@ import java.awt.FlowLayout;
 import java.awt.event.*;
 
 public class StartGameView {
-    private static JFrame view = new JFrame();
-
+    private static JFrame view;
     public static void main(String[] args) {
+        view = new JFrame();
         view.setSize(500, 600);
 
         JButton startGameButton = new JButton("Start Game!");
@@ -14,8 +14,8 @@ public class StartGameView {
 
         JLabel welcome = new JLabel("Welcome to Space Trader!");
 
-        startGameButton.setBounds(sgbX, sgbY, 100, 40);
-        welcome.setBounds(sgbX - 25, sgbY - 100, 200, 40);
+        startGameButton.setBounds(sgbX, sgbY, 1000, 40);
+        welcome.setBounds(sgbX - 25, sgbY - 100, 2000, 40);
 
         startGameButton.addActionListener(new SegueListener());
 

@@ -9,11 +9,12 @@ import javax.imageio.ImageIO;
 
 
 public class Bandit extends Game {
-    private static JDialog view = new JDialog();
+    private static JDialog view;
     private static int creditsDemanded;
     private static boolean fleePressed = false;
     protected static TravelUI next;
     protected static Bandit current;
+    protected static EndGame end;
     private static int banditMoney = 1000;
     private static double fleeNum = (Math.random() * 99);
     private static double fightNum = (Math.random() * 99);
@@ -25,6 +26,7 @@ public class Bandit extends Game {
 
     public void banditMain(ArrayList<JButton> buttons, JFrame mainView,
                            Region region1, JLabel[] shiplabels) throws IOException {
+        view = new JDialog();
         view.setSize(1200, 600);
         cp = view.getContentPane();
         cp.removeAll();
@@ -135,21 +137,19 @@ public class Bandit extends Game {
                 System.out.println("SHip health2" + ship.getHealth());
                 JOptionPane.showMessageDialog(mainView, "Payment Succeeded");
             }
-            view.dispose();
-            mainView.setVisible(true);
-            mainView.revalidate();
-            mainView.repaint();
-            player.setSuccessfulTravel(true);
-            player.setRegionPrev(player.getRegion1()); // now they match
-            player.setRegion1(region1);
-            //next = new TravelUI();
-            //try{
-            //  next.display(player.getRegion1());
-            //} catch(IOException j){
-
-            //}
-            shiplabels[5].setText("Current money: " + player.getMoney());
-            System.out.println(player.getMoney());
+            if (ship.getHealth() <= 0) {
+                end.display(false);
+                view.dispose();
+            } else {
+                view.dispose();
+                mainView.setVisible(true);
+                mainView.revalidate();
+                mainView.repaint();
+                player.setSuccessfulTravel(true);
+                player.setRegionPrev(player.getRegion1()); // now they match
+                player.setRegion1(region1);
+                shiplabels[5].setText("Current money: " + player.getMoney());
+            }
         }
     }
 
@@ -157,6 +157,7 @@ public class Bandit extends Game {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            player.setKarma(player.getKarma() + 1);
             if (fleeNum < player.getFleeChance()) {
                 System.out.println("is this still the same" + player.getRegionPrev());
                 player.setRegion1(player.getRegionPrev());
@@ -222,9 +223,15 @@ public class Bandit extends Game {
                 shiplabels[4].setText(" Ship health: " + (ship.getHealth() - 20));
                 shiplabels[5].setText("Current money: " + player.getMoney());
                 ship.setHealth(ship.getHealth() - 20);
+
                 System.out.println(banditMoney);
-                view.dispose();
-                mainView.setVisible(true);
+                if (ship.getHealth() <= 0) {
+                    end.display(false);
+                    view.dispose();
+                } else {
+                    view.dispose();
+                    mainView.setVisible(true);
+                }
                 JOptionPane.showMessageDialog(mainView,
                         "Flee Failed (Did not travel and Lost Health and Money)");
 
@@ -236,6 +243,7 @@ public class Bandit extends Game {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            player.setKarma(player.getKarma() - 1);
             if (fightNum < player.getFightChance()) {
                 player.setSuccessfulTravel(true);
                 player.setRegionPrev(player.getRegion1()); // now they match
@@ -252,7 +260,6 @@ public class Bandit extends Game {
                 shiplabels[4].setText(" Ship health: " + (ship.getHealth() - 20));
                 shiplabels[5].setText("Current money: " + player.getMoney());
                 ship.setHealth(ship.getHealth() - 20);
-                System.out.println(banditMoney);
                 System.out.println("is this still the same" + player.getRegionPrev());
                 player.setRegion1(player.getRegionPrev());
                 System.out.println("Should match above" + player.getRegionPrev());
@@ -286,11 +293,16 @@ public class Bandit extends Game {
                     cp.repaint();
                 }
                 shiplabels[6].setText("Current Location: " + player.getRegion1().getName());
-                view.dispose();
-                mainView.revalidate();
-                mainView.repaint();
-                player.setRegionPrev(player.getRegion1());
-                mainView.setVisible(true);
+                if (ship.getHealth() <= 0) {
+                    end.display(false);
+                    view.dispose();
+                } else {
+                    view.dispose();
+                    mainView.revalidate();
+                    mainView.repaint();
+                    player.setRegionPrev(player.getRegion1());
+                    mainView.setVisible(true);
+                }
                 JOptionPane.showMessageDialog(mainView,
                         "Fight Failed (Did not travel, lost money and ship health)");
 

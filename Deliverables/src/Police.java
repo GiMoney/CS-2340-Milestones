@@ -10,10 +10,11 @@ import javax.imageio.ImageIO;
 
 
 public class Police extends Game {
-    protected static JDialog view = new JDialog();
+    protected static JDialog view;
     //protected static int creditsDemanded;
     protected static boolean fleePressed = false;
     protected static TravelUI next;
+    protected static EndGame end;
     //protected static Bandit current;
     protected static int policeMoney = 1000;
     protected static double fleeNum = (Math.random() * 99);
@@ -26,12 +27,14 @@ public class Police extends Game {
 
     public void policeMain(ArrayList<JButton> buttons, JFrame mainView,
                            Region region1, JLabel[] shiplabels) throws IOException {
+        view = new JDialog();
         view.setSize(1200, 600);
         cp = view.getContentPane();
         cp.removeAll();
         cp.setLayout(new BorderLayout());
 
-        createGUI();
+
+        createGUI(region1);
         Police.shiplabels = shiplabels;
         Police.mainView = mainView;
         Police.region1 = region1;
@@ -71,7 +74,7 @@ public class Police extends Game {
         view.setVisible(true);
     }
 
-    private void createGUI() throws IOException {
+    private void createGUI(Region region1) throws IOException {
         BufferedImage image;
         image = ImageIO.read(getClass().getResource("/resource/police.jpg"));
         JLabel label = new JLabel(new ImageIcon(image));
@@ -116,7 +119,7 @@ public class Police extends Game {
             player.setDialogOpen(true);
             inventory.removeElementAt(0);
             ship.setCargoSpace(ship.getCargoSpace() + 1);
-
+            player.setKarma(player.getKarma() + 1);
             shiplabels[0].setText("Player Ship information: ");
             shiplabels[1].setText(" Ship type: " + ship.getShipType());
             shiplabels[2].setText(" Ship cargo space: " + ship.getCargoSpace());
@@ -126,21 +129,19 @@ public class Police extends Game {
             ship.setHealth(ship.getHealth() - 20);
             JOptionPane.showMessageDialog(view,
                     "Payment Succeeded (Lost 'stolen' item) but Traveled to new Region");
-            view.dispose();
-            mainView.setVisible(true);
-            mainView.revalidate();
-            mainView.repaint();
-            player.setSuccessfulTravel(true);
-            player.setRegionPrev(player.getRegion1()); // now they match
-            player.setRegion1(region1);
-            //next = new TravelUI();
-            //try{
-            //  next.display(player.getRegion1());
-            //} catch(IOException j){
-
-            //}
-            shiplabels[5].setText("Current money: " + player.getMoney());
-            System.out.println(player.getMoney());
+            if (ship.getHealth() <= 0) {
+                end.display(false);
+                view.dispose();
+            } else {
+                view.dispose();
+                mainView.setVisible(true);
+                mainView.revalidate();
+                mainView.repaint();
+                player.setSuccessfulTravel(true);
+                player.setRegionPrev(player.getRegion1()); // now they match
+                player.setRegion1(region1);
+                shiplabels[5].setText("Current money: " + player.getMoney());
+            }
         }
     }
 
@@ -148,6 +149,7 @@ public class Police extends Game {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            player.setKarma(player.getKarma() - 1);
             if (fleeNum < player.getFleeChance()) {
                 System.out.println("is this still the same" + player.getRegionPrev());
                 player.setRegion1(player.getRegionPrev());
@@ -208,6 +210,27 @@ public class Police extends Game {
                 System.out.println(player.getMoney());
                 shiplabels[5].setText("Current money: " + player.getMoney());
             } else {
+                for (int id = 0; id < region.size(); id++) {
+
+                    int x = (player.getRegionPrev().getX() - region.get(id).getX());
+                    int y = (player.getRegionPrev().getY() - region.get(id).getY());
+                    int distance = (int) Math.sqrt(((x * x) + (y * y)));
+
+                    double pilotFactor = (player.getPilot() > 0) ? 1.0 / player.getPilot() : 1;
+                    int fuelCost = (int) Math.ceil(distance / 5.0 * pilotFactor);
+                    //System.out.println(buttons.get(id).getText());
+                    buttons.get(id).setText(region.get(id).toString() + " / "
+                            + "distance: " + distance
+                            + " / " + "Fuel Cost: -" + fuelCost);
+                    // System.out.println("After" + buttons.get(id).getText());
+                    buttons.get(id).setBounds(view.getWidth() / 2 - 100, (id * 40) + 100, 500, 40);
+                    currRegion = region.get(id);
+                    //buts.update2(buttons, location, region, id, ship, labels);
+                    cp.revalidate();
+                    cp.repaint();
+                    view.dispose();
+                }
+                player.setRegion1(player.getRegionPrev());
                 policeMoney = player.getMoney();
                 player.setMoney(0);
                 inventory.removeElementAt(0);
@@ -216,8 +239,13 @@ public class Police extends Game {
                 shiplabels[5].setText("Current money: " + player.getMoney());
                 ship.setHealth(ship.getHealth() - 20);
                 System.out.println(policeMoney);
-                view.dispose();
-                mainView.setVisible(true);
+                if (ship.getHealth() <= 0) {
+                    end.display(false);
+                    view.dispose();
+                } else {
+                    view.dispose();
+                    mainView.setVisible(true);
+                }
                 JOptionPane.showMessageDialog(mainView,
                         "Flee Failed (Did not travel and lost health, money, and the stolen item)");
 
@@ -229,6 +257,7 @@ public class Police extends Game {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            player.setKarma(player.getKarma() - 1);
             if (fightNum < player.getFightChance()) {
                 player.setSuccessfulTravel(true);
                 player.setRegionPrev(player.getRegion1()); // now they match
@@ -279,11 +308,16 @@ public class Police extends Game {
                     cp.repaint();
                 }
                 shiplabels[6].setText("Current Location: " + player.getRegion1().getName());
-                view.dispose();
-                mainView.revalidate();
-                mainView.repaint();
-                player.setRegionPrev(player.getRegion1());
-                mainView.setVisible(true);
+                if (ship.getHealth() <= 0) {
+                    end.display(false);
+                    view.dispose();
+                } else {
+                    view.dispose();
+                    mainView.revalidate();
+                    mainView.repaint();
+                    player.setRegionPrev(player.getRegion1());
+                    mainView.setVisible(true);
+                }
                 JOptionPane.showMessageDialog(mainView,
                         "Fight Failed (Did not travel, lost money and ship health)");
 

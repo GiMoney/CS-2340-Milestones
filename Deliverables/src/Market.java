@@ -6,9 +6,11 @@ import javax.swing.JButton;
 import javax.swing.JList;
 
 public class Market extends Game {
-    private static JDialog view = new JDialog();
+    private static JDialog view;
+    protected static EndGame end;
 
     public static void displayMarket(Region region) {
+        view = new JDialog();
         view.setModal(true);
         view.setSize(400, 500);
         Container cp = view.getContentPane();
@@ -35,7 +37,14 @@ public class Market extends Game {
         money.setBounds(200, 10, 100, 100);
         cp.add(money, BorderLayout.CENTER);
 
-        JLabel cost = new JLabel("Cost of each item: " + currRegion.priceCalculator(20, player));
+        JLabel cost;
+        if(player.getKarma() >= 3){
+            cost = new JLabel("Cost of each item: " + currRegion.priceCalculator(10, player));
+        } else if(player.getKarma() <= -3){
+            cost = new JLabel("Cost of each item: " + currRegion.priceCalculator(30, player));
+        } else {
+            cost = new JLabel("Cost of each item: " + currRegion.priceCalculator(20, player));
+        }
         cost.setBounds(200, 30, 200, 100);
         cp.add(cost, BorderLayout.CENTER);
 
@@ -58,15 +67,34 @@ public class Market extends Game {
         DefaultListModel marketside = new DefaultListModel();
         for (int i = 0; i < region.getItems().size(); i++) {
             marketside.addElement(region.getItems().get(i));
+            System.out.println(region.getTechLevel());
+        }
+        if(region.getTechLevel() == TechLevel.FUTURISTIC) {
+            marketside.addElement(player.getName() + "'s Universe ($10000)");
         }
         jList.setModel(marketside);
         jList2.setModel(inventory);
         buy.addActionListener(e -> {
+            String val = (String)jList.getSelectedValue();
+            System.out.println(val);
             int remainingMon = player.getMoney() - currRegion.priceCalculator(20, player);
+            if(jList.getSelectedValue()
+                    .equals(player.getName() + "'s Universe ($10000)")) {
+                remainingMon = player.getMoney() - 10000;
+            } else if(player.getKarma() >= 3){
+                remainingMon = player.getMoney() - currRegion.priceCalculator(10, player);
+            } else if(player.getKarma() <= -3){
+                remainingMon = player.getMoney() - currRegion.priceCalculator(30, player);
+            }
             if (jList.getSelectedValue() != null && remainingMon >= 0
                     && ship.getCargoSpace() - 1 >= 0) {
                 if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
                     inventory.addElement(jList.getSelectedValue());
+                    if(jList.getSelectedValue()
+                            .equals(player.getName() + "'s Universe ($10000)")) {
+                        end.display(true);
+                        view.dispose();
+                    }
                     marketside.removeElement(jList.getSelectedValue());
                     currRegion.getItems().remove(jList.getSelectedValue());
                     //add selected item to player inventory;

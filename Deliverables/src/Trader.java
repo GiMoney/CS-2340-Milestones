@@ -50,8 +50,14 @@ public class Trader extends Game {
         JLabel money = new JLabel("Money: " + player.getMoney());
         money.setBounds(200, 10, 100, 100);
         cp.add(money, BorderLayout.CENTER);
-
-        JLabel cost = new JLabel("Cost of each item: " + traderCost);
+        JLabel cost;
+        if(player.getKarma() >= 3){
+            cost = new JLabel("Cost of each item: " + (this.traderCost - 1));
+        } else if(player.getKarma() <= -3){
+            cost = new JLabel("Cost of each item: " + (this.traderCost + 1));
+        } else {
+            cost = new JLabel("Cost of each item: " + (this.traderCost));
+        }
         cost.setBounds(200, 30, 200, 100);
         cp.add(cost, BorderLayout.CENTER);
 
@@ -67,9 +73,9 @@ public class Trader extends Game {
         neg.setBounds(100, 110, 60, 20);
         cp.add(neg, BorderLayout.CENTER);
 
-        JButton attack = new JButton("Attack");
-        attack.setBounds(150, 110, 60, 20);
-        cp.add(attack, BorderLayout.CENTER);
+        JButton rob = new JButton("Rob");
+        rob.setBounds(150, 110, 60, 20);
+        cp.add(rob, BorderLayout.CENTER);
 
         JList jList = new JList();
         jList.setBounds(30, 140, 150, 310);
@@ -85,9 +91,15 @@ public class Trader extends Game {
         }
         jList.setModel(marketside);
         jList2.setModel(inventory);
-
+        int remainingMon;
+        if(player.getKarma() >= 3){
+            remainingMon = player.getMoney() - (this.traderCost - 1);
+        } else if(player.getKarma() <= -3){
+            remainingMon = player.getMoney() - (this.traderCost + 1);
+        } else {
+            remainingMon = (player.getMoney() - this.traderCost);
+        }
         buy.addActionListener(e -> {
-            int remainingMon = (player.getMoney() - this.traderCost);
             if (jList.getSelectedValue() != null && remainingMon >= 0
                     && ship.getCargoSpace() - 1 >= 0) {
                 if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
@@ -135,8 +147,20 @@ public class Trader extends Game {
             } else {
                 traderCost = traderCost + 2;
                 cost.setText("Cost of each item: " + traderCost);
-                neg.setEnabled(false);
             }
+            neg.setEnabled(false);
+        });
+
+        rob.addActionListener(e -> {
+            if (robNum < player.getRobChance()) {
+                inventory.addElement(marketside.get(1));
+                marketside.removeElementAt(1);
+                ship.setCargoSpace(ship.getCargoSpace() - 1);
+                cargo.setText("Cargo: " + ship.getCargoSpace());
+            } else {
+                ship.setHealth(ship.getHealth() - 20);
+            }
+            rob.setEnabled(false);
         });
 
         view.setLocation(1000, 300);

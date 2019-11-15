@@ -4,12 +4,13 @@ import java.awt.Container;
 import java.awt.event.*;
 
 public class PlayerInfoView extends ViewController {
-    protected static JFrame view = new JFrame();
+    protected static JFrame view;
     protected static PlayerInfoView current;
     protected static Game next;
     private static String[] configArgs;
 
     public static void main(String[] args) {
+        view = new JFrame();
         configArgs = args;
         view.setSize(500, 600);
         Container cp = view.getContentPane();

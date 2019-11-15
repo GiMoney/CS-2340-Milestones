@@ -12,12 +12,13 @@ import java.io.IOException;
 
 public class Game extends ViewController {
     protected static ArrayList<Region> region;
-    protected static JFrame view = new JFrame("Click on a region on the map to travel there");
+    protected static JFrame view;
     protected static Game current;
     protected static Region currRegion;
     protected static Region regionPrev;
     protected static Universe universe;
     protected static Player player;
+    protected static EndGame end;
     private static String[] configArgs = new String[1000];
     protected static Ship ship;
     protected static TravelUI next;
@@ -30,10 +31,11 @@ public class Game extends ViewController {
 
 
     public static void startGame(String[] args) {
+        view = new JFrame("Click on a region on the map to travel there");
         universe = new Universe(names);
         region = universe.region;
         if (args[1].equals("Easy")) {
-            player.setMoney(1000);
+            player.setMoney(1000000);
         } else if (args[1].equals("Medium")) {
             player.setMoney(500);
         } else {
@@ -45,6 +47,7 @@ public class Game extends ViewController {
         Boolean banditWon = false;
         player = new Player(args);
         startGame(args);
+        player.setKarma(0);
         String difficulty = player.getDifficulty();
         view.setSize(1000, 600);
         Container cp = view.getContentPane();
@@ -70,12 +73,28 @@ public class Game extends ViewController {
         shipFuel.setBounds(80, 190, 200, 40);
         JLabel shipHealth = new JLabel(" Ship health: " + ship.getHealth());
         shipHealth.setBounds(80, 220, 200, 40);
+        JButton repair = new JButton(" Repair Ship ($10 for 10 health): ");
+        repair.setBounds(60, 350, 300, 50);
 
         cp.add(shipInfo, BorderLayout.CENTER);
         cp.add(shipType, BorderLayout.CENTER);
         cp.add(shipCargo, BorderLayout.CENTER);
         cp.add(shipFuel, BorderLayout.CENTER);
         cp.add(shipHealth, BorderLayout.CENTER);
+        cp.add(repair, BorderLayout.CENTER);
+
+        repair.addActionListener(e -> {
+            if (ship.getHealth() + 10 > 101 || player.getMoney() - 10 < 0) {
+                JOptionPane.showMessageDialog(view,
+                        "Not enough money/ship is already healthy");
+            } else {
+                player.setMoney(player.getMoney() - 10);
+                money.setText("Current money: " + player.getMoney());
+                ship.setHealth(ship.getHealth() + 10);
+                shipHealth.setText(" Ship health: " + ship.getHealth());
+            }
+        });
+
         ArrayList<JButton> buttons = new ArrayList<>();
         Button buts = new Button();
         JLabel[] labels = new JLabel[] {shipInfo, shipType, shipCargo, shipFuel,
@@ -155,77 +174,71 @@ public class Game extends ViewController {
             int fuelCost = (int) Math.ceil(
                     distance(player.getRegion1(), region) / 5.0 * pilotFactor);
 
-            if (fuelCost != 0 && banditNum < player.getBanditChance()) {
-                Bandit bandit = new Bandit();
-                regionPrev = player.getRegion1();
-                System.out.println("LOOK AT THIS" + regionPrev);
-                player.setDialogOpen(true);
-                player.setSuccessfulTravel(true);
-                try {
-                    bandit.banditMain(buttons, view, region, shiplabels);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                view.setVisible(false);
-                view.revalidate();
-                view.repaint();
-                System.out.println("2");
-                /*while (true) {
-                    if (!player.getDialogOpen()) {
-                        break;
+                if (fuelCost != 0 && banditNum < player.getBanditChance()) {
+                    Bandit bandit = new Bandit();
+                    regionPrev = player.getRegion1();
+                    System.out.println("LOOK AT THIS" + regionPrev);
+                    player.setDialogOpen(true);
+                    player.setSuccessfulTravel(true);
+                    try {
+                        bandit.banditMain(buttons, view, region, shiplabels);
+                        System.out.println("SHIP HEALTH" + ship.getHealth());
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
                     }
-                }*/
-
-            } else if (fuelCost != 0 && traderNum < player.getTraderChance()) {
-                player.setSuccessfulTravel(true);
-                Trader trader = new Trader();
-                try {
-                    ship.setFuelCapacity(ship.getFuelCapacity()
-                            - fuelCost);
-                    player.setRegionPrev(player.getRegion1());
-                    player.setRegion1(region);
-                    trader.displayTrader(region);
+                    view.setVisible(false);
                     view.revalidate();
                     view.repaint();
 
-                } catch (Exception j) {
-                    j.printStackTrace();
+                } else if (fuelCost != 0 && traderNum < player.getTraderChance()) {
+                    player.setSuccessfulTravel(true);
+                    Trader trader = new Trader();
+                    try {
+                        ship.setFuelCapacity(ship.getFuelCapacity()
+                                - fuelCost);
+                        player.setRegionPrev(player.getRegion1());
+                        player.setRegion1(region);
+                        trader.displayTrader(region);
+                        view.revalidate();
+                        view.repaint();
+
+                    } catch (Exception j) {
+                        j.printStackTrace();
+                    }
+                } else if (fuelCost != 0 && ship.getCargoSpace() < 17
+                        && policeNum < (player.getPoliceChance())
+                        && !player.getRegionPrev().equals(region)) {
+                    player.setSuccessfulTravel(true);
+                    Police police = new Police();
+                    try {
+                        ship.setFuelCapacity(ship.getFuelCapacity()
+                                - fuelCost);
+                        player.setRegionPrev(player.getRegion1());
+                        player.setRegion1(region);
+                        police.policeMain(buttons, view, region, shiplabels);
+                        view.revalidate();
+                        view.repaint();
+
+                    } catch (Exception j) {
+                        j.printStackTrace();
+                    }
+                } else {
+
+                    player.setSuccessfulTravel(true);
+                    next = new TravelUI();
+                    try {
+                        ship.setFuelCapacity(ship.getFuelCapacity()
+                                - fuelCost);
+                        player.setRegionPrev(player.getRegion1());
+                        player.setRegion1(region);
+                        next.display(region);
+                        view.revalidate();
+                        view.repaint();
+
+                    } catch (IOException j) {
+                        j.printStackTrace();
+                    }
                 }
-            } else if (fuelCost != 0 && ship.getCargoSpace() < 17
-                    && policeNum < (player.getPoliceChance())
-                    && !player.getRegionPrev().equals(region)) {
-                player.setSuccessfulTravel(true);
-                Police police = new Police();
-                try {
-                    ship.setFuelCapacity(ship.getFuelCapacity()
-                            - fuelCost);
-                    player.setRegionPrev(player.getRegion1());
-                    player.setRegion1(region);
-                    police.policeMain(buttons, view, region, shiplabels);
-                    view.revalidate();
-                    view.repaint();
-
-                } catch (Exception j) {
-                    j.printStackTrace();
-                }
-            } else {
-
-                player.setSuccessfulTravel(true);
-                next = new TravelUI();
-                try {
-                    ship.setFuelCapacity(ship.getFuelCapacity()
-                            - fuelCost);
-                    player.setRegionPrev(player.getRegion1());
-                    player.setRegion1(region);
-                    next.display(region);
-                    view.revalidate();
-                    view.repaint();
-
-                } catch (IOException j) {
-                    j.printStackTrace();
-                }
-            }
-
         }
 
         public static int distance(Region r1, Region r2) {

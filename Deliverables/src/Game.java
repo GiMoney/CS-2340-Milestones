@@ -225,7 +225,13 @@ public class Game extends ViewController {
                 } else {
 
                     player.setSuccessfulTravel(true);
-                    next = new TravelUI();
+                    if (ship.getHealth() <= 0) {
+                        end.display(false);
+                        view.dispose();
+                        view.setVisible(false);
+                    } else {
+                        next = new TravelUI();
+                    }
                     try {
                         ship.setFuelCapacity(ship.getFuelCapacity()
                                 - fuelCost);
@@ -238,6 +244,11 @@ public class Game extends ViewController {
                     } catch (IOException j) {
                         j.printStackTrace();
                     }
+                }
+                if(inventory.contains((player.getName() + "'s Universe ($10000)"))) {
+                  end.display(true);
+                  inventory.clear();
+                  view.dispose();
                 }
         }
 

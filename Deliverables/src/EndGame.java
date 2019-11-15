@@ -29,8 +29,10 @@ public class EndGame {
         view.setLocationRelativeTo(null);
         view.setLayout(new FlowLayout());
         view.setVisible(true);
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newGame = new StartGameView();
         yes.addActionListener(e -> {
+            view.dispose();
             view.setVisible(false);
             newGame.main(null);
         });

@@ -296,6 +296,7 @@ public class Bandit extends Game {
                 if (ship.getHealth() <= 0) {
                     end.display(false);
                     view.dispose();
+                    mainView.setVisible(false);
                 } else {
                     view.dispose();
                     mainView.revalidate();

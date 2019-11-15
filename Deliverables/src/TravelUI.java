@@ -8,13 +8,14 @@ import javax.imageio.ImageIO;
 
 
 public class TravelUI extends Game {
-    private static JDialog view = new JDialog();
+    private static JDialog view;
     private static TravelUI current;
     private static Market next;
     private static final String IMAGE_URL = "/resource/bar.png";
 
 
     public void display(Region region) throws IOException {
+        view = new JDialog();
         ArrayList<String> images = new ArrayList<>();
         view.setModal(true);
         view.setSize(400, 500);
@@ -101,8 +102,15 @@ public class TravelUI extends Game {
         public void actionPerformed(ActionEvent e) {
             current.view.setVisible(false);
             next = new Market();
-            next.displayMarket(region);
-            current.view.setVisible(true);
+            if (ship.getHealth() <= 0) {
+                end.display(false);
+                view.dispose();
+                view.setVisible(false);
+            } else {
+                view.dispose();
+                next.displayMarket(region);
+                current.view.setVisible(true);
+            }
         }
 
     }

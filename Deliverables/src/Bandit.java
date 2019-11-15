@@ -24,6 +24,7 @@ public class Bandit extends Game {
     private static ArrayList<JButton> buttons;
     private static Container cp;
 
+    @Override
     public void banditMain(ArrayList<JButton> buttons, JFrame mainView,
                            Region region1, JLabel[] shiplabels) throws IOException {
         view = new JDialog();

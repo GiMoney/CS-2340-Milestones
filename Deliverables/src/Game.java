@@ -29,6 +29,17 @@ public class Game extends ViewController {
         "Gamma-Hamma", "Helix-Felix", "I-99", "Ben-10"
     };
 
+    public void banditMain(ArrayList<JButton> buttons,
+                           JFrame view,Region region,JLabel[] shiplabels) throws IOException {
+        //do nothing
+    }
+    public void displayTrader(Region region) throws IOException {
+        //do nothing
+    }
+    public void policeMain(ArrayList<JButton> buttons,
+                           JFrame view,Region region,JLabel[] shiplabels) throws IOException {
+        //do nothing
+    }
 
     public static void startGame(String[] args) {
         view = new JFrame("Click on a region on the map to travel there");
@@ -154,6 +165,7 @@ public class Game extends ViewController {
         private JLabel[] shiplabels;
         private Ship ship;
 
+
         public PageActionListener(Region region, Boolean banditWon, Region regionPrev,
                                   ArrayList<JButton> buttons, Button buts,
                                   JLabel[] shiplabels, Ship ship) {
@@ -174,7 +186,7 @@ public class Game extends ViewController {
             int fuelCost = (int) Math.ceil(
                     distance(player.getRegion1(), region) / 5.0 * pilotFactor);
             if (fuelCost != 0 && banditNum < player.getBanditChance()) {
-                Bandit bandit = new Bandit();
+                Game bandit = new Bandit();
                 regionPrev = player.getRegion1();
                 System.out.println("LOOK AT THIS" + regionPrev);
                 player.setDialogOpen(true);
@@ -191,7 +203,7 @@ public class Game extends ViewController {
 
             } else if (fuelCost != 0 && traderNum < player.getTraderChance()) {
                 player.setSuccessfulTravel(true);
-                Trader trader = new Trader();
+                Game trader = new Trader();
                 try {
                     ship.setFuelCapacity(ship.getFuelCapacity()
                             - fuelCost);
@@ -208,7 +220,7 @@ public class Game extends ViewController {
                     && policeNum < (player.getPoliceChance())
                     && !player.getRegionPrev().equals(region)) {
                 player.setSuccessfulTravel(true);
-                Police police = new Police();
+                Game police = new Police();
                 try {
                     ship.setFuelCapacity(ship.getFuelCapacity()
                             - fuelCost);
@@ -246,12 +258,14 @@ public class Game extends ViewController {
         }
 
 
+
         public static int distance(Region r1, Region r2) {
             int x = (r1.getX() - r2.getX());
             int y = (r1.getY() - r2.getY());
             return (int) Math.sqrt(((x * x) + (y * y)));
 
         }
+
 
     }
 

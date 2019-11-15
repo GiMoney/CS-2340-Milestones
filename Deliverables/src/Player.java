@@ -34,7 +34,7 @@ public class Player {
         difficulty = args[1];
         if (difficulty.equals("Easy")) {
             money = 1000;
-            banditChance = 100 - karma; //change back to 15 when not testing
+            banditChance = 15 - karma; //change back to 15 when not testing
             policeChance = 15 - karma;
         } else if (difficulty.equals("Medium")) {
             money = 500;

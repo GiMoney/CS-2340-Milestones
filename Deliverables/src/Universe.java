@@ -108,6 +108,7 @@ public class Universe extends Game {
     private void populateLists() {
         preAgItems = new LinkedList<>(); // NEED to add quantity
         preAgItems.add("Fuel + 10"); // Important need to update fuel afterwards
+        preAgItems.add("Repair Ship + 10HP");
         preAgItems.add("Stone");
         preAgItems.add("Dirt");
         preAgItems.add("Wood");
@@ -120,6 +121,7 @@ public class Universe extends Game {
 
         agItems = new LinkedList<>(); // NEED to add quantity
         agItems.add("Fuel + 10"); // Important need to update fuel afterwards
+        agItems.add("Repair Ship + 10HP");
         agItems.add("Seeds");
         agItems.add("Dirt");
         agItems.add("Rice");
@@ -132,6 +134,7 @@ public class Universe extends Game {
 
         medItems = new LinkedList<>(); // NEED to add quantity
         medItems.add("Fuel + 10"); // Important need to update fuel afterwards
+        medItems.add("Repair Ship + 10HP");
         medItems.add("Steel Sword");
         medItems.add("Steel Armor");
         medItems.add("Rations");
@@ -144,6 +147,7 @@ public class Universe extends Game {
 
         renItems = new LinkedList<>(); // NEED to add quantity
         renItems.add("Fuel + 10"); // Important need to update fuel afterwards
+        renItems.add("Repair Ship + 10HP");
         renItems.add("Artwork");
         renItems.add("Silver Jewelry");
         renItems.add("Baked pastry");
@@ -156,6 +160,7 @@ public class Universe extends Game {
 
         indItems = new LinkedList<>(); // NEED to add quantity
         indItems.add("Fuel + 10"); // Important need to update fuel afterwards
+        indItems.add("Repair Ship + 10HP");
         indItems.add("Coal");
         indItems.add("Revolver");
         indItems.add("Bread");
@@ -169,6 +174,7 @@ public class Universe extends Game {
 
         modItems = new LinkedList<>(); // NEED to add quantity
         modItems.add("Fuel + 10"); // Important need to update fuel afterwards
+        modItems.add("Repair Ship + 10HP");
         modItems.add("Car v2 (autonomous)");
         modItems.add("Pizza");
         modItems.add("Bitcoin");
@@ -182,6 +188,7 @@ public class Universe extends Game {
 
         futItems = new LinkedList<>(); // NEED to add quantity
         futItems.add("Fuel + 10"); // Important need to update fuel afterwards
+        futItems.add("Repair Ship + 10HP");
         futItems.add("car version v3 (flying)");
         futItems.add("Laser pistol");
         futItems.add("3d-printed food");
@@ -195,6 +202,7 @@ public class Universe extends Game {
 
         darkItems = new LinkedList<>(); // NEED to add quantity
         darkItems.add("Fuel + 10"); // Important need to update fuel afterwards
+        darkItems.add("Repair Ship + 10HP");
         darkItems.add("Cocaine");
         darkItems.add("Dirt");
         darkItems.add("Bread");
@@ -207,6 +215,7 @@ public class Universe extends Game {
 
         steamItems = new LinkedList<>(); // NEED to add quantity
         steamItems.add("Fuel + 10"); // Important need to update fuel afterwards
+        steamItems.add("Repair Ship + 10HP");
         steamItems.add("Coal");
         steamItems.add("Binoculars");
         steamItems.add("Revolver");
@@ -219,6 +228,7 @@ public class Universe extends Game {
 
         cybItems = new LinkedList<>(); // NEED to add quantity
         cybItems.add("Fuel + 10"); // Important need to update fuel afterwards
+        cybItems.add("Repair Ship + 10HP");
         cybItems.add("Cybernetic nav chip");
         cybItems.add("Plasma cannon pistol");
         cybItems.add("Plasma engine");

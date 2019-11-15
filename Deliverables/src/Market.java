@@ -93,6 +93,9 @@ public class Market extends Game {
                     if(jList.getSelectedValue()
                             .equals(player.getName() + "'s Universe ($10000)")) {
                         end.display(true);
+                        Game.view.setVisible(false);
+                        inventory.removeAllElements();
+                        view.setVisible(false);
                         view.dispose();
                     }
                     marketside.removeElement(jList.getSelectedValue());

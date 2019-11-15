@@ -173,84 +173,78 @@ public class Game extends ViewController {
             double pilotFactor = (player.getPilot() > 0) ? 1.0 / player.getPilot() : 1;
             int fuelCost = (int) Math.ceil(
                     distance(player.getRegion1(), region) / 5.0 * pilotFactor);
+            if (fuelCost != 0 && banditNum < player.getBanditChance()) {
+                Bandit bandit = new Bandit();
+                regionPrev = player.getRegion1();
+                System.out.println("LOOK AT THIS" + regionPrev);
+                player.setDialogOpen(true);
+                player.setSuccessfulTravel(true);
+                try {
+                    bandit.banditMain(buttons, view, region, shiplabels);
+                    System.out.println("SHIP HEALTH" + ship.getHealth());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                view.setVisible(false);
+                view.revalidate();
+                view.repaint();
 
-                if (fuelCost != 0 && banditNum < player.getBanditChance()) {
-                    Bandit bandit = new Bandit();
-                    regionPrev = player.getRegion1();
-                    System.out.println("LOOK AT THIS" + regionPrev);
-                    player.setDialogOpen(true);
-                    player.setSuccessfulTravel(true);
-                    try {
-                        bandit.banditMain(buttons, view, region, shiplabels);
-                        System.out.println("SHIP HEALTH" + ship.getHealth());
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    view.setVisible(false);
+            } else if (fuelCost != 0 && traderNum < player.getTraderChance()) {
+                player.setSuccessfulTravel(true);
+                Trader trader = new Trader();
+                try {
+                    ship.setFuelCapacity(ship.getFuelCapacity()
+                            - fuelCost);
+                    player.setRegionPrev(player.getRegion1());
+                    player.setRegion1(region);
+                    trader.displayTrader(region);
                     view.revalidate();
                     view.repaint();
 
-                } else if (fuelCost != 0 && traderNum < player.getTraderChance()) {
-                    player.setSuccessfulTravel(true);
-                    Trader trader = new Trader();
-                    try {
-                        ship.setFuelCapacity(ship.getFuelCapacity()
-                                - fuelCost);
-                        player.setRegionPrev(player.getRegion1());
-                        player.setRegion1(region);
-                        trader.displayTrader(region);
-                        view.revalidate();
-                        view.repaint();
+                } catch (Exception j) {
+                    j.printStackTrace();
+                }
+            } else if (fuelCost != 0 && ship.getCargoSpace() < 17
+                    && policeNum < (player.getPoliceChance())
+                    && !player.getRegionPrev().equals(region)) {
+                player.setSuccessfulTravel(true);
+                Police police = new Police();
+                try {
+                    ship.setFuelCapacity(ship.getFuelCapacity()
+                            - fuelCost);
+                    player.setRegionPrev(player.getRegion1());
+                    player.setRegion1(region);
+                    police.policeMain(buttons, view, region, shiplabels);
+                    view.revalidate();
+                    view.repaint();
 
-                    } catch (Exception j) {
-                        j.printStackTrace();
-                    }
-                } else if (fuelCost != 0 && ship.getCargoSpace() < 17
-                        && policeNum < (player.getPoliceChance())
-                        && !player.getRegionPrev().equals(region)) {
-                    player.setSuccessfulTravel(true);
-                    Police police = new Police();
-                    try {
-                        ship.setFuelCapacity(ship.getFuelCapacity()
-                                - fuelCost);
-                        player.setRegionPrev(player.getRegion1());
-                        player.setRegion1(region);
-                        police.policeMain(buttons, view, region, shiplabels);
-                        view.revalidate();
-                        view.repaint();
+                } catch (Exception j) {
+                    j.printStackTrace();
+                }
+            } else {
 
-                    } catch (Exception j) {
-                        j.printStackTrace();
-                    }
+                player.setSuccessfulTravel(true);
+                if (ship.getHealth() <= 0) {
+                    end.display(false);
+                    view.dispose();
+                    view.setVisible(false);
                 } else {
-
-                    player.setSuccessfulTravel(true);
-                    if (ship.getHealth() <= 0) {
-                        end.display(false);
-                        view.dispose();
-                        view.setVisible(false);
-                    } else {
-                        next = new TravelUI();
-                    }
-                    try {
-                        ship.setFuelCapacity(ship.getFuelCapacity()
-                                - fuelCost);
-                        player.setRegionPrev(player.getRegion1());
-                        player.setRegion1(region);
-                        next.display(region);
-                        view.revalidate();
-                        view.repaint();
-
-                    } catch (IOException j) {
-                        j.printStackTrace();
-                    }
+                    next = new TravelUI();
                 }
-                if(inventory.contains((player.getName() + "'s Universe ($10000)"))) {
-                  end.display(true);
-                  inventory.clear();
-                  view.dispose();
+                try {
+                    ship.setFuelCapacity(ship.getFuelCapacity()
+                            - fuelCost);
+                    player.setRegionPrev(player.getRegion1());
+                    player.setRegion1(region);
+                    next.display(region);
+                    view.revalidate();
+                    view.repaint();
+                } catch (IOException j) {
+                    j.printStackTrace();
                 }
+            }
         }
+
 
         public static int distance(Region r1, Region r2) {
             int x = (r1.getX() - r2.getX());

@@ -109,7 +109,7 @@ public class TravelUI extends Game {
             } else {
                 view.dispose();
                 next.displayMarket(region);
-                current.view.setVisible(true);
+                current.view.setVisible(false);
             }
         }
 

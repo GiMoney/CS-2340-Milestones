@@ -51,9 +51,9 @@ public class Trader extends Game {
         money.setBounds(200, 10, 100, 100);
         cp.add(money, BorderLayout.CENTER);
         JLabel cost;
-        if(player.getKarma() >= 3){
+        if (player.getKarma() >= 3) {
             cost = new JLabel("Cost of each item: " + (this.traderCost - 1));
-        } else if(player.getKarma() <= -3){
+        } else if (player.getKarma() <= -3) {
             cost = new JLabel("Cost of each item: " + (this.traderCost + 1));
         } else {
             cost = new JLabel("Cost of each item: " + (this.traderCost));
@@ -84,17 +84,16 @@ public class Trader extends Game {
         jList2.setBounds(200, 140, 150, 310);
         cp.add(jList2, BorderLayout.CENTER);
 
-
         DefaultListModel marketside = new DefaultListModel();
         for (int i = 0; i < region.getItems().size(); i++) {
-            marketside.addElement(region.getItems().get(i));
+            marketside.addElement(region.getItems().get(3));
         }
         jList.setModel(marketside);
         jList2.setModel(inventory);
         int remainingMon;
-        if(player.getKarma() >= 3){
+        if (player.getKarma() >= 3) {
             remainingMon = player.getMoney() - (this.traderCost - 1);
-        } else if(player.getKarma() <= -3){
+        } else if (player.getKarma() <= -3) {
             remainingMon = player.getMoney() - (this.traderCost + 1);
         } else {
             remainingMon = (player.getMoney() - this.traderCost);
@@ -165,6 +164,5 @@ public class Trader extends Game {
 
         view.setLocation(1000, 300);
         view.setVisible(true);
-
     }
 }

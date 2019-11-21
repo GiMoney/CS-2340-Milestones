@@ -47,7 +47,7 @@ public class Player {
         }
         x = 0;
         y = 0;
-        traderChance = 20 + karma;
+        traderChance = 15 + karma;
         fleeChance = (5.625 * pilot) + 5;
         fightChance = (5.625 * fighter) + 5;
         robChance = fightChance;
@@ -135,16 +135,18 @@ public class Player {
     public int getX() {
         return x;
     }
+
     public int getY() {
         return y;
     }
+
     public void setX(int x) {
         this.x = x;
     }
+
     public void setY(int y) {
         this.y = y;
     }
-    public void setKarma(int karma) { this.karma = karma;}
 
     public int getBanditChance() {
         return banditChance;
@@ -194,7 +196,13 @@ public class Player {
         return robChance;
     }
 
-    public int getKarma() { return karma; }
+    public int getKarma() {
+        return karma;
+    }
+
+    public void setKarma(int karma) {
+        this.karma = karma;
+    }
 
     public int getRepairDiscount() {
         return repairDiscount;

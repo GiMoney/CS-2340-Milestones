@@ -38,9 +38,9 @@ public class Market extends Game {
         cp.add(money, BorderLayout.CENTER);
 
         JLabel cost;
-        if(player.getKarma() >= 3){
+        if (player.getKarma() >= 3) {
             cost = new JLabel("Cost of each item: " + currRegion.priceCalculator(10, player));
-        } else if(player.getKarma() <= -3){
+        } else if (player.getKarma() <= -3) {
             cost = new JLabel("Cost of each item: " + currRegion.priceCalculator(30, player));
         } else {
             cost = new JLabel("Cost of each item: " + currRegion.priceCalculator(20, player));
@@ -69,28 +69,28 @@ public class Market extends Game {
             marketside.addElement(region.getItems().get(i));
             System.out.println(region.getTechLevel());
         }
-        if(region.getTechLevel() == TechLevel.FUTURISTIC) {
+        if (region.getTechLevel() == TechLevel.FUTURISTIC) {
             marketside.addElement(player.getName() + "'s Universe ($10000)");
         }
         jList.setModel(marketside);
         jList2.setModel(inventory);
         buy.addActionListener(e -> {
-            String val = (String)jList.getSelectedValue();
+            String val = (String) jList.getSelectedValue();
             System.out.println(val);
             int remainingMon = player.getMoney() - currRegion.priceCalculator(20, player);
-            if(jList.getSelectedValue()
+            if (jList.getSelectedValue()
                     .equals(player.getName() + "'s Universe ($10000)")) {
                 remainingMon = player.getMoney() - 10000;
-            } else if(player.getKarma() >= 3){
+            } else if (player.getKarma() >= 3) {
                 remainingMon = player.getMoney() - currRegion.priceCalculator(10, player);
-            } else if(player.getKarma() <= -3){
+            } else if (player.getKarma() <= -3) {
                 remainingMon = player.getMoney() - currRegion.priceCalculator(30, player);
             }
             if (jList.getSelectedValue() != null && remainingMon >= 0
                     && ship.getCargoSpace() - 1 >= 0) {
                 if (!jList.getSelectedValue().equals(currRegion.getItems().get(0))) {
                     inventory.addElement(jList.getSelectedValue());
-                    if(jList.getSelectedValue()
+                    if (jList.getSelectedValue()
                             .equals(player.getName() + "'s Universe ($10000)")) {
                         end.display(true);
                         Game.view.setVisible(false);

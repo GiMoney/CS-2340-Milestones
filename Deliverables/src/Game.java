@@ -30,14 +30,14 @@ public class Game extends ViewController {
     };
 
     public void banditMain(ArrayList<JButton> buttons,
-                           JFrame view,Region region,JLabel[] shiplabels) throws IOException {
+                           JFrame view, Region region, JLabel[] shiplabels) throws IOException {
         //do nothing
     }
     public void displayTrader(Region region) throws IOException {
         //do nothing
     }
     public void policeMain(ArrayList<JButton> buttons,
-                           JFrame view,Region region,JLabel[] shiplabels) throws IOException {
+                           JFrame view, Region region, JLabel[] shiplabels) throws IOException {
         //do nothing
     }
 
@@ -67,6 +67,7 @@ public class Game extends ViewController {
         player.setSuccessfulTravel(false);
         player.setDialogOpen(true);
         regionPrev = player.getRegion1();
+        int discount = 10 - player.getRepairDiscount() / 10;
 
         JLabel welcome = new JLabel("Current Difficulty: " + difficulty);
         welcome.setBounds(20, 0, 200, 40);
@@ -84,7 +85,7 @@ public class Game extends ViewController {
         shipFuel.setBounds(80, 190, 200, 40);
         JLabel shipHealth = new JLabel(" Ship health: " + ship.getHealth());
         shipHealth.setBounds(80, 220, 200, 40);
-        JButton repair = new JButton(" Repair Ship ($10 for 10 health): ");
+        JButton repair = new JButton(" Repair Ship ($" + discount + " for 10 health): ");
         repair.setBounds(60, 350, 300, 50);
 
         cp.add(shipInfo, BorderLayout.CENTER);
@@ -94,12 +95,13 @@ public class Game extends ViewController {
         cp.add(shipHealth, BorderLayout.CENTER);
         cp.add(repair, BorderLayout.CENTER);
 
+
         repair.addActionListener(e -> {
-            if (ship.getHealth() + 10 > 101 || player.getMoney() - 10 < 0) {
+            if (ship.getHealth() + 10 > 100 || player.getMoney() - discount < 0) {
                 JOptionPane.showMessageDialog(view,
                         "Not enough money/ship is already healthy");
             } else {
-                player.setMoney(player.getMoney() - 10);
+                player.setMoney(player.getMoney() - discount);
                 money.setText("Current money: " + player.getMoney());
                 ship.setHealth(ship.getHealth() + 10);
                 shipHealth.setText(" Ship health: " + ship.getHealth());
